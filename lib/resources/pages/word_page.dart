@@ -1,6 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/resources/services/csv_loder_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class WordPage extends NyStatefulWidget {
@@ -19,12 +20,9 @@ class _WordPageState extends NyState<WordPage> {
   }
 
   Future<void> _loadCSV() async {
-    final rawCSV =
-        await rootBundle.loadString('public/assets/csv/hangul_test_5.csv');
-    List<List<dynamic>> csvList = const CsvToListConverter().convert(rawCSV);
-    setState(() {
-      _data = csvList;
-    });
+    CsvLoaderService csvLoader = CsvLoaderService();
+    _data = await csvLoader.loadCsvData('public/assets/csv/hangul_test_5.csv');
+    setState(() {});
   }
 
   @override
