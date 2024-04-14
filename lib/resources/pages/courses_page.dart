@@ -8,7 +8,7 @@ class CoursesPage extends NyStatefulWidget {
 }
 
 class _CoursesPageState extends NyState<CoursesPage> {
-  final List<String> courses = ['ハングル検定5級', 'ハングル検定4級'];
+  final List<String> courses = ['ハングル検定5級'];
 
   @override
   init() async {}
@@ -30,7 +30,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
             return ListTile(
               title: Text(courses[index]),
               onTap: () {
-                // ここに各コースがタップされた時の処理を書く
+                routeTo('/word');
               },
             );
           },
