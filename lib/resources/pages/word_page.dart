@@ -19,21 +19,19 @@ class _WordPageState extends NyState<WordPage> {
   }
 
   void _nextWord() {
-    setState(() {
-      _currentIndex = (_currentIndex + 1) % _words.length;
-    });
-  }
-
-  void _previousWord() {
-    setState(() {
-      _currentIndex = (_currentIndex - 1 + _words.length) % _words.length;
-    });
+    if (_currentIndex == _words.length - 1) {
+      routeTo('/result');
+    } else {
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % _words.length;
+      });
+    }
   }
 
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Word")),
+      appBar: AppBar(title: Text(queryParameters()['lesson_name'])),
       body: SafeArea(
         child: _words.isNotEmpty
             ? Column(
@@ -44,10 +42,6 @@ class _WordPageState extends NyState<WordPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      ElevatedButton(
-                        onPressed: _previousWord,
-                        child: Text('戻る'),
-                      ),
                       ElevatedButton(
                         onPressed: _nextWord,
                         child: Text('次へ'),
