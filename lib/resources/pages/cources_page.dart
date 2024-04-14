@@ -8,6 +8,8 @@ class CourcesPage extends NyStatefulWidget {
 }
 
 class _CourcesPageState extends NyState<CourcesPage> {
+  final List<String> courses = ['ハングル検定5級', 'ハングル検定4級'];
+
   @override
   init() async {}
 
@@ -20,9 +22,19 @@ class _CourcesPageState extends NyState<CourcesPage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Cources")),
+      appBar: AppBar(title: Text("コース")),
       body: SafeArea(
-        child: Container(),
+        child: ListView.builder(
+          itemCount: courses.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(courses[index]),
+              onTap: () {
+                // ここに各コースがタップされた時の処理を書く
+              },
+            );
+          },
+        ),
       ),
     );
   }
