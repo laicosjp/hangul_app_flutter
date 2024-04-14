@@ -10,6 +10,7 @@ class WordPage extends NyStatefulWidget {
 
 class _WordPageState extends NyState<WordPage> {
   List<List<dynamic>> _words = [];
+  int _currentIndex = 0;
 
   @override
   init() async {
@@ -17,20 +18,45 @@ class _WordPageState extends NyState<WordPage> {
     _words = widget.data();
   }
 
+  void _nextWord() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % _words.length;
+    });
+  }
+
+  void _previousWord() {
+    setState(() {
+      _currentIndex = (_currentIndex - 1 + _words.length) % _words.length;
+    });
+  }
+
   @override
   Widget view(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Word")),
       body: SafeArea(
-        child: ListView.builder(
-          itemCount: _words.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(_words[index][1]),
-              subtitle: Text(_words[index][2].toString()),
-            );
-          },
-        ),
+        child: _words.isNotEmpty
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(_words[_currentIndex][1]),
+                  Text(_words[_currentIndex][2].toString()),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ElevatedButton(
+                        onPressed: _previousWord,
+                        child: Text('戻る'),
+                      ),
+                      ElevatedButton(
+                        onPressed: _nextWord,
+                        child: Text('次へ'),
+                      ),
+                    ],
+                  )
+                ],
+              )
+            : Center(child: Text('単語がありません')),
       ),
     );
   }
