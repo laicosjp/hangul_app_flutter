@@ -63,7 +63,11 @@ class _CoursePageState extends NyState<CoursePage> {
                       int lessonNumber = index + 1;
                       return OutlinedButton(
                         onPressed: () {
-                          routeTo('/word');
+                          routeTo('/word',
+                              data: _lessons[lessonNumber],
+                              queryParameters: {
+                                "lesson_name": "Lesson $lessonNumber",
+                              });
                         },
                         child: Text('Lesson $lessonNumber'),
                         style: ButtonStyle(
