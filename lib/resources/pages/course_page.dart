@@ -62,7 +62,9 @@ class _CoursePageState extends NyState<CoursePage> {
                     itemBuilder: (context, index) {
                       int lessonNumber = index + 1;
                       return OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          routeTo('/word');
+                        },
                         child: Text('Lesson $lessonNumber'),
                         style: ButtonStyle(
                           shape:
