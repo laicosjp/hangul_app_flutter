@@ -30,7 +30,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
             return ListTile(
               title: Text(courses[index]),
               onTap: () {
-                routeTo('/word');
+                routeTo('/course');
               },
             );
           },
