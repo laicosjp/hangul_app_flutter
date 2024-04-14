@@ -1,3 +1,4 @@
+import '/resources/pages/word_page.dart';
 import '/resources/pages/courses_page.dart';
 import '/resources/pages/home_page.dart';
 import 'package:nylo_framework/nylo_framework.dart';
@@ -25,4 +26,5 @@ appRouter() => nyRoutes((router) {
   //   router.route(AccountPage.path, (context) => AccountPage());
   // });
   router.route(CoursesPage.path, (context) => CoursesPage(), initialRoute: true);
+  router.route(WordPage.path, (context) => WordPage());
 });
