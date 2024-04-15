@@ -8,7 +8,10 @@ class CoursesPage extends NyStatefulWidget {
 }
 
 class _CoursesPageState extends NyState<CoursesPage> {
-  final List<String> courses = ['ハングル検定5級'];
+  final List<Map<String, dynamic>> courses = [
+    {"course_title": 'ハングル検定5級', "course_id": "5"},
+    {"course_title": 'ハングル検定4級', "course_id": "4"}
+  ];
 
   @override
   init() async {}
@@ -28,9 +31,11 @@ class _CoursesPageState extends NyState<CoursesPage> {
           itemCount: courses.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(courses[index]),
+              title: Text(courses[index]['course_title']),
               onTap: () {
-                routeTo('/course');
+                routeTo('/course', queryParameters: {
+                  'course_id': courses[index]['course_id']
+                });
               },
             );
           },
