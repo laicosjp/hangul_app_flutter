@@ -37,16 +37,19 @@ class _WordPageState extends NyState<WordPage> {
           Expanded(
             flex: 2,
             child: Center(
-              child: Text(
-                _words[_currentIndex][1].toString(),
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Text(
+                  _words[_currentIndex][1].toString(),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Expanded(
-              flex: 1,
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: <Widget>[
                   OutlinedButton(
