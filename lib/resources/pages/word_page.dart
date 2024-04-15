@@ -32,25 +32,66 @@ class _WordPageState extends NyState<WordPage> {
   Widget view(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(queryParameters()['lesson_name'])),
-      body: SafeArea(
-        child: _words.isNotEmpty
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 6,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Text(
+                  _words[_currentIndex][1].toString(),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
                 children: <Widget>[
-                  Text(_words[_currentIndex][1]),
-                  Text(_words[_currentIndex][2].toString()),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      ElevatedButton(
-                        onPressed: _nextWord,
-                        child: Text('次へ'),
-                      ),
-                    ],
-                  )
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: Text('ワイルス'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: Size(double.infinity, 50),
+                      side: BorderSide(color: Colors.orange),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: Text('コンクール'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: Size(double.infinity, 50),
+                      side: BorderSide(color: Colors.orange),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: Text('スキー'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: Size(double.infinity, 50),
+                      side: BorderSide(color: Colors.orange),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: Text('フード'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: Size(double.infinity, 50),
+                      side: BorderSide(color: Colors.orange),
+                    ),
+                  ),
                 ],
-              )
-            : Center(child: Text('単語がありません')),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
