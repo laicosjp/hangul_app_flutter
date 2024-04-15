@@ -1,3 +1,4 @@
+import '/resources/pages/result_page.dart';
 import '/resources/pages/course_page.dart';
 import '/resources/pages/word_page.dart';
 import '/resources/pages/courses_page.dart';
@@ -29,4 +30,5 @@ appRouter() => nyRoutes((router) {
   router.route(CoursesPage.path, (context) => CoursesPage(), initialRoute: true);
   router.route(WordPage.path, (context) => WordPage());
   router.route(CoursePage.path, (context) => CoursePage());
+  router.route(ResultPage.path, (context) => ResultPage());
 });
