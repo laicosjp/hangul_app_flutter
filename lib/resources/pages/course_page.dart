@@ -10,8 +10,8 @@ class CoursePage extends NyStatefulWidget {
 }
 
 class _CoursePageState extends NyState<CoursePage> {
-  final String courseTitle = 'ハングル検定5級';
-  final String courseDescription = '韓国語の入門者向け！ハングル検定5級の単語を学ぼう！';
+  final String courseTitle = '単語一覧';
+  final String courseDescription = '頑張ろう！';
   final int PER_WORD = 10;
   List<List<dynamic>> _data = [];
   Map<int, List<List<dynamic>>> _lessons = {};
@@ -35,7 +35,10 @@ class _CoursePageState extends NyState<CoursePage> {
 
   Future<void> _loadCSV() async {
     CsvLoaderService csvLoader = CsvLoaderService();
-    _data = await csvLoader.loadCsvData('public/assets/csv/hangul_test_5.csv');
+    String course_id = queryParameters()['course_id'];
+
+    _data = await csvLoader
+        .loadCsvData("public/assets/csv/hangul_test_$course_id.csv");
     setState(() {});
   }
 
