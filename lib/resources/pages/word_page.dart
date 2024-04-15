@@ -35,7 +35,7 @@ class _WordPageState extends NyState<WordPage> {
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 2,
+            flex: 6,
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(32.0),
@@ -47,7 +47,7 @@ class _WordPageState extends NyState<WordPage> {
             ),
           ),
           Expanded(
-            flex: 1,
+            flex: 4,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
