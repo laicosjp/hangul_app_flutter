@@ -1,3 +1,4 @@
+import '/app/models/word.dart';
 import '/app/controllers/home_controller.dart';
 import '/app/models/user.dart';
 import '/app/networking/api_service.dart';
@@ -16,6 +17,10 @@ final Map<Type, dynamic> modelDecoders = {
   User: (data) => User.fromJson(data),
 
   // User: (data) => User.fromJson(data),
+
+  // 以下は、WordモデルでfromJsonを定義していないので、一旦コメントアウトしている
+  // List<Word>: (data) => List.from(data).map((json) => Word.fromJson(json)).toList(),
+  // Word: (data) => Word.fromJson(data),
 };
 
 /* API Decoders
