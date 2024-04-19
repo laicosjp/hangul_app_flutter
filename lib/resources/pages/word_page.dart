@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/resources/services/csv_loder_service.dart';
+import 'package:flutter_app/app/models/word.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class WordPage extends NyStatefulWidget {
@@ -9,7 +9,7 @@ class WordPage extends NyStatefulWidget {
 }
 
 class _WordPageState extends NyState<WordPage> {
-  List<List<dynamic>> _words = [];
+  List<Word> _words = [];
   int _currentIndex = 0;
 
   @override
@@ -40,7 +40,7 @@ class _WordPageState extends NyState<WordPage> {
               child: Padding(
                 padding: const EdgeInsets.all(32.0),
                 child: Text(
-                  _words[_currentIndex][1].toString(),
+                  _words[_currentIndex].text.toString(),
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),

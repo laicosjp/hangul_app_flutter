@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/resources/services/csv_loder_service.dart';
 import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
@@ -13,8 +14,8 @@ class _CoursePageState extends NyState<CoursePage> {
   final String courseTitle = '単語一覧';
   final String courseDescription = '頑張ろう！';
   final int PER_WORD = 10;
-  List<List<dynamic>> _data = [];
-  Map<int, List<List<dynamic>>> _lessons = {};
+  List<Word> _words = [];
+  final Map<int, List<Word>> _lessons = {};
 
   @override
   init() async {
@@ -25,20 +26,17 @@ class _CoursePageState extends NyState<CoursePage> {
 
   void _parseLessons() {
     int lessonNumber = 1;
-    for (int i = 0; i < _data.length; i += PER_WORD) {
-      _lessons[lessonNumber] = _data.sublist(
-          i, i + PER_WORD > _data.length ? _data.length : i + PER_WORD);
+    for (int i = 0; i < _words.length; i += PER_WORD) {
+      _lessons[lessonNumber] = _words.sublist(i, i + PER_WORD > _words.length ? _words.length : i + PER_WORD);
       lessonNumber++;
     }
     setState(() {});
   }
 
   Future<void> _loadCSV() async {
-    CsvLoaderService csvLoader = CsvLoaderService();
     String course_id = queryParameters()['course_id'];
+    _words = await CsvLoaderService().getAllWords("public/assets/csv/hangul_test_$course_id.csv");
 
-    _data = await csvLoader
-        .loadCsvData("public/assets/csv/hangul_test_$course_id.csv");
     setState(() {});
   }
 
@@ -66,16 +64,13 @@ class _CoursePageState extends NyState<CoursePage> {
                       int lessonNumber = index + 1;
                       return OutlinedButton(
                         onPressed: () {
-                          routeTo('/word',
-                              data: _lessons[lessonNumber],
-                              queryParameters: {
-                                "lesson_name": "Lesson $lessonNumber",
-                              });
+                          routeTo('/word', data: _lessons[lessonNumber], queryParameters: {
+                            "lesson_name": "Lesson $lessonNumber",
+                          });
                         },
                         child: Text('Lesson $lessonNumber'),
                         style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
