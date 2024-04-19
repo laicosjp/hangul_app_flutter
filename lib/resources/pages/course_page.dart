@@ -18,28 +18,18 @@ class _CoursePageState extends NyState<CoursePage> {
   @override
   init() async {
     super.init();
-    await _loadCSV();
-    // _parseLessons();
 
-    // ====
-    String course_id = queryParameters()['course_id'];
-    _allWords = await CsvLoaderService().getAllWords("public/assets/csv/hangul_test_$course_id.csv");
-    _lessons = [Lesson(id: 1, title: "Lesson 1", words: _allWords)];
+    String courseId = queryParameters()['course_id'];
+    _allWords = await CsvLoaderService().getAllWords("public/assets/csv/hangul_test_$courseId.csv");
+    _parseLessons();
   }
 
-  // void _parseLessons() {
-  //   int lessonNumber = 1;
-  //   for (int i = 0; i < _words.length; i += PER_WORD) {
-  //     _lessons[lessonNumber] = _words.sublist(i, i + PER_WORD > _words.length ? _words.length : i + PER_WORD);
-  //     lessonNumber++;
-  //   }
-  //   setState(() {});
-  // }
-
-  Future<void> _loadCSV() async {
-    // _words = await CsvLoaderService().getAllWords("public/assets/csv/hangul_test_$course_id.csv");
-
-    setState(() {});
+  void _parseLessons() {
+    for (int i = 0; i < _allWords.length; i += PER_WORD) {
+      int lessonNumber = (i ~/ PER_WORD) + 1;
+      List<Word> wordsForLesson = _allWords.sublist(i, i + PER_WORD > _allWords.length ? _allWords.length : i + PER_WORD);
+      _lessons.add(Lesson(id: lessonNumber, title: "Lesson $lessonNumber", words: wordsForLesson));
+    }
   }
 
   @override
