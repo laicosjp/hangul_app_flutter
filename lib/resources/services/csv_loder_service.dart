@@ -22,7 +22,7 @@ class CsvLoaderService {
         }
       }
 
-      word.choices.addAll(_choices);
+      word.choices.addAll(_choices..shuffle());
     });
 
     return _words;
