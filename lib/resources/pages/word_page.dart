@@ -17,7 +17,7 @@ class _WordPageState extends NyState<WordPage> {
   init() async {
     super.init();
     _lesson = widget.data();
-    _words = _lesson['words'];
+    _words = _lesson.words;
   }
 
   // void _nextWord() {
@@ -42,7 +42,7 @@ class _WordPageState extends NyState<WordPage> {
               child: Padding(
                 padding: const EdgeInsets.all(32.0),
                 child: Text(
-                  _words[_currentIndex]['text'].toString(),
+                  _words[_currentIndex].text.toString(),
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -56,7 +56,7 @@ class _WordPageState extends NyState<WordPage> {
                 children: <Widget>[
                   OutlinedButton(
                     onPressed: () {},
-                    child: Text(_words[_currentIndex]['choices'][0]['translation']),
+                    child: Text(_words[_currentIndex].choices[0].translation),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       side: BorderSide(color: Colors.orange),
@@ -65,7 +65,7 @@ class _WordPageState extends NyState<WordPage> {
                   SizedBox(height: 10),
                   OutlinedButton(
                     onPressed: () {},
-                    child: Text(_words[_currentIndex]['choices'][1]['translation']),
+                    child: Text(_words[_currentIndex].choices[1].translation),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       side: BorderSide(color: Colors.orange),
@@ -74,7 +74,7 @@ class _WordPageState extends NyState<WordPage> {
                   SizedBox(height: 10),
                   OutlinedButton(
                     onPressed: () {},
-                    child: Text(_words[_currentIndex]['choices'][2]['translation']),
+                    child: Text(_words[_currentIndex].choices[2].translation),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       side: BorderSide(color: Colors.orange),
@@ -83,7 +83,7 @@ class _WordPageState extends NyState<WordPage> {
                   SizedBox(height: 10),
                   OutlinedButton(
                     onPressed: () {},
-                    child: Text(_words[_currentIndex]['choices'][2]['translation']),
+                    child: Text(_words[_currentIndex].choices[3].translation),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       side: BorderSide(color: Colors.orange),
