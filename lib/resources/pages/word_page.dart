@@ -23,7 +23,6 @@ class _WordPageState extends NyState<WordPage> {
   void _checkAnswer(response) {
     if (_words[_currentIndex] == response) {
       // 正解の時の処理
-
     } else {
       // 不正解の時の処理
     }
@@ -42,6 +41,19 @@ class _WordPageState extends NyState<WordPage> {
   void onPressedChoice(response) {
     _checkAnswer(response);
     _nextWord();
+  }
+
+  Widget _buildChoiceButton(int choiceIndex) {
+    return OutlinedButton(
+      onPressed: () {
+        onPressedChoice(_words[_currentIndex].choices[choiceIndex]);
+      },
+      child: Text(_words[_currentIndex].choices[choiceIndex].translation),
+      style: OutlinedButton.styleFrom(
+        minimumSize: Size(double.infinity, 50),
+        side: BorderSide(color: Colors.orange),
+      ),
+    );
   }
 
   @override
@@ -67,51 +79,15 @@ class _WordPageState extends NyState<WordPage> {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
-                children: <Widget>[
-                  OutlinedButton(
-                    onPressed: () {
-                      onPressedChoice(_words[_currentIndex].choices[0]);
-                    },
-                    child: Text(_words[_currentIndex].choices[0].translation),
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
-                      side: BorderSide(color: Colors.orange),
-                    ),
+                children: List.generate(
+                  _words[_currentIndex].choices.length,
+                  (index) => Column(
+                    children: [
+                      _buildChoiceButton(index),
+                      SizedBox(height: 10),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  OutlinedButton(
-                    onPressed: () {
-                      onPressedChoice(_words[_currentIndex].choices[1]);
-                    },
-                    child: Text(_words[_currentIndex].choices[1].translation),
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
-                      side: BorderSide(color: Colors.orange),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  OutlinedButton(
-                    onPressed: () {
-                      onPressedChoice(_words[_currentIndex].choices[2]);
-                    },
-                    child: Text(_words[_currentIndex].choices[2].translation),
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
-                      side: BorderSide(color: Colors.orange),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  OutlinedButton(
-                    onPressed: () {
-                      onPressedChoice(_words[_currentIndex].choices[3]);
-                    },
-                    child: Text(_words[_currentIndex].choices[3].translation),
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
-                      side: BorderSide(color: Colors.orange),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
