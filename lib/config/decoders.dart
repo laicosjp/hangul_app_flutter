@@ -1,3 +1,4 @@
+import '/app/models/lesson.dart';
 import '/app/models/word.dart';
 import '/app/controllers/home_controller.dart';
 import '/app/models/user.dart';
@@ -17,6 +18,10 @@ final Map<Type, dynamic> modelDecoders = {
 
   List<Word>: (data) => List.from(data).map((json) => Word.fromJson(json)).toList(),
   Word: (data) => Word.fromJson(data),
+
+  List<Lesson>: (data) => List.from(data).map((json) => Lesson.fromJson(json)).toList(),
+
+  Lesson: (data) => Lesson.fromJson(data),
 };
 
 /* API Decoders

@@ -6,11 +6,13 @@ class Word extends Model {
   final int id;
   final String text;
   final String translation;
+  final List<Word> choices;
 
   Word({
     required this.id,
     required this.text,
     required this.translation,
+    required this.choices,
   });
 
   factory Word.fromJson(data) {
@@ -18,6 +20,7 @@ class Word extends Model {
       id: data['id'],
       text: data['text'],
       translation: data['translation'],
+      choices: data['choices'],
     );
   }
 
@@ -31,6 +34,7 @@ class Word extends Model {
       id: int.parse(csvRow[0]),
       text: csvRow[1],
       translation: csvRow[2],
+      choices: [],
     );
   }
 }
