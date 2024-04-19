@@ -9,24 +9,26 @@ class WordPage extends NyStatefulWidget {
 }
 
 class _WordPageState extends NyState<WordPage> {
-  List<Word> _words = [];
+  var _lesson;
+  var _words = [];
   int _currentIndex = 0;
 
   @override
   init() async {
     super.init();
-    _words = widget.data();
+    _lesson = widget.data();
+    _words = _lesson['words'];
   }
 
-  void _nextWord() {
-    if (_currentIndex == _words.length - 1) {
-      routeTo('/result');
-    } else {
-      setState(() {
-        _currentIndex = (_currentIndex + 1) % _words.length;
-      });
-    }
-  }
+  // void _nextWord() {
+  //   if (_currentIndex == _lesson.length - 1) {
+  //     routeTo('/result');
+  //   } else {
+  //     setState(() {
+  //       _currentIndex = (_currentIndex + 1) % _lesson.length;
+  //     });
+  //   }
+  // }
 
   @override
   Widget view(BuildContext context) {
@@ -40,7 +42,7 @@ class _WordPageState extends NyState<WordPage> {
               child: Padding(
                 padding: const EdgeInsets.all(32.0),
                 child: Text(
-                  _words[_currentIndex].text.toString(),
+                  _words[_currentIndex]['text'].toString(),
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -54,7 +56,7 @@ class _WordPageState extends NyState<WordPage> {
                 children: <Widget>[
                   OutlinedButton(
                     onPressed: () {},
-                    child: Text('ワイルス'),
+                    child: Text(_words[_currentIndex]['choices'][0]['translation']),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       side: BorderSide(color: Colors.orange),
@@ -63,7 +65,7 @@ class _WordPageState extends NyState<WordPage> {
                   SizedBox(height: 10),
                   OutlinedButton(
                     onPressed: () {},
-                    child: Text('コンクール'),
+                    child: Text(_words[_currentIndex]['choices'][1]['translation']),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       side: BorderSide(color: Colors.orange),
@@ -72,7 +74,7 @@ class _WordPageState extends NyState<WordPage> {
                   SizedBox(height: 10),
                   OutlinedButton(
                     onPressed: () {},
-                    child: Text('スキー'),
+                    child: Text(_words[_currentIndex]['choices'][2]['translation']),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       side: BorderSide(color: Colors.orange),
@@ -81,7 +83,7 @@ class _WordPageState extends NyState<WordPage> {
                   SizedBox(height: 10),
                   OutlinedButton(
                     onPressed: () {},
-                    child: Text('フード'),
+                    child: Text(_words[_currentIndex]['choices'][2]['translation']),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       side: BorderSide(color: Colors.orange),
