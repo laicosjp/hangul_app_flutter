@@ -13,20 +13,24 @@ class Word extends Model {
     required this.translation,
   });
 
-  // Word.fromJson(data) {
-
-  // }
+  factory Word.fromJson(data) {
+    return Word(
+      id: data['id'],
+      text: data['text'],
+      translation: data['translation'],
+    );
+  }
 
   // @override
   // toJson() {
   //   return {};
   // }
 
-  factory Word.fromCsv(List<dynamic> csvRow) {
+  factory Word.fromCsv(List<String> csvRow) {
     return Word(
-      id: int.parse(csvRow[0].toString()),
-      text: csvRow[1].toString(),
-      translation: csvRow[2].toString(),
+      id: int.parse(csvRow[0]),
+      text: csvRow[1],
+      translation: csvRow[2],
     );
   }
 }
