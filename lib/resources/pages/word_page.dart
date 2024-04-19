@@ -20,15 +20,29 @@ class _WordPageState extends NyState<WordPage> {
     _words = _lesson.words;
   }
 
-  // void _nextWord() {
-  //   if (_currentIndex == _lesson.length - 1) {
-  //     routeTo('/result');
-  //   } else {
-  //     setState(() {
-  //       _currentIndex = (_currentIndex + 1) % _lesson.length;
-  //     });
-  //   }
-  // }
+  void _checkAnswer(response) {
+    if (_words[_currentIndex] == response) {
+      // 正解の時の処理
+
+    } else {
+      // 不正解の時の処理
+    }
+  }
+
+  void _nextWord() {
+    if (_currentIndex == _words.length - 1) {
+      routeTo('/result');
+    } else {
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % _words.length;
+      });
+    }
+  }
+
+  void onPressedChoice(response) {
+    _checkAnswer(response);
+    _nextWord();
+  }
 
   @override
   Widget view(BuildContext context) {
@@ -55,7 +69,9 @@ class _WordPageState extends NyState<WordPage> {
               child: Column(
                 children: <Widget>[
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onPressedChoice(_words[_currentIndex].choices[0]);
+                    },
                     child: Text(_words[_currentIndex].choices[0].translation),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
@@ -64,7 +80,9 @@ class _WordPageState extends NyState<WordPage> {
                   ),
                   SizedBox(height: 10),
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onPressedChoice(_words[_currentIndex].choices[1]);
+                    },
                     child: Text(_words[_currentIndex].choices[1].translation),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
@@ -73,7 +91,9 @@ class _WordPageState extends NyState<WordPage> {
                   ),
                   SizedBox(height: 10),
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onPressedChoice(_words[_currentIndex].choices[2]);
+                    },
                     child: Text(_words[_currentIndex].choices[2].translation),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
@@ -82,7 +102,9 @@ class _WordPageState extends NyState<WordPage> {
                   ),
                   SizedBox(height: 10),
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onPressedChoice(_words[_currentIndex].choices[3]);
+                    },
                     child: Text(_words[_currentIndex].choices[3].translation),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
