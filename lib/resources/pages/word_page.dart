@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/word.dart';
@@ -15,8 +16,9 @@ class _WordPageState extends NyState<WordPage> {
   var _lesson;
   List<Word> _words = [];
   int _currentIndex = 0;
-  FlutterTts _tts = FlutterTts();
   String _answerProgress = 'hidden';
+  FlutterTts _tts = FlutterTts();
+  final _player = AudioPlayer();
 
   @override
   init() async {
@@ -31,11 +33,13 @@ class _WordPageState extends NyState<WordPage> {
       // 正解の時の処理
       setState(() {
         _answerProgress = 'correct';
+        _player.play(AssetSource('audio/correct.mp3'));
       });
     } else {
       // 不正解の時の処理
       setState(() {
         _answerProgress = 'incorrect';
+        _player.play(AssetSource('audio/incorrect.mp3'));
       });
     }
   }
