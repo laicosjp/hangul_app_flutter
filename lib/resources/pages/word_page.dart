@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/app/models/word.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class WordPage extends NyStatefulWidget {
@@ -12,12 +12,18 @@ class _WordPageState extends NyState<WordPage> {
   var _lesson;
   var _words = [];
   int _currentIndex = 0;
+  FlutterTts _tts = FlutterTts();
 
   @override
   init() async {
     super.init();
     _lesson = widget.data();
     _words = _lesson.words;
+
+    _tts.setLanguage('ko-KR');
+    _tts.setSpeechRate(0.8);
+    _tts.setVolume(1);
+    _tts.speak(_words[_currentIndex].text);
   }
 
   void _checkAnswer(response) {
