@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/word.dart';
+import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -10,9 +13,10 @@ class WordPage extends NyStatefulWidget {
 
 class _WordPageState extends NyState<WordPage> {
   var _lesson;
-  var _words = [];
+  List<Word> _words = [];
   int _currentIndex = 0;
   FlutterTts _tts = FlutterTts();
+  String _answerProgress = 'hidden';
 
   @override
   init() async {
@@ -25,8 +29,14 @@ class _WordPageState extends NyState<WordPage> {
   void _checkAnswer(response) {
     if (_words[_currentIndex] == response) {
       // 正解の時の処理
+      setState(() {
+        _answerProgress = 'correct';
+      });
     } else {
       // 不正解の時の処理
+      setState(() {
+        _answerProgress = 'incorrect';
+      });
     }
   }
 
@@ -41,11 +51,6 @@ class _WordPageState extends NyState<WordPage> {
     }
   }
 
-  void _onPressedChoice(response) {
-    _checkAnswer(response);
-    _nextWord();
-  }
-
   void _speak(word) {
     _tts.setLanguage('ko-KR');
     _tts.setSpeechRate(0.6);
@@ -55,13 +60,18 @@ class _WordPageState extends NyState<WordPage> {
 
   Widget _buildChoiceButton(int choiceIndex) {
     return OutlinedButton(
-      onPressed: () {
-        _onPressedChoice(_words[_currentIndex].choices[choiceIndex]);
+      onPressed: () async {
+        _checkAnswer(_words[_currentIndex].choices[choiceIndex]);
+        await Future.delayed(Duration(milliseconds: 700));
+        setState(() {
+          _answerProgress = 'hidden';
+        });
+        _nextWord();
       },
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
       style: OutlinedButton.styleFrom(
-        minimumSize: Size(double.infinity, 50),
-        side: BorderSide(color: Colors.orange),
+        minimumSize: Size(double.infinity, 60),
+        side: BorderSide(color: ThemeColor.get(context).primaryContent),
       ),
     );
   }
@@ -70,38 +80,60 @@ class _WordPageState extends NyState<WordPage> {
   Widget view(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(queryParameters()['lesson_name'])),
-      body: Column(
-        children: <Widget>[
+      body: Container(
+        child: Column(children: [
+          Expanded(
+            flex: 7,
+            child: Center(
+                child: Stack(
+              children: [
+                Center(child: Text(_words[_currentIndex].text, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+                Center(
+                  child: _answerProgress == 'correct'
+                      ? Icon(
+                          CupertinoIcons.circle,
+                          color: Colors.lightGreen.withOpacity(0.4),
+                          size: 300,
+                        )
+                      : _answerProgress == 'incorrect'
+                          ? Icon(
+                              CupertinoIcons.clear,
+                              color: Colors.blue.withOpacity(0.4),
+                              size: 300,
+                            )
+                          : Container(),
+                ),
+              ],
+            )),
+          ),
+          Expanded(
+            flex: 1,
+            child: _answerProgress == 'correct'
+                ? Text(
+                    "Correct!",
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.lightGreen.withOpacity(0.7)),
+                  )
+                : _answerProgress == 'incorrect'
+                    ? Text(
+                        "Incorrect...",
+                        style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.blue.withOpacity(0.7)),
+                      )
+                    : Container(),
+          ),
           Expanded(
             flex: 6,
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Text(
-                  _words[_currentIndex].text.toString(),
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                _words[_currentIndex].choices.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: _buildChoiceButton(index),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: List.generate(
-                  _words[_currentIndex].choices.length,
-                  (index) => Column(
-                    children: [
-                      _buildChoiceButton(index),
-                      SizedBox(height: 10),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+          )
+        ]),
       ),
     );
   }
