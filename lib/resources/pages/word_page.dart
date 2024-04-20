@@ -70,6 +70,7 @@ class _WordPageState extends NyState<WordPage> {
         setState(() {
           _answerProgress = 'hidden';
         });
+        _player.stop(); // この処理がないと、連続で正解（or不正解）の時に音声が再生されない
         _nextWord();
       },
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
