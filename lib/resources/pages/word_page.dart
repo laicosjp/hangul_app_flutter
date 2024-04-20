@@ -89,11 +89,20 @@ class _WordPageState extends NyState<WordPage> {
               children: [
                 Center(child: Text(_words[_currentIndex].text, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
                 Center(
-                    child: Icon(
-                  CupertinoIcons.circle,
-                  color: Colors.lightGreen.withOpacity(0.5),
-                  size: 300,
-                )),
+                  child: _answerProgress == 'correct'
+                      ? Icon(
+                          CupertinoIcons.circle,
+                          color: Colors.lightGreen.withOpacity(0.4),
+                          size: 300,
+                        )
+                      : _answerProgress == 'incorrect'
+                          ? Icon(
+                              CupertinoIcons.clear,
+                              color: Colors.blue.withOpacity(0.4),
+                              size: 300,
+                            )
+                          : Container(),
+                ),
               ],
             )),
           ),
@@ -102,14 +111,14 @@ class _WordPageState extends NyState<WordPage> {
             child: _answerProgress == 'correct'
                 ? Text(
                     "Correct!",
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.lightGreen.withOpacity(0.9)),
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.lightGreen.withOpacity(0.7)),
                   )
                 : _answerProgress == 'incorrect'
                     ? Text(
                         "Incorrect...",
-                        style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.blue.withOpacity(0.9)),
+                        style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.blue.withOpacity(0.7)),
                       )
-                    : Container(), // 何も表示しない場合
+                    : Container(),
           ),
           Expanded(
             flex: 6,
