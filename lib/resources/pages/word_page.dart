@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -60,8 +62,8 @@ class _WordPageState extends NyState<WordPage> {
       },
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
       style: OutlinedButton.styleFrom(
-        minimumSize: Size(double.infinity, 50),
-        side: BorderSide(color: Colors.orange),
+        minimumSize: Size(double.infinity, 70),
+        side: BorderSide(color: ThemeColor.get(context).primaryContent),
       ),
     );
   }
@@ -70,38 +72,47 @@ class _WordPageState extends NyState<WordPage> {
   Widget view(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(queryParameters()['lesson_name'])),
-      body: Column(
-        children: <Widget>[
+      body: Container(
+        child: Column(children: [
           Expanded(
-            flex: 6,
+            flex: 7,
             child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Text(
-                  _words[_currentIndex].text.toString(),
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+                child: Stack(
+              children: [
+                Center(child: Text(_words[_currentIndex].text, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+                Center(
+                    child: Icon(
+                  CupertinoIcons.circle,
+                  color: Colors.lightGreen.withOpacity(0.5),
+                  size: 300,
+                )),
+              ],
+            )),
           ),
           Expanded(
-            flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: List.generate(
-                  _words[_currentIndex].choices.length,
-                  (index) => Column(
+              flex: 1,
+              child: Text(
+                "Correct!",
+                style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.lightGreen.withOpacity(0.9)),
+              )),
+          Expanded(
+            flex: 6,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                _words[_currentIndex].choices.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Column(
                     children: [
                       _buildChoiceButton(index),
-                      SizedBox(height: 10),
                     ],
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          )
+        ]),
       ),
     );
   }
