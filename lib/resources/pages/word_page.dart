@@ -16,6 +16,7 @@ class _WordPageState extends NyState<WordPage> {
   List<Word> _words = [];
   int _currentIndex = 0;
   FlutterTts _tts = FlutterTts();
+  String _answerProgress = 'hidden';
 
   @override
   init() async {
@@ -28,8 +29,14 @@ class _WordPageState extends NyState<WordPage> {
   void _checkAnswer(response) {
     if (_words[_currentIndex] == response) {
       // 正解の時の処理
+      setState(() {
+        _answerProgress = 'correct';
+      });
     } else {
       // 不正解の時の処理
+      setState(() {
+        _answerProgress = 'incorrect';
+      });
     }
   }
 
@@ -44,11 +51,6 @@ class _WordPageState extends NyState<WordPage> {
     }
   }
 
-  void _onPressedChoice(response) {
-    _checkAnswer(response);
-    _nextWord();
-  }
-
   void _speak(word) {
     _tts.setLanguage('ko-KR');
     _tts.setSpeechRate(0.6);
@@ -58,8 +60,13 @@ class _WordPageState extends NyState<WordPage> {
 
   Widget _buildChoiceButton(int choiceIndex) {
     return OutlinedButton(
-      onPressed: () {
-        _onPressedChoice(_words[_currentIndex].choices[choiceIndex]);
+      onPressed: () async {
+        _checkAnswer(_words[_currentIndex].choices[choiceIndex]);
+        await Future.delayed(Duration(milliseconds: 700));
+        setState(() {
+          _answerProgress = 'hidden';
+        });
+        _nextWord();
       },
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
       style: OutlinedButton.styleFrom(
@@ -91,11 +98,19 @@ class _WordPageState extends NyState<WordPage> {
             )),
           ),
           Expanded(
-              flex: 1,
-              child: Text(
-                "Correct!",
-                style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.lightGreen.withOpacity(0.9)),
-              )),
+            flex: 1,
+            child: _answerProgress == 'correct'
+                ? Text(
+                    "Correct!",
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.lightGreen.withOpacity(0.9)),
+                  )
+                : _answerProgress == 'incorrect'
+                    ? Text(
+                        "Incorrect...",
+                        style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.blue.withOpacity(0.9)),
+                      )
+                    : Container(), // 何も表示しない場合
+          ),
           Expanded(
             flex: 6,
             child: Column(
