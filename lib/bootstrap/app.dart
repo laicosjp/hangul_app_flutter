@@ -64,8 +64,7 @@ class AppBuild extends StatelessWidget {
         themes: appThemes,
         child: ThemeConsumer(
           child: ValueListenableBuilder(
-            valueListenable:
-                ValueNotifier(locale ?? NyLocalization.instance.locale),
+            valueListenable: ValueNotifier(locale ?? NyLocalization.instance.locale),
             builder: (context, Locale locale, _) => MaterialApp(
               navigatorKey: navigatorKey,
               themeMode: themeMode,
@@ -84,25 +83,22 @@ class AppBuild extends StatelessWidget {
               shortcuts: shortcuts,
               actions: actions,
               title: title ?? "",
-              darkTheme: darkTheme ??
-                  appThemes
-                      .firstWhere(
-                          (theme) => theme.id == getEnv('DARK_THEME_ID'),
-                          orElse: () => appThemes.first)
-                      .data,
+              // Note：ダークテーマを有効にするときは以下のコメントアウトを外すこと
+              // darkTheme: darkTheme ??
+              //     appThemes
+              //         .firstWhere(
+              //             (theme) => theme.id == getEnv('DARK_THEME_ID'),
+              //             orElse: () => appThemes.first)
+              //         .data,
               initialRoute: initialRoute,
               onGenerateRoute: onGenerateRoute,
               theme: themeData ?? ThemeProvider.themeOf(context).data,
-              localeResolutionCallback:
-                  (Locale? locale, Iterable<Locale> supportedLocales) {
+              localeResolutionCallback: (Locale? locale, Iterable<Locale> supportedLocales) {
                 return locale;
               },
               localizationsDelegates: NyLocalization.instance.delegates,
               locale: locale,
-              supportedLocales:
-                  supportedLocales ?? [
-                    Locale('en', 'US')
-                  ],
+              supportedLocales: supportedLocales ?? [Locale('en', 'US')],
             ),
           ),
         ),
