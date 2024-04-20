@@ -19,11 +19,7 @@ class _WordPageState extends NyState<WordPage> {
     super.init();
     _lesson = widget.data();
     _words = _lesson.words;
-
-    _tts.setLanguage('ko-KR');
-    _tts.setSpeechRate(0.8);
-    _tts.setVolume(1);
-    _tts.speak(_words[_currentIndex].text);
+    _speak(_words[_currentIndex].text);
   }
 
   void _checkAnswer(response) {
@@ -41,18 +37,26 @@ class _WordPageState extends NyState<WordPage> {
       setState(() {
         _currentIndex = (_currentIndex + 1) % _words.length;
       });
+      _speak(_words[_currentIndex].text);
     }
   }
 
-  void onPressedChoice(response) {
+  void _onPressedChoice(response) {
     _checkAnswer(response);
     _nextWord();
+  }
+
+  void _speak(word) {
+    _tts.setLanguage('ko-KR');
+    _tts.setSpeechRate(0.6);
+    _tts.setVolume(1);
+    _tts.speak(word);
   }
 
   Widget _buildChoiceButton(int choiceIndex) {
     return OutlinedButton(
       onPressed: () {
-        onPressedChoice(_words[_currentIndex].choices[choiceIndex]);
+        _onPressedChoice(_words[_currentIndex].choices[choiceIndex]);
       },
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
       style: OutlinedButton.styleFrom(
