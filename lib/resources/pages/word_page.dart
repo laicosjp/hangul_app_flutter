@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
@@ -12,7 +13,7 @@ class WordPage extends NyStatefulWidget {
 
 class _WordPageState extends NyState<WordPage> {
   var _lesson;
-  var _words = [];
+  List<Word> _words = [];
   int _currentIndex = 0;
   FlutterTts _tts = FlutterTts();
 
@@ -62,7 +63,7 @@ class _WordPageState extends NyState<WordPage> {
       },
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
       style: OutlinedButton.styleFrom(
-        minimumSize: Size(double.infinity, 70),
+        minimumSize: Size(double.infinity, 60),
         side: BorderSide(color: ThemeColor.get(context).primaryContent),
       ),
     );
@@ -103,11 +104,7 @@ class _WordPageState extends NyState<WordPage> {
                 _words[_currentIndex].choices.length,
                 (index) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Column(
-                    children: [
-                      _buildChoiceButton(index),
-                    ],
-                  ),
+                  child: _buildChoiceButton(index),
                 ),
               ),
             ),
