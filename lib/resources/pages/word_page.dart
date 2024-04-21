@@ -47,7 +47,7 @@ class _WordPageState extends NyState<WordPage> {
 
   void _nextWord() {
     if (_currentIndex == _words.length - 1) {
-      routeTo('/result');
+      routeTo('/result', data: _words);
     } else {
       setState(() {
         _currentIndex = (_currentIndex + 1) % _words.length;
