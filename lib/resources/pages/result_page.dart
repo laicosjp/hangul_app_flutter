@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/lesson.dart';
 import 'package:flutter_app/app/models/word.dart';
@@ -15,12 +16,15 @@ class ResultPage extends NyStatefulWidget {
 class _ResultPageState extends NyState<ResultPage> {
   var _lesson;
   List<Word> _words = [];
+  final _player = AudioPlayer();
 
   @override
   init() async {
     super.init();
     _lesson = widget.data();
     _words = _lesson.words;
+    _player.audioCache = AudioCache(prefix: 'public/assets/');
+    _player.play(AssetSource("audio/yay.mp3"));
   }
 
   @override
@@ -31,6 +35,7 @@ class _ResultPageState extends NyState<ResultPage> {
         child: Container(
           child: Column(
             children: [
+              Text("お疲れさま！"),
               Expanded(
                   flex: 1,
                   child: Row(children: [
