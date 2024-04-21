@@ -48,21 +48,6 @@ class _ResultPageState extends NyState<ResultPage> {
                           ),
                         ),
                       ),
-                    ),
-                    Gap(10),
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {},
-                        child: Text("Next Lesson"),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(ThemeColor.get(context).primaryContent),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ),
                     )
                   ])),
               Expanded(
