@@ -7,11 +7,13 @@ class Lesson extends Model {
   final int id;
   final String title;
   final List<Word> words;
+  final int courseId;
 
   Lesson({
     required this.id,
     required this.title,
     required this.words,
+    required this.courseId,
   });
 
   factory Lesson.fromJson(data) {
@@ -19,6 +21,7 @@ class Lesson extends Model {
       id: data['id'],
       title: data['title'],
       words: data['words'],
+      courseId: data['course_id'],
     );
   }
 

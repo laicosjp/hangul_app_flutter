@@ -14,12 +14,13 @@ class _CoursePageState extends NyState<CoursePage> {
   final int PER_WORD = 10;
   List<Word> _allWords = [];
   List<Lesson> _lessons = [];
+  int courseId = 0;
 
   @override
   init() async {
     super.init();
 
-    String courseId = queryParameters()['course_id'];
+    courseId = int.parse(queryParameters()['course_id']);
     _allWords = await CsvLoaderService().getAllWords("public/assets/csv/hangul_test_$courseId.csv");
     _parseLessons();
   }
@@ -28,14 +29,14 @@ class _CoursePageState extends NyState<CoursePage> {
     for (int i = 0; i < _allWords.length; i += PER_WORD) {
       int lessonNumber = (i ~/ PER_WORD) + 1;
       List<Word> wordsForLesson = _allWords.sublist(i, i + PER_WORD > _allWords.length ? _allWords.length : i + PER_WORD);
-      _lessons.add(Lesson(id: lessonNumber, title: "Lesson $lessonNumber", words: wordsForLesson));
+      _lessons.add(Lesson(id: lessonNumber, title: "Lesson $lessonNumber", words: wordsForLesson, courseId: courseId));
     }
   }
 
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("単語一覧")),
+      appBar: AppBar(title: Text("単語一覧"), automaticallyImplyLeading: false),
       body: SafeArea(
         child: Container(
             padding: EdgeInsets.all(20),
