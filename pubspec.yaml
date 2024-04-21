@@ -62,6 +62,6 @@ flutter:
     - public/assets/images/
     - public/assets/app_icon/
     - public/assets/csv/
+    - public/assets/audio/
     - lang/
     - .env
-    - assets/audio/

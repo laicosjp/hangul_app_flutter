@@ -23,6 +23,7 @@ class _WordPageState extends NyState<WordPage> {
   @override
   init() async {
     super.init();
+    _player.audioCache = AudioCache(prefix: 'public/assets/');
     _lesson = widget.data();
     _words = _lesson.words;
     _speak(_words[_currentIndex].text);
