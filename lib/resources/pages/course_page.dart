@@ -36,7 +36,7 @@ class _CoursePageState extends NyState<CoursePage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("単語一覧")),
+      appBar: AppBar(title: Text("単語一覧"), automaticallyImplyLeading: false),
       body: SafeArea(
         child: Container(
             padding: EdgeInsets.all(20),

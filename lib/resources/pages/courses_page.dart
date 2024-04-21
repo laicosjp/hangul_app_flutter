@@ -25,7 +25,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("コース")),
+      appBar: AppBar(title: Text("コース"), automaticallyImplyLeading: false),
       body: SafeArea(
         child: ListView.builder(
           itemCount: courses.length,
@@ -33,9 +33,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
             return ListTile(
               title: Text(courses[index]['course_title']),
               onTap: () {
-                routeTo('/course', queryParameters: {
-                  'course_id': courses[index]['course_id']
-                });
+                routeTo('/course', queryParameters: {'course_id': courses[index]['course_id']});
               },
             );
           },
