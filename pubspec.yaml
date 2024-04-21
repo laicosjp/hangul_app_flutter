@@ -32,6 +32,7 @@ dependencies:
   csv: ^6.0.0
   gap: ^3.0.1
   flutter_tts: 3.8.5 # 最新版は 4.0.2 だが、Kotlinとの互換性でエラーが発生するため、一時的に古いバージョンを使用している
+  audioplayers: ^6.0.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
@@ -61,5 +62,6 @@ flutter:
     - public/assets/images/
     - public/assets/app_icon/
     - public/assets/csv/
+    - public/assets/audio/
     - lang/
     - .env
