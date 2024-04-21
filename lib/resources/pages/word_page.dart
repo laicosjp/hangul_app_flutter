@@ -77,7 +77,8 @@ class _WordPageState extends NyState<WordPage> {
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
       style: OutlinedButton.styleFrom(
         minimumSize: Size(double.infinity, 60),
-        side: BorderSide(color: ThemeColor.get(context).primaryContent),
+        side: BorderSide(color: ThemeColor.get(context).primaryAccent),
+        foregroundColor: ThemeColor.get(context).buttonPrimaryContent,
       ),
     );
   }

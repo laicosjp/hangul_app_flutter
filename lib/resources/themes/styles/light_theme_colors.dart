@@ -10,9 +10,9 @@ class LightThemeColors implements ColorStyles {
   Color get background => const Color(0xFFFFFFFF);
 
   @override
-  Color get primaryContent => const Color(0xFF000000);
+  Color get primaryContent => Colors.orange;
   @override
-  Color get primaryAccent => const Color(0xFF0045a0);
+  Color get primaryAccent => Color.fromARGB(255, 130, 130, 130);
 
   @override
   Color get surfaceBackground => Colors.white;
@@ -21,7 +21,7 @@ class LightThemeColors implements ColorStyles {
 
   // app bar
   @override
-  Color get appBarBackground => Colors.blue;
+  Color get appBarBackground => Colors.orange;
   @override
   Color get appBarPrimaryContent => Colors.white;
 
@@ -29,7 +29,7 @@ class LightThemeColors implements ColorStyles {
   @override
   Color get buttonBackground => Colors.blueAccent;
   @override
-  Color get buttonPrimaryContent => Colors.white;
+  Color get buttonPrimaryContent => Colors.black;
 
   // bottom tab bar
   @override

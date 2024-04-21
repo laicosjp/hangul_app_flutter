@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/lesson.dart';
 import 'package:flutter_app/app/models/word.dart';
+import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_app/resources/services/csv_loder_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -54,20 +55,16 @@ class _CoursePageState extends NyState<CoursePage> {
                     itemBuilder: (context, index) {
                       int lessonNumber = index + 1;
                       return OutlinedButton(
-                        onPressed: () {
-                          routeTo('/word', data: _lessons[index], queryParameters: {
-                            "lesson_name": "Lesson $lessonNumber",
-                          });
-                        },
-                        child: Text(_lessons[index].title),
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                      );
+                          onPressed: () {
+                            routeTo('/word', data: _lessons[index], queryParameters: {
+                              "lesson_name": "Lesson $lessonNumber",
+                            });
+                          },
+                          child: Text(_lessons[index].title),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: ThemeColor.get(context).primaryAccent),
+                            foregroundColor: ThemeColor.get(context).buttonPrimaryContent,
+                          ));
                     },
                   ),
                 ),
