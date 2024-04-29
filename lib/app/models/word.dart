@@ -4,6 +4,7 @@ import 'package:nylo_framework/nylo_framework.dart';
 
 class Word extends Model {
   final int id;
+  final int courseId;
   final String text;
   final String translation;
   final List<Word> choices;
@@ -11,6 +12,7 @@ class Word extends Model {
   Word({
     required this.id,
     required this.text,
+    required this.courseId,
     required this.translation,
     required this.choices,
   });
@@ -19,6 +21,7 @@ class Word extends Model {
     return Word(
       id: data['id'],
       text: data['text'],
+      courseId: data['courseId'],
       translation: data['translation'],
       choices: data['choices'],
     );
@@ -32,8 +35,9 @@ class Word extends Model {
   factory Word.fromCsv(List<String> csvRow) {
     return Word(
       id: int.parse(csvRow[0]),
-      text: csvRow[1],
-      translation: csvRow[2],
+      courseId: int.parse(csvRow[1]),
+      text: csvRow[2],
+      translation: csvRow[3],
       choices: [],
     );
   }
