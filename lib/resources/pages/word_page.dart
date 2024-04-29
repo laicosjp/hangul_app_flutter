@@ -60,6 +60,7 @@ class _WordPageState extends NyState<WordPage> {
     _tts.setLanguage('ko-KR');
     _tts.setSpeechRate(0.6);
     _tts.setVolume(1);
+    word = word.replaceAll(RegExp(r'\(.*?\)'), ''); // カッコの中身は読み上げない
     _tts.speak(word);
   }
 
