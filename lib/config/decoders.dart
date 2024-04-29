@@ -1,3 +1,4 @@
+import '/app/models/course.dart';
 import '/app/models/lesson.dart';
 import '/app/models/word.dart';
 import '/app/controllers/home_controller.dart';
@@ -22,6 +23,10 @@ final Map<Type, dynamic> modelDecoders = {
   List<Lesson>: (data) => List.from(data).map((json) => Lesson.fromJson(json)).toList(),
 
   Lesson: (data) => Lesson.fromJson(data),
+
+  List<Course>: (data) => List.from(data).map((json) => Course.fromJson(json)).toList(),
+
+  Course: (data) => Course.fromJson(data),
 };
 
 /* API Decoders

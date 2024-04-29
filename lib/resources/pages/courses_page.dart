@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/course.dart';
+import 'package:flutter_app/resources/services/csv_loder_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class CoursesPage extends NyStatefulWidget {
@@ -8,13 +10,13 @@ class CoursesPage extends NyStatefulWidget {
 }
 
 class _CoursesPageState extends NyState<CoursesPage> {
-  final List<Map<String, dynamic>> courses = [
-    {"course_title": 'ハングル検定5級', "course_id": "5"},
-    {"course_title": 'ハングル検定4級', "course_id": "4"}
-  ];
+  List<Course> courses = [];
 
   @override
-  init() async {}
+  init() async {
+    courses = await CsvLoaderService().getAllCourses();
+    courses = courses.where((course) => course.isPublished).toList();
+  }
 
   /// Use boot if you need to load data before the [view] is rendered.
   // @override
@@ -31,9 +33,9 @@ class _CoursesPageState extends NyState<CoursesPage> {
           itemCount: courses.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(courses[index]['course_title']),
+              title: Text(courses[index].title),
               onTap: () {
-                routeTo('/course', queryParameters: {'course_id': courses[index]['course_id']});
+                routeTo('/course', queryParameters: {'course_id': courses[index].id.toString()});
               },
             );
           },
