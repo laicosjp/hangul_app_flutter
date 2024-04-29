@@ -22,7 +22,7 @@ class _CoursePageState extends NyState<CoursePage> {
     super.init();
 
     courseId = int.parse(queryParameters()['course_id']);
-    _allWords = await CsvLoaderService().getAllWords("public/assets/csv/hangul_test_$courseId.csv");
+    _allWords = await CsvLoaderService().getAllWords("public/assets/csv/word_$courseId.csv");
     _parseLessons();
   }
 
