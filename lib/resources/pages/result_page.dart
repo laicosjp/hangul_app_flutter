@@ -1,10 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/app/models/lesson.dart';
 import 'package:flutter_app/app/models/word.dart';
-import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
-import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class ResultPage extends NyStatefulWidget {
