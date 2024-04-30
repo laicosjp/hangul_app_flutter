@@ -77,7 +77,7 @@ class _WordPageState extends NyState<WordPage> {
       },
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
       style: OutlinedButton.styleFrom(
-        minimumSize: Size(double.infinity, 60),
+        minimumSize: Size(double.infinity, 58),
         side: BorderSide(color: ThemeColor.get(context).primaryAccent),
         foregroundColor: ThemeColor.get(context).buttonPrimaryContent,
       ),
@@ -131,11 +131,11 @@ class _WordPageState extends NyState<WordPage> {
           Expanded(
             flex: 6,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(
                 _words[_currentIndex].choices.length,
                 (index) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
                   child: _buildChoiceButton(index),
                 ),
               ),
