@@ -47,8 +47,6 @@ class _WordPageState extends NyState<WordPage> {
         _player.play(AssetSource('audio/incorrect.mp3'));
       });
     }
-
-    _exercisedWords.add(_words[_currentIndex]);
   }
 
   void _nextWord() {
@@ -70,10 +68,23 @@ class _WordPageState extends NyState<WordPage> {
     _tts.speak(word);
   }
 
+  Future<void> _recordAnswer(response) async {
+    await NyStorage.deleteFromCollectionWhere((wordId) => wordId == _words[_currentIndex].id, key: "correctWordIds");
+    await NyStorage.deleteFromCollectionWhere((wordId) => wordId == _words[_currentIndex].id, key: "incorrectWordIds");
+
+    if (_words[_currentIndex] == response) {
+      await NyStorage.addToCollection("correctWordIds", item: _words[_currentIndex].id);
+    } else {
+      await NyStorage.addToCollection("incorrectWordIds", item: _words[_currentIndex].id);
+    }
+  }
+
   Widget _buildChoiceButton(int choiceIndex) {
     return OutlinedButton(
       onPressed: () async {
         _checkAnswer(_words[_currentIndex].choices[choiceIndex]);
+        await _recordAnswer(_words[_currentIndex].choices[choiceIndex]);
+        _exercisedWords.add(_words[_currentIndex]);
         await Future.delayed(Duration(milliseconds: 700));
         setState(() {
           _answerProgress = 'hidden';
