@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/course.dart';
-import 'package:flutter_app/resources/services/csv_loder_service.dart';
+import 'package:flutter_app/resources/services/courses_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class CoursesPage extends NyStatefulWidget {
@@ -10,12 +10,12 @@ class CoursesPage extends NyStatefulWidget {
 }
 
 class _CoursesPageState extends NyState<CoursesPage> {
+  final _coursesService = CoursesService();
   List<Course> courses = [];
 
   @override
   init() async {
-    courses = await CsvLoaderService().getAllCourses();
-    courses = courses.where((course) => course.isPublished).toList();
+    courses = await _coursesService.findAll();
   }
 
   /// Use boot if you need to load data before the [view] is rendered.

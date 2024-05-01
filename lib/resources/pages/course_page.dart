@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/lesson.dart';
-import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
-import 'package:flutter_app/resources/services/csv_loder_service.dart';
+import 'package:flutter_app/resources/services/lessons_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class CoursePage extends NyStatefulWidget {
@@ -12,26 +11,13 @@ class CoursePage extends NyStatefulWidget {
 }
 
 class _CoursePageState extends NyState<CoursePage> {
-  final int PER_WORD = 10;
-  List<Word> _allWords = [];
+  final _lessonsService = LessonsService();
   List<Lesson> _lessons = [];
-  int courseId = 0;
 
   @override
   init() async {
     super.init();
-
-    courseId = int.parse(queryParameters()['course_id']);
-    _allWords = await CsvLoaderService().getAllWords("public/assets/csv/word_$courseId.csv");
-    _parseLessons();
-  }
-
-  void _parseLessons() {
-    for (int i = 0; i < _allWords.length; i += PER_WORD) {
-      int lessonNumber = (i ~/ PER_WORD) + 1;
-      List<Word> wordsForLesson = _allWords.sublist(i, i + PER_WORD > _allWords.length ? _allWords.length : i + PER_WORD);
-      _lessons.add(Lesson(id: lessonNumber, title: "Lesson $lessonNumber", words: wordsForLesson, courseId: courseId));
-    }
+    _lessons = await _lessonsService.findAll(courseId: int.parse(queryParameters()['course_id']));
   }
 
   @override
@@ -53,12 +39,9 @@ class _CoursePageState extends NyState<CoursePage> {
                     ),
                     itemCount: _lessons.length,
                     itemBuilder: (context, index) {
-                      int lessonNumber = index + 1;
                       return OutlinedButton(
                           onPressed: () {
-                            routeTo('/word', data: _lessons[index], queryParameters: {
-                              "lesson_name": "Lesson $lessonNumber",
-                            });
+                            routeTo('/word', queryParameters: {"lessonId": _lessons[index].id.toString()});
                           },
                           child: Text(_lessons[index].title),
                           style: OutlinedButton.styleFrom(
