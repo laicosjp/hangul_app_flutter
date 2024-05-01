@@ -35,6 +35,11 @@ class CsvLoaderService {
     final _rawCSV = await rootBundle.loadString(path);
     final List<List<String>> _csvList = CsvToListConverter().convert(_rawCSV).map((list) => list.map((item) => item.toString()).toList()).toList();
     final List<Lesson> _lessons = _csvList.map((csvRow) => Lesson.fromCsv(csvRow)).where((lesson) => lesson.courseId == courseId).toList();
+    final List<Word> _words = await getAllWords("public/assets/csv/word_${courseId}.csv");
+
+    _lessons.forEach((lesson) {
+      lesson.words.addAll(_words.where((word) => word.lessonId == lesson.id).toList());
+    });
 
     return _lessons;
   }
