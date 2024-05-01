@@ -1,7 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/word.dart';
+import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
+import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class ResultPage extends NyStatefulWidget {
@@ -34,25 +36,6 @@ class _ResultPageState extends NyState<ResultPage> {
             children: [
               Text("お疲れさま！"),
               Expanded(
-                  flex: 1,
-                  child: Row(children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          routeTo('/course', queryParameters: {'course_id': _lesson.courseId.toString()});
-                        },
-                        child: Text("Home"),
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ])),
-              Expanded(
                 flex: 9,
                 child: ListView.builder(
                   itemCount: _words.length,
@@ -62,6 +45,53 @@ class _ResultPageState extends NyState<ResultPage> {
                     );
                   },
                 ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      flex: 1,
+                      child: Row(children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              routeTo('/course', queryParameters: {'course_id': _lesson.courseId.toString()});
+                            },
+                            child: Text("ホームヘ"),
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(ThemeColor.get(context).primaryAccent),
+                              side: MaterialStateProperty.all(BorderSide(color: ThemeColor.get(context).primaryAccent)),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ])),
+                  Gap(10),
+                  Expanded(
+                      flex: 1,
+                      child: Row(children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              routeTo('/course', queryParameters: {'course_id': _lesson.courseId.toString()});
+                            },
+                            child: Text("つぎのレッスンへ"),
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(ThemeColor.get(context).primaryContent),
+                              side: MaterialStateProperty.all(BorderSide(color: ThemeColor.get(context).primaryContent)),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ])),
+                ],
               ),
             ],
           ),
