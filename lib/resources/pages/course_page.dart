@@ -12,7 +12,6 @@ class CoursePage extends NyStatefulWidget {
 
 class _CoursePageState extends NyState<CoursePage> {
   final _lessonsService = LessonsService();
-  final int PER_WORD = 10;
   List<Lesson> _lessons = [];
 
   @override

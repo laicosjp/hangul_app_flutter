@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
+import 'package:flutter_app/resources/services/words_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -13,19 +14,20 @@ class WordPage extends NyStatefulWidget {
 }
 
 class _WordPageState extends NyState<WordPage> {
-  var _lesson;
+  int _lessonId = 0;
   List<Word> _words = [];
   int _currentIndex = 0;
   String _answerProgress = 'hidden';
   FlutterTts _tts = FlutterTts();
   final _player = AudioPlayer();
+  final _wordsService = WordsService();
 
   @override
   init() async {
     super.init();
     _player.audioCache = AudioCache(prefix: 'public/assets/');
-    _lesson = widget.data();
-    _words = _lesson.words;
+    _lessonId = int.parse(widget.queryParameters()['lessonId']);
+    _words = await _wordsService.findAll(lessonId: _lessonId);
     _speak(_words[_currentIndex].text);
   }
 
@@ -47,7 +49,7 @@ class _WordPageState extends NyState<WordPage> {
 
   void _nextWord() {
     if (_currentIndex == _words.length - 1) {
-      routeTo('/result', data: _lesson);
+      routeTo('/result');
     } else {
       setState(() {
         _currentIndex = (_currentIndex + 1) % _words.length;
@@ -87,7 +89,7 @@ class _WordPageState extends NyState<WordPage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(queryParameters()['lesson_name'])),
+      appBar: AppBar(title: Text("レッスンの名前")),
       body: Container(
         child: Column(children: [
           Expanded(
