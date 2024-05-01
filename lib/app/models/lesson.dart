@@ -21,7 +21,7 @@ class Lesson extends Model {
       id: data['id'],
       title: data['title'],
       words: data['words'],
-      courseId: data['course_id'],
+      courseId: data['courseId'],
     );
   }
 
