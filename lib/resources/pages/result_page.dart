@@ -1,7 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class ResultPage extends NyStatefulWidget {
@@ -11,16 +13,30 @@ class ResultPage extends NyStatefulWidget {
 }
 
 class _ResultPageState extends NyState<ResultPage> {
-  var _lesson;
   List<Word> _words = [];
   final _player = AudioPlayer();
+  FlutterTts _tts = FlutterTts();
+  List<int> _correctWordIds = [];
 
   @override
   init() async {
     super.init();
     _words = widget.data();
+    _shoutYay();
+    _retrieveCorrectWordIds();
+  }
+
+  void _shoutYay() {
     _player.audioCache = AudioCache(prefix: 'public/assets/');
     _player.play(AssetSource("audio/yay.mp3"));
+  }
+
+  void _retrieveCorrectWordIds() async {
+    _correctWordIds = await NyStorage.readCollection("correctWordIds");
+  }
+
+  bool _checkResult(Word word) {
+    return _correctWordIds.contains(word.id);
   }
 
   @override
@@ -58,6 +74,10 @@ class _ResultPageState extends NyState<ResultPage> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(_words[index].text + " （" + _words[index].translation + "）"),
+                      trailing: _checkResult(_words[index]) ? Icon(CupertinoIcons.checkmark, color: Colors.green) : Icon(CupertinoIcons.clear, color: Colors.blue),
+                      onTap: () {
+                        _tts.speak(_words[index].text);
+                      },
                     );
                   },
                 ),
