@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:csv/csv.dart';
 import 'package:flutter_app/app/models/course.dart';
+import 'package:flutter_app/app/models/lesson.dart';
 import 'package:flutter_app/app/models/word.dart';
 
 class CsvLoaderService {
@@ -27,6 +28,15 @@ class CsvLoaderService {
     });
 
     return _words;
+  }
+
+  Future<List<Lesson>> getLessons({required int courseId}) async {
+    final path = "public/assets/csv/lessons.csv";
+    final _rawCSV = await rootBundle.loadString(path);
+    final List<List<String>> _csvList = CsvToListConverter().convert(_rawCSV).map((list) => list.map((item) => item.toString()).toList()).toList();
+    final List<Lesson> _lessons = _csvList.map((csvRow) => Lesson.fromCsv(csvRow)).where((lesson) => lesson.courseId == courseId).toList();
+
+    return _lessons;
   }
 
   Future<List<Course>> getAllCourses() async {

@@ -13,7 +13,6 @@ class CoursePage extends NyStatefulWidget {
 
 class _CoursePageState extends NyState<CoursePage> {
   final int PER_WORD = 10;
-  List<Word> _allWords = [];
   List<Lesson> _lessons = [];
   int courseId = 0;
 
@@ -22,16 +21,7 @@ class _CoursePageState extends NyState<CoursePage> {
     super.init();
 
     courseId = int.parse(queryParameters()['course_id']);
-    _allWords = await CsvLoaderService().getAllWords("public/assets/csv/word_$courseId.csv");
-    _parseLessons();
-  }
-
-  void _parseLessons() {
-    for (int i = 0; i < _allWords.length; i += PER_WORD) {
-      int lessonNumber = (i ~/ PER_WORD) + 1;
-      List<Word> wordsForLesson = _allWords.sublist(i, i + PER_WORD > _allWords.length ? _allWords.length : i + PER_WORD);
-      _lessons.add(Lesson(id: lessonNumber, title: "Lesson $lessonNumber", words: wordsForLesson, courseId: courseId));
-    }
+    _lessons = await CsvLoaderService().getLessons(courseId: courseId);
   }
 
   @override
@@ -53,12 +43,9 @@ class _CoursePageState extends NyState<CoursePage> {
                     ),
                     itemCount: _lessons.length,
                     itemBuilder: (context, index) {
-                      int lessonNumber = index + 1;
                       return OutlinedButton(
                           onPressed: () {
-                            routeTo('/word', data: _lessons[index], queryParameters: {
-                              "lesson_name": "Lesson $lessonNumber",
-                            });
+                            routeTo('/word', queryParameters: {"lessonId": _lessons[index].id.toString()});
                           },
                           child: Text(_lessons[index].title),
                           style: OutlinedButton.styleFrom(

@@ -25,8 +25,17 @@ class Lesson extends Model {
     );
   }
 
-  @override
-  toJson() {
-    return {};
+  // @override
+  // toJson() {
+  //   return {};
+  // }
+
+  factory Lesson.fromCsv(List<String> csvRow) {
+    return Lesson(
+      id: int.parse(csvRow[0]),
+      title: csvRow[2],
+      courseId: int.parse(csvRow[1]),
+      words: [],
+    );
   }
 }
