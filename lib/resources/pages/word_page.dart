@@ -21,6 +21,8 @@ class _WordPageState extends NyState<WordPage> {
   FlutterTts _tts = FlutterTts();
   final _player = AudioPlayer();
   final _wordsService = WordsService();
+  final PER_WORD = 9;
+  List<Word> _exercisedWords = [];
 
   @override
   init() async {
@@ -45,11 +47,13 @@ class _WordPageState extends NyState<WordPage> {
         _player.play(AssetSource('audio/incorrect.mp3'));
       });
     }
+
+    _exercisedWords.add(_words[_currentIndex]);
   }
 
   void _nextWord() {
-    if (_currentIndex == _words.length - 1) {
-      routeTo('/result');
+    if (_currentIndex == PER_WORD) {
+      routeTo('/result', data: _exercisedWords);
     } else {
       setState(() {
         _currentIndex = (_currentIndex + 1) % _words.length;

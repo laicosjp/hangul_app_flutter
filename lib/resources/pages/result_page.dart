@@ -18,8 +18,7 @@ class _ResultPageState extends NyState<ResultPage> {
   @override
   init() async {
     super.init();
-    _lesson = widget.data();
-    _words = _lesson.words;
+    _words = widget.data();
     _player.audioCache = AudioCache(prefix: 'public/assets/');
     _player.play(AssetSource("audio/yay.mp3"));
   }
@@ -39,7 +38,7 @@ class _ResultPageState extends NyState<ResultPage> {
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () {
-                          routeTo('/course', queryParameters: {'course_id': _lesson.courseId.toString()});
+                          routeTo('/home');
                         },
                         child: Text("Home"),
                         style: ButtonStyle(
