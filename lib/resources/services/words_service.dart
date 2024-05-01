@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/resources/services/csv_loader_service.dart';
 
@@ -10,6 +11,8 @@ class WordsService extends CsvLoaderService {
       _words = _words.where((word) => word.lessonId == lessonId).toList();
     }
 
+    _words.forEach((word) => _assignRandomChoices(word, _words));
+
     return _words;
   }
 
@@ -18,5 +21,20 @@ class WordsService extends CsvLoaderService {
     final _word = _csvList.map((csvRow) => Word.fromCsv(csvRow)).toList().firstWhere((word) => word.id == id);
 
     return _word;
+  }
+
+  void _assignRandomChoices(Word word, List<Word> allWords) {
+    List<Word> _choices = [word];
+    Set<int> usedIndexes = {allWords.indexOf(word)};
+
+    while (_choices.length < 4) {
+      int randomIndex = Random().nextInt(allWords.length);
+      if (!usedIndexes.contains(randomIndex)) {
+        _choices.add(allWords[randomIndex]);
+        usedIndexes.add(randomIndex);
+      }
+    }
+
+    word.choices.addAll(_choices..shuffle());
   }
 }
