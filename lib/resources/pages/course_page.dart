@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/lesson.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
-import 'package:flutter_app/resources/services/csv_loader_service.dart';
+import 'package:flutter_app/resources/services/lessons_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class CoursePage extends NyStatefulWidget {
@@ -11,16 +11,14 @@ class CoursePage extends NyStatefulWidget {
 }
 
 class _CoursePageState extends NyState<CoursePage> {
+  final _lessonsService = LessonsService();
   final int PER_WORD = 10;
   List<Lesson> _lessons = [];
-  int courseId = 0;
 
   @override
   init() async {
     super.init();
-
-    courseId = int.parse(queryParameters()['course_id']);
-    _lessons = await CsvLoaderService().getLessons(courseId: courseId);
+    _lessons = await _lessonsService.findAll(courseId: int.parse(queryParameters()['course_id']));
   }
 
   @override

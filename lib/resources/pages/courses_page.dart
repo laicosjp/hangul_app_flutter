@@ -10,8 +10,8 @@ class CoursesPage extends NyStatefulWidget {
 }
 
 class _CoursesPageState extends NyState<CoursesPage> {
-  List<Course> courses = [];
   final _coursesService = CoursesService();
+  List<Course> courses = [];
 
   @override
   init() async {
