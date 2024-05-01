@@ -76,7 +76,7 @@ class _ResultPageState extends NyState<ResultPage> {
                         Expanded(
                           child: OutlinedButton(
                             onPressed: () {
-                              routeTo('/course', queryParameters: {'course_id': _lesson.courseId.toString()});
+                              // routeTo('/course', queryParameters: {'course_id': _lesson.courseId.toString()});
                             },
                             child: Text("つぎのレッスンへ"),
                             style: ButtonStyle(
