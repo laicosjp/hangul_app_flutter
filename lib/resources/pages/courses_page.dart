@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/course.dart';
-import 'package:flutter_app/resources/services/csv_loder_service.dart';
+import 'package:flutter_app/resources/services/csv_loader_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class CoursesPage extends NyStatefulWidget {

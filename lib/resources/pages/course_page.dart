@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/lesson.dart';
-import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
-import 'package:flutter_app/resources/services/csv_loder_service.dart';
+import 'package:flutter_app/resources/services/csv_loader_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class CoursePage extends NyStatefulWidget {
