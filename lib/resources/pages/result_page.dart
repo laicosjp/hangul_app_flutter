@@ -95,6 +95,7 @@ class _ResultPageState extends NyState<ResultPage> {
                         Expanded(
                           child: OutlinedButton(
                             onPressed: () {
+                              routeTo('/word', queryParameters: {"lessonId": _words.last.lessonId.toString()});
                             },
                             child: Text("つぎのレッスンへ"),
                             style: ButtonStyle(

@@ -1,14 +1,20 @@
 import 'dart:math';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/resources/services/csv_loader_service.dart';
+import 'package:nylo_framework/nylo_framework.dart';
 
 class WordsService extends CsvLoaderService {
-  Future<List<Word>> findAll({int? lessonId}) async {
+  Future<List<Word>> findAll({int? lessonId, bool? onlyNew}) async {
     final _csvList = await convertCsv(model: "words");
     List<Word> _words = _csvList.map((csvRow) => Word.fromCsv(csvRow)).toList();
 
     if (lessonId != null) {
       _words = _words.where((word) => word.lessonId == lessonId).toList();
+    }
+
+    if (onlyNew == true) {
+      List<int> _wordIds = await _learnedWordIds();
+      _words.removeWhere((word) => _wordIds.contains(word.id));
     }
 
     _words.forEach((word) => _assignRandomChoices(word, _words));
@@ -36,5 +42,12 @@ class WordsService extends CsvLoaderService {
     }
 
     word.choices.addAll(_choices..shuffle());
+  }
+
+  Future<List<int>> _learnedWordIds() async {
+    List<int> _correctWordIds = await NyStorage.readCollection("correctWordIds");
+    List<int> _incorrectWordIds = await NyStorage.readCollection("incorrectWordIds");
+
+    return _correctWordIds + _incorrectWordIds;
   }
 }

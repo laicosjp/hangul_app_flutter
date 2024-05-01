@@ -29,7 +29,7 @@ class _WordPageState extends NyState<WordPage> {
     super.init();
     _player.audioCache = AudioCache(prefix: 'public/assets/');
     _lessonId = int.parse(widget.queryParameters()['lessonId']);
-    _words = await _wordsService.findAll(lessonId: _lessonId);
+    _words = await _wordsService.findAll(lessonId: _lessonId, onlyNew: true);
     _speak(_words[_currentIndex].text);
   }
 
@@ -50,12 +50,13 @@ class _WordPageState extends NyState<WordPage> {
   }
 
   void _nextWord() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % _words.length;
+    });
+
     if (_currentIndex == PER_WORD) {
       routeTo('/result', data: _exercisedWords);
     } else {
-      setState(() {
-        _currentIndex = (_currentIndex + 1) % _words.length;
-      });
       _speak(_words[_currentIndex].text);
     }
   }
