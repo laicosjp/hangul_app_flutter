@@ -22,6 +22,7 @@ class _CoursePageState extends NyState<CoursePage> {
 
   late List<Lesson> _lessons = [];
   late Course course;
+  late List<int> _learnedWordIds = [];
 
   int currentLessonPosition = 0;
 
@@ -30,6 +31,7 @@ class _CoursePageState extends NyState<CoursePage> {
     super.init();
     _lessons = await _lessonsService.findAll(courseId: int.parse(queryParameters()['course_id']));
     course = await _coursesService.findOne(int.parse(queryParameters()['course_id']));
+    _learnedWordIds = await _lessons[currentLessonPosition].learnedWordIds();
   }
 
   @override
@@ -83,10 +85,10 @@ class _CoursePageState extends NyState<CoursePage> {
                         child: CircularPercentIndicator(
                           radius: 80.0,
                           lineWidth: 14,
-                          percent: 0.8,
+                          percent: _learnedWordIds.length / _lessons[currentLessonPosition].words.length,
                           center: Center(
                             child: Text(
-                              "80%",
+                              "${_learnedWordIds.length / _lessons[currentLessonPosition].words.length * 100}%",
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
@@ -108,7 +110,7 @@ class _CoursePageState extends NyState<CoursePage> {
                                   ),
                                   Text("覚えた", style: TextStyle(fontSize: 14)),
                                   Spacer(),
-                                  Text("80", style: TextStyle(fontSize: 34)),
+                                  Text("${_learnedWordIds.length / _lessons[currentLessonPosition].words.length * 100}", style: TextStyle(fontSize: 34)),
                                   Gap(4),
                                   Text("%")
                                 ],
@@ -123,7 +125,7 @@ class _CoursePageState extends NyState<CoursePage> {
                                   ),
                                   Text("未修得", style: TextStyle(fontSize: 14)),
                                   Spacer(),
-                                  Text("20", style: TextStyle(fontSize: 24)),
+                                  Text("${100 - (_learnedWordIds.length / _lessons[currentLessonPosition].words.length * 100)}", style: TextStyle(fontSize: 24)),
                                   Gap(4),
                                   Text("%")
                                 ],
