@@ -224,7 +224,9 @@ class _CoursePageState extends NyState<CoursePage> {
                     Gap(10),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          routeTo('/word', queryParameters: {"lessonId": _lessons[0].id.toString()});
+                        },
                         child: Text("未学習"),
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white),
                       ),
