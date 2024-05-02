@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/app/models/course.dart';
 import 'package:flutter_app/app/models/lesson.dart';
+import 'package:flutter_app/resources/services/courses_service.dart';
 import 'package:flutter_app/resources/services/lessons_service.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:gap/gap.dart';
@@ -16,12 +18,16 @@ class CoursePage extends NyStatefulWidget {
 
 class _CoursePageState extends NyState<CoursePage> {
   final _lessonsService = LessonsService();
-  List<Lesson> _lessons = [];
+  final _coursesService = CoursesService();
+
+  late List<Lesson> _lessons = [];
+  late Course course;
 
   @override
   init() async {
     super.init();
     _lessons = await _lessonsService.findAll(courseId: int.parse(queryParameters()['course_id']));
+    course = await _coursesService.findOne(int.parse(queryParameters()['course_id']));
   }
 
   // @override
@@ -64,7 +70,7 @@ class _CoursePageState extends NyState<CoursePage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("ハングル検定5級")),
+      appBar: AppBar(title: Text(course.title)),
       body: SafeAreaWidget(
         child: Container(
           child: Column(
@@ -142,7 +148,7 @@ class _CoursePageState extends NyState<CoursePage> {
               Gap(40),
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text("ハングル検定5級 Lesson1", style: TextStyle(fontWeight: FontWeight.w600)),
+                child: Text("${course.title} Lesson1", style: TextStyle(fontWeight: FontWeight.w600)),
               ),
               Gap(20),
               Container(
