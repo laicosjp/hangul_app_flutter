@@ -23,49 +23,14 @@ class _CoursePageState extends NyState<CoursePage> {
   late List<Lesson> _lessons = [];
   late Course course;
 
+  int currentLessonPosition = 0;
+
   @override
   init() async {
     super.init();
     _lessons = await _lessonsService.findAll(courseId: int.parse(queryParameters()['course_id']));
     course = await _coursesService.findOne(int.parse(queryParameters()['course_id']));
   }
-
-  // @override
-  // Widget view(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(title: Text("単語一覧"), automaticallyImplyLeading: false),
-  //     body: SafeArea(
-  //       child: Container(
-  //           padding: EdgeInsets.all(20),
-  //           child: Column(
-  //             children: [
-  //               Expanded(
-  //                 child: GridView.builder(
-  //                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //                     crossAxisCount: 2, // 2つのアイテムを横に並べる
-  //                     crossAxisSpacing: 10, // 横のスペース
-  //                     mainAxisSpacing: 10, // 縦のスペース
-  //                     childAspectRatio: 4.0,
-  //                   ),
-  //                   itemCount: _lessons.length,
-  //                   itemBuilder: (context, index) {
-  //                     return OutlinedButton(
-  //                         onPressed: () {
-  //                           routeTo('/word', queryParameters: {"lessonId": _lessons[index].id.toString()});
-  //                         },
-  //                         child: Text(_lessons[index].title),
-  //                         style: OutlinedButton.styleFrom(
-  //                           side: BorderSide(color: ThemeColor.get(context).primaryAccent),
-  //                           foregroundColor: ThemeColor.get(context).buttonPrimaryContent,
-  //                         ));
-  //                   },
-  //                 ),
-  //               ),
-  //             ],
-  //           )),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget view(BuildContext context) {
@@ -77,78 +42,37 @@ class _CoursePageState extends NyState<CoursePage> {
             children: [
               Container(
                 height: 60,
-                child: ListView(
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  children: [
-                    CircularPercentIndicator(
-                      radius: 26.0,
-                      lineWidth: 7,
-                      percent: 0.8,
-                      center: Text("1", style: TextStyle(fontWeight: FontWeight.w600)),
-                      backgroundColor: Colors.grey,
-                      progressColor: Colors.lightGreen,
-                    ),
-                    Gap(16),
-                    CircularPercentIndicator(
-                      radius: 26.0,
-                      lineWidth: 7,
-                      percent: 0.3,
-                      center: Text("2", style: TextStyle(fontWeight: FontWeight.w600)),
-                      backgroundColor: Colors.grey,
-                      progressColor: Colors.lightGreen,
-                    ),
-                    Gap(16),
-                    CircularPercentIndicator(
-                      radius: 26.0,
-                      lineWidth: 7,
-                      percent: 0.0,
-                      center: Text("3", style: TextStyle(fontWeight: FontWeight.w600)),
-                      backgroundColor: Colors.grey,
-                      progressColor: Colors.lightGreen,
-                    ),
-                    Gap(16),
-                    CircularPercentIndicator(
-                      radius: 26.0,
-                      lineWidth: 7,
-                      percent: 0.0,
-                      center: Text("4", style: TextStyle(fontWeight: FontWeight.w600)),
-                      backgroundColor: Colors.grey,
-                      progressColor: Colors.lightGreen,
-                    ),
-                    Gap(16),
-                    CircularPercentIndicator(
-                      radius: 26.0,
-                      lineWidth: 7,
-                      percent: 0.0,
-                      center: Text("5", style: TextStyle(fontWeight: FontWeight.w600)),
-                      backgroundColor: Colors.grey,
-                      progressColor: Colors.lightGreen,
-                    ),
-                    Gap(16),
-                    CircularPercentIndicator(
-                      radius: 26.0,
-                      lineWidth: 7,
-                      percent: 0.0,
-                      center: Text("6", style: TextStyle(fontWeight: FontWeight.w600)),
-                      backgroundColor: Colors.grey,
-                      progressColor: Colors.lightGreen,
-                    ),
-                    Gap(16),
-                    CircularPercentIndicator(
-                      radius: 26.0,
-                      lineWidth: 7,
-                      percent: 0.0,
-                      center: Text("7", style: TextStyle(fontWeight: FontWeight.w600)),
-                      backgroundColor: Colors.grey,
-                      progressColor: Colors.lightGreen,
-                    ),
-                  ],
+                  itemCount: _lessons.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentLessonPosition = index;
+                            });
+                          },
+                          child: CircularPercentIndicator(
+                            radius: 26.0,
+                            lineWidth: 7,
+                            percent: 0.1,
+                            center: Text("${index + 1}", style: TextStyle(fontWeight: FontWeight.w600)),
+                            backgroundColor: Colors.grey,
+                            progressColor: Colors.lightGreen,
+                          ),
+                        ),
+                        Gap(16),
+                      ],
+                    );
+                  },
                 ),
               ),
               Gap(40),
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text("${course.title} Lesson1", style: TextStyle(fontWeight: FontWeight.w600)),
+                child: Text("${course.title} ${_lessons[currentLessonPosition].title}", style: TextStyle(fontWeight: FontWeight.w600)),
               ),
               Gap(20),
               Container(
@@ -225,7 +149,7 @@ class _CoursePageState extends NyState<CoursePage> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
-                          routeTo('/word', queryParameters: {"lessonId": _lessons[0].id.toString()});
+                          routeTo('/word', queryParameters: {"lessonId": _lessons[currentLessonPosition].id.toString()});
                         },
                         child: Text("未学習"),
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white),
