@@ -25,7 +25,7 @@ class _ResultPageState extends NyState<ResultPage> {
     super.init();
     _words = widget.data();
     _shoutYay();
-    _retrieveCorrectWordIds();
+    await _retrieveCorrectWordIds();
   }
 
   void _shoutYay() {
@@ -33,7 +33,7 @@ class _ResultPageState extends NyState<ResultPage> {
     _player.play(AssetSource("audio/yay.mp3"));
   }
 
-  void _retrieveCorrectWordIds() async {
+  Future<void> _retrieveCorrectWordIds() async {
     _correctWordIds = await NyStorage.readCollection("correctWordIds");
   }
 
@@ -44,12 +44,11 @@ class _ResultPageState extends NyState<ResultPage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Result"), automaticallyImplyLeading: false),
+      appBar: AppBar(title: Text("お疲れさま！"), automaticallyImplyLeading: false),
       body: SafeAreaWidget(
         child: Container(
           child: Column(
             children: [
-              Text("お疲れさま！"),
               Expanded(
                 flex: 9,
                 child: ListView.builder(
