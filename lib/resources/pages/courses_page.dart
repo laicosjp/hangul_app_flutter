@@ -49,7 +49,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image(
-                          image: NetworkImage("https://pbs.twimg.com/media/GMU4OtFW0AEa3Rk?format=jpg&name=large"),
+                          image: AssetImage("public/assets/images/seoul${courses[position].id}.png"),
                           fit: BoxFit.cover,
                         ),
                       ),
