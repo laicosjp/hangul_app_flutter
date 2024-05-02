@@ -33,6 +33,7 @@ dependencies:
   gap: ^3.0.1
   flutter_tts: 3.8.5 # 最新版は 4.0.2 だが、Kotlinとの互換性でエラーが発生するため、一時的に古いバージョンを使用している
   audioplayers: ^6.0.0
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
