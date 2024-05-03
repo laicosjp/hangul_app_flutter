@@ -38,4 +38,10 @@ class Lesson extends Model {
       words: [],
     );
   }
+
+  Future<List<int>> learnedWordIds() async {
+    List<int> _correctWordIds = await NyStorage.readCollection("correctWordIds");
+
+    return this.words.where((word) => _correctWordIds.contains(word.id)).map((e) => e.id).toList();
+  }
 }

@@ -2,7 +2,9 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/word.dart';
+import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
+import 'package:gap/gap.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -23,7 +25,7 @@ class _ResultPageState extends NyState<ResultPage> {
     super.init();
     _words = widget.data();
     _shoutYay();
-    _retrieveCorrectWordIds();
+    await _retrieveCorrectWordIds();
   }
 
   void _shoutYay() {
@@ -31,7 +33,7 @@ class _ResultPageState extends NyState<ResultPage> {
     _player.play(AssetSource("audio/yay.mp3"));
   }
 
-  void _retrieveCorrectWordIds() async {
+  Future<void> _retrieveCorrectWordIds() async {
     _correctWordIds = await NyStorage.readCollection("correctWordIds");
   }
 
@@ -42,31 +44,11 @@ class _ResultPageState extends NyState<ResultPage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Result"), automaticallyImplyLeading: false),
+      appBar: AppBar(title: Text("お疲れさま！"), automaticallyImplyLeading: false),
       body: SafeAreaWidget(
         child: Container(
           child: Column(
             children: [
-              Text("お疲れさま！"),
-              Expanded(
-                  flex: 1,
-                  child: Row(children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          routeTo('/home');
-                        },
-                        child: Text("Home"),
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ])),
               Expanded(
                 flex: 9,
                 child: ListView.builder(
@@ -81,6 +63,53 @@ class _ResultPageState extends NyState<ResultPage> {
                     );
                   },
                 ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      flex: 1,
+                      child: Row(children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              routeTo('/courses');
+                            },
+                            child: Text("ホームヘ"),
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(ThemeColor.get(context).primaryAccent),
+                              side: MaterialStateProperty.all(BorderSide(color: ThemeColor.get(context).primaryAccent)),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ])),
+                  Gap(10),
+                  Expanded(
+                      flex: 1,
+                      child: Row(children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              routeTo('/word', queryParameters: {"lessonId": _words.last.lessonId.toString()});
+                            },
+                            child: Text("つぎのレッスンへ"),
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(ThemeColor.get(context).primaryContent),
+                              side: MaterialStateProperty.all(BorderSide(color: ThemeColor.get(context).primaryContent)),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ])),
+                ],
               ),
             ],
           ),

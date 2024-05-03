@@ -29,7 +29,7 @@ class _WordPageState extends NyState<WordPage> {
     super.init();
     _player.audioCache = AudioCache(prefix: 'public/assets/');
     _lessonId = int.parse(widget.queryParameters()['lessonId']);
-    _words = await _wordsService.findAll(lessonId: _lessonId);
+    _words = await _wordsService.findAll(lessonId: _lessonId, onlyNew: true);
     _speak(_words[_currentIndex].text);
   }
 
@@ -50,12 +50,13 @@ class _WordPageState extends NyState<WordPage> {
   }
 
   void _nextWord() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % _words.length;
+    });
+
     if (_currentIndex == PER_WORD) {
       routeTo('/result', data: _exercisedWords);
     } else {
-      setState(() {
-        _currentIndex = (_currentIndex + 1) % _words.length;
-      });
       _speak(_words[_currentIndex].text);
     }
   }
@@ -70,12 +71,9 @@ class _WordPageState extends NyState<WordPage> {
 
   Future<void> _recordAnswer(response) async {
     await NyStorage.deleteFromCollectionWhere((wordId) => wordId == _words[_currentIndex].id, key: "correctWordIds");
-    await NyStorage.deleteFromCollectionWhere((wordId) => wordId == _words[_currentIndex].id, key: "incorrectWordIds");
 
     if (_words[_currentIndex] == response) {
       await NyStorage.addToCollection("correctWordIds", item: _words[_currentIndex].id);
-    } else {
-      await NyStorage.addToCollection("incorrectWordIds", item: _words[_currentIndex].id);
     }
   }
 

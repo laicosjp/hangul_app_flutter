@@ -22,6 +22,7 @@ class _CoursePageState extends NyState<CoursePage> {
 
   late List<Lesson> _lessons = [];
   late Course course;
+  late List<Map<int, double>> learningProgresses = [];
 
   int currentLessonPosition = 0;
 
@@ -30,6 +31,15 @@ class _CoursePageState extends NyState<CoursePage> {
     super.init();
     _lessons = await _lessonsService.findAll(courseId: int.parse(queryParameters()['course_id']));
     course = await _coursesService.findOne(int.parse(queryParameters()['course_id']));
+    await setLearningProgress();
+  }
+
+  Future<void> setLearningProgress() async {
+    for (Lesson lesson in _lessons) {
+      List<int> learnedWordIds = await lesson.learnedWordIds();
+      double percent = double.parse((learnedWordIds.length / lesson.words.length * 100).toStringAsFixed(1));
+      learningProgresses.add({lesson.id: percent});
+    }
   }
 
   @override
@@ -57,7 +67,7 @@ class _CoursePageState extends NyState<CoursePage> {
                           child: CircularPercentIndicator(
                             radius: 26.0,
                             lineWidth: 7,
-                            percent: 0.1,
+                            percent: learningProgresses[index].values.last / 100,
                             center: Text("${index + 1}", style: TextStyle(fontWeight: FontWeight.w600)),
                             backgroundColor: Colors.grey,
                             progressColor: Colors.lightGreen,
@@ -83,10 +93,10 @@ class _CoursePageState extends NyState<CoursePage> {
                         child: CircularPercentIndicator(
                           radius: 80.0,
                           lineWidth: 14,
-                          percent: 0.8,
+                          percent: learningProgresses[currentLessonPosition].values.last / 100,
                           center: Center(
                             child: Text(
-                              "80%",
+                              "${learningProgresses[currentLessonPosition].values.last}%",
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
@@ -108,7 +118,7 @@ class _CoursePageState extends NyState<CoursePage> {
                                   ),
                                   Text("覚えた", style: TextStyle(fontSize: 14)),
                                   Spacer(),
-                                  Text("80", style: TextStyle(fontSize: 34)),
+                                  Text("${learningProgresses[currentLessonPosition].values.last}", style: TextStyle(fontSize: 34)),
                                   Gap(4),
                                   Text("%")
                                 ],
@@ -123,7 +133,7 @@ class _CoursePageState extends NyState<CoursePage> {
                                   ),
                                   Text("未修得", style: TextStyle(fontSize: 14)),
                                   Spacer(),
-                                  Text("20", style: TextStyle(fontSize: 24)),
+                                  Text("${100 - (learningProgresses[currentLessonPosition].values.last)}", style: TextStyle(fontSize: 24)),
                                   Gap(4),
                                   Text("%")
                                 ],
