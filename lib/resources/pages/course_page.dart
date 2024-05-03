@@ -157,13 +157,25 @@ class _CoursePageState extends NyState<CoursePage> {
                     ),
                     Gap(10),
                     Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          routeTo('/word', queryParameters: {"lessonId": _lessons[currentLessonPosition].id.toString()});
-                        },
-                        child: Text("未学習"),
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white),
-                      ),
+                      child: learningProgresses[currentLessonPosition].values.last == 100
+                          ? ElevatedButton(
+                              onPressed: () async {
+                                Lesson _lesson = _lessons[currentLessonPosition];
+                                List<int> _learnedWordIds = await _lesson.learnedWordIds();
+                                await NyStorage.deleteFromCollectionWhere((id) => _learnedWordIds.contains(id), key: 'correctWordIds');
+
+                                routeTo('/word', queryParameters: {"lessonId": _lesson.id.toString()});
+                              },
+                              child: Text("総復習"),
+                              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, foregroundColor: Colors.white),
+                            )
+                          : ElevatedButton(
+                              onPressed: () {
+                                routeTo('/word', queryParameters: {"lessonId": _lessons[currentLessonPosition].id.toString()});
+                              },
+                              child: Text("未学習"),
+                              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white),
+                            ),
                     )
                   ],
                 ),
