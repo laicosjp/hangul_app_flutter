@@ -1,0 +1,56 @@
+appId: com.alda_korean_word.android
+clearState: true
+clearKeychain: true  
+---
+- launchApp
+- tapOn: "ハングル検定5級\n04 / 100\nTry"
+- tapOn: "1"
+- tapOn: "3"
+- swipe:
+    start: 80%, 15%
+    end: 10%, 15%
+- tapOn: "7"
+
+- tapOn: "未学習"
+
+- tapOn: "あさって" # 1
+- tapOn: "まず" # 2
+- tapOn: "薬" # 3
+- tapOn: "野球" # 4
+- tapOn: "両方" # 5
+- tapOn: "靴下" # 6
+- tapOn: "6月" # 7
+- tapOn: "6" # 8
+- tapOn: "六十、60" # 9
+- tapOn: "です" # 10
+
+- tapOn: "つぎのレッスンへ"
+
+- tapOn: "曜日"
+- tapOn: "ここ"
+- tapOn: "すみません"
+- tapOn: "駅"
+- tapOn: "女、女性"
+- tapOn: "六つ"
+- tapOn: "八つ"
+- tapOn: "横"
+- tapOn: "旅行"
+- tapOn: "もしもし"
+
+- tapOn: "つぎのレッスンへ"
+
+- tapOn: "料理"
+- tapOn: "十、10"
+- tapOn: "開ける"
+- tapOn: "夏"
+- tapOn: "英語"
+- tapOn: "おいくつでいらっしゃいますか"
+- tapOn: "おいくつでいらっしゃいますか"
+- tapOn: "鉛筆"
+- tapOn: "映画"
+- tapOn: "ラジオ"
+
+- tapOn: "つぎのレッスンへ"
+
+- tapOn: "～へ、～で (=으로)"
+- tapOn: "と (=과)"
