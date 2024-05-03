@@ -41,8 +41,7 @@ class Lesson extends Model {
 
   Future<List<int>> learnedWordIds() async {
     List<int> _correctWordIds = await NyStorage.readCollection("correctWordIds");
-    List<int> _incorrectWordIds = await NyStorage.readCollection("incorrectWordIds");
 
-    return this.words.where((word) => _correctWordIds.contains(word.id) || _incorrectWordIds.contains(word.id)).map((e) => e.id).toList();
+    return this.words.where((word) => _correctWordIds.contains(word.id)).map((e) => e.id).toList();
   }
 }
