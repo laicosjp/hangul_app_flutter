@@ -77,18 +77,22 @@ class _WordPageState extends NyState<WordPage> {
     }
   }
 
+  Future<void> onAnswered(int choiceIndex) async {
+    _checkAnswer(_words[_currentIndex].choices[choiceIndex]);
+    await _recordAnswer(_words[_currentIndex].choices[choiceIndex]);
+    _exercisedWords.add(_words[_currentIndex]);
+    await Future.delayed(Duration(milliseconds: 700));
+    setState(() {
+      _answerProgress = 'hidden';
+    });
+    _player.stop(); // この処理がないと、連続で正解（or不正解）の時に音声が再生されない
+    _nextWord();
+  }
+
   Widget _buildChoiceButton(int choiceIndex) {
     return OutlinedButton(
       onPressed: () async {
-        _checkAnswer(_words[_currentIndex].choices[choiceIndex]);
-        await _recordAnswer(_words[_currentIndex].choices[choiceIndex]);
-        _exercisedWords.add(_words[_currentIndex]);
-        await Future.delayed(Duration(milliseconds: 700));
-        setState(() {
-          _answerProgress = 'hidden';
-        });
-        _player.stop(); // この処理がないと、連続で正解（or不正解）の時に音声が再生されない
-        _nextWord();
+        await onAnswered(choiceIndex);
       },
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
       style: OutlinedButton.styleFrom(
