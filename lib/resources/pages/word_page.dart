@@ -71,12 +71,9 @@ class _WordPageState extends NyState<WordPage> {
 
   Future<void> _recordAnswer(response) async {
     await NyStorage.deleteFromCollectionWhere((wordId) => wordId == _words[_currentIndex].id, key: "correctWordIds");
-    await NyStorage.deleteFromCollectionWhere((wordId) => wordId == _words[_currentIndex].id, key: "incorrectWordIds");
 
     if (_words[_currentIndex] == response) {
       await NyStorage.addToCollection("correctWordIds", item: _words[_currentIndex].id);
-    } else {
-      await NyStorage.addToCollection("incorrectWordIds", item: _words[_currentIndex].id);
     }
   }
 

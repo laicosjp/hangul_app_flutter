@@ -46,8 +46,7 @@ class WordsService extends CsvLoaderService {
 
   Future<List<int>> _learnedWordIds() async {
     List<int> _correctWordIds = await NyStorage.readCollection("correctWordIds");
-    List<int> _incorrectWordIds = await NyStorage.readCollection("incorrectWordIds");
 
-    return _correctWordIds + _incorrectWordIds;
+    return _correctWordIds;
   }
 }
