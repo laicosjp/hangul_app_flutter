@@ -8,16 +8,16 @@ class WordsService extends CsvLoaderService {
     final _csvList = await convertCsv(model: "words");
     List<Word> _words = _csvList.map((csvRow) => Word.fromCsv(csvRow)).toList();
 
+    _words.forEach((word) => _assignRandomChoices(word, _words));
+
     if (lessonId != null) {
       _words = _words.where((word) => word.lessonId == lessonId).toList();
     }
 
     if (onlyNew == true) {
       List<int> _wordIds = await _learnedWordIds();
-      _words.removeWhere((word) => _wordIds.contains(word.id));
+      _words = _words.where((word) => !_wordIds.contains(word.id)).toList();
     }
-
-    _words.forEach((word) => _assignRandomChoices(word, _words));
 
     return _words;
   }
