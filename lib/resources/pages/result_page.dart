@@ -24,12 +24,8 @@ class _ResultPageState extends NyState<ResultPage> {
   init() async {
     super.init();
     _words = widget.data();
-    _shoutYay();
-    await _retrieveCorrectWordIds();
-  }
-
-  void _shoutYay() {
     widget.controller.playAudio('audio/yay.mp3');
+    await _retrieveCorrectWordIds();
   }
 
   Future<void> _retrieveCorrectWordIds() async {

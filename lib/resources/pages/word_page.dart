@@ -29,25 +29,39 @@ class _WordPageState extends NyState<WordPage> {
     widget.controller.speak(_words[_currentIndex].text);
   }
 
-  void _checkAnswer(response) {
-    if (_words[_currentIndex] == response) {
-      // 正解の時の処理
-      setState(() {
-        _answerProgress = 'correct';
-      });
-      widget.controller.playAudio('audio/correct.mp3');
-    } else {
-      // 不正解の時の処理
-      setState(() {
-        _answerProgress = 'incorrect';
-      });
-      widget.controller.playAudio('audio/incorrect.mp3');
-    }
+  Future<void> onAnswered(int choiceIndex) async {
+    Word currentWord = _words[_currentIndex];
+    Word chosenWord = currentWord.choices[choiceIndex];
+    bool isCorrect = currentWord == chosenWord;
+
+    updateAnswerProgress(isCorrect);
+    playFeedbackAudio(isCorrect);
+    recordAnswer(currentWord, chosenWord);
+
+    await Future.delayed(Duration(milliseconds: 700));
+    moveToNextWord();
   }
 
-  void _nextWord() {
+  void updateAnswerProgress(bool isCorrect) {
+    setState(() {
+      _answerProgress = isCorrect ? 'correct' : 'incorrect';
+    });
+  }
+
+  void playFeedbackAudio(bool isCorrect) {
+    String audioFile = isCorrect ? 'audio/correct.mp3' : 'audio/incorrect.mp3';
+    widget.controller.playAudio(audioFile);
+  }
+
+  void recordAnswer(Word chosenWord, Word currentWord) {
+    widget.controller.recordScore(chosenWord, currentWord);
+    _exercisedWords.add(currentWord);
+  }
+
+  void moveToNextWord() {
     setState(() {
       _currentIndex = (_currentIndex + 1) % _words.length;
+      _answerProgress = 'hidden';
     });
 
     if (_currentIndex == PER_WORD) {
@@ -55,17 +69,6 @@ class _WordPageState extends NyState<WordPage> {
     } else {
       widget.controller.speak(_words[_currentIndex].text);
     }
-  }
-
-  Future<void> onAnswered(int choiceIndex) async {
-    _checkAnswer(_words[_currentIndex].choices[choiceIndex]);
-    widget.controller.recordScore(_words[_currentIndex].choices[choiceIndex], _words[_currentIndex]);
-    _exercisedWords.add(_words[_currentIndex]);
-    await Future.delayed(Duration(milliseconds: 700));
-    setState(() {
-      _answerProgress = 'hidden';
-    });
-    _nextWord();
   }
 
   Widget _buildChoiceButton(int choiceIndex) {
