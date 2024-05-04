@@ -59,11 +59,6 @@ class _WordPageState extends NyState<WordPage> {
       _answerProgress = 'hidden';
     });
 
-    print("=============");
-    print(_currentIndex);
-    print(PER_WORD);
-    print("=============");
-
     if (_currentIndex == PER_WORD) {
       routeTo('/result', data: _exercisedWords);
     } else {
