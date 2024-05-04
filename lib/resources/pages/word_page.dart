@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controllers/word_controller.dart';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
+import 'package:flutter_app/resources/pages/complete_page.dart';
 import 'package:flutter_app/resources/services/words_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -26,6 +27,12 @@ class _WordPageState extends NyState<WordPage> {
     super.init();
     _lessonId = int.parse(widget.queryParameters()['lessonId']);
     _words = await _wordsService.findAll(lessonId: _lessonId, onlyNew: true);
+
+    if (_words.isEmpty) {
+      routeTo(CompletePage.path, queryParameters: {'lessonId': _lessonId.toString()});
+      return;
+    }
+
     widget.controller.speak(_words[_currentIndex].text);
   }
 
@@ -59,7 +66,7 @@ class _WordPageState extends NyState<WordPage> {
       _answerProgress = 'hidden';
     });
 
-    if (_currentIndex == PER_WORD) {
+    if (_currentIndex == PER_WORD || (_words.length < PER_WORD && _currentIndex == 0)) {
       routeTo('/result', data: _exercisedWords);
     } else {
       widget.controller.speak(_words[_currentIndex].text);

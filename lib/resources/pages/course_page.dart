@@ -133,7 +133,7 @@ class _CoursePageState extends NyState<CoursePage> {
                                   ),
                                   Text("未修得", style: TextStyle(fontSize: 14)),
                                   Spacer(),
-                                  Text("${100 - (learningProgresses[currentLessonPosition].values.last)}", style: TextStyle(fontSize: 24)),
+                                  Text("${(100 - (learningProgresses[currentLessonPosition].values.last)).toStringAsFixed(1)}", style: TextStyle(fontSize: 24)),
                                   Gap(4),
                                   Text("%")
                                 ],

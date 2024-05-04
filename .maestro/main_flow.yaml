@@ -54,3 +54,5 @@ clearKeychain: true
 
 - tapOn: "～へ、～で (=으로)"
 - tapOn: "と (=과)"
+
+- tapOn: "つぎのレッスンへ"
