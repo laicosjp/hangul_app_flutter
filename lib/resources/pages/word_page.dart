@@ -18,7 +18,7 @@ class _WordPageState extends NyState<WordPage> {
   int _currentIndex = 0;
   String _answerProgress = 'hidden';
   final _wordsService = WordsService();
-  final PER_WORD = 9;
+  final PER_WORD = 10;
   List<Word> _exercisedWords = [];
 
   @override
@@ -58,6 +58,11 @@ class _WordPageState extends NyState<WordPage> {
       _currentIndex = (_currentIndex + 1) % _words.length;
       _answerProgress = 'hidden';
     });
+
+    print("=============");
+    print(_currentIndex);
+    print(PER_WORD);
+    print("=============");
 
     if (_currentIndex == PER_WORD) {
       routeTo('/result', data: _exercisedWords);
