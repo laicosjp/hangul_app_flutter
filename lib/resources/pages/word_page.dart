@@ -35,7 +35,7 @@ class _WordPageState extends NyState<WordPage> {
     bool isCorrect = currentWord == chosenWord;
 
     updateAnswerProgress(isCorrect);
-    playFeedbackAudio(isCorrect);
+    widget.controller.playFeedbackAudio(isCorrect);
     recordAnswer(currentWord, chosenWord);
 
     await Future.delayed(Duration(milliseconds: 700));
@@ -46,11 +46,6 @@ class _WordPageState extends NyState<WordPage> {
     setState(() {
       _answerProgress = isCorrect ? 'correct' : 'incorrect';
     });
-  }
-
-  void playFeedbackAudio(bool isCorrect) {
-    String audioFile = isCorrect ? 'audio/correct.mp3' : 'audio/incorrect.mp3';
-    widget.controller.playAudio(audioFile);
   }
 
   void recordAnswer(Word chosenWord, Word currentWord) {

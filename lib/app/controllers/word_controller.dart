@@ -26,4 +26,9 @@ class WordController extends Controller {
       await NyStorage.addToCollection("correctWordIds", item: _answer.id);
     }
   }
+
+  playFeedbackAudio(bool isCorrect) {
+    String audioFile = isCorrect ? 'audio/correct.mp3' : 'audio/incorrect.mp3';
+    playAudio(audioFile);
+  }
 }
