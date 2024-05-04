@@ -1,13 +1,12 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/controllers/word_controller.dart';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_app/resources/services/words_service.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
-class WordPage extends NyStatefulWidget {
+class WordPage extends NyStatefulWidget<WordController> {
   static const path = '/word';
 
   WordPage({super.key}) : super(path, child: _WordPageState());
@@ -18,77 +17,59 @@ class _WordPageState extends NyState<WordPage> {
   List<Word> _words = [];
   int _currentIndex = 0;
   String _answerProgress = 'hidden';
-  FlutterTts _tts = FlutterTts();
-  final _player = AudioPlayer();
   final _wordsService = WordsService();
-  final PER_WORD = 9;
+  final PER_WORD = 10;
   List<Word> _exercisedWords = [];
 
   @override
   init() async {
     super.init();
-    _player.audioCache = AudioCache(prefix: 'public/assets/');
     _lessonId = int.parse(widget.queryParameters()['lessonId']);
     _words = await _wordsService.findAll(lessonId: _lessonId, onlyNew: true);
-    _speak(_words[_currentIndex].text);
+    widget.controller.speak(_words[_currentIndex].text);
   }
 
-  void _checkAnswer(response) {
-    if (_words[_currentIndex] == response) {
-      // 正解の時の処理
-      setState(() {
-        _answerProgress = 'correct';
-        _player.play(AssetSource('audio/correct.mp3'));
-      });
-    } else {
-      // 不正解の時の処理
-      setState(() {
-        _answerProgress = 'incorrect';
-        _player.play(AssetSource('audio/incorrect.mp3'));
-      });
-    }
+  Future<void> onAnswered(int choiceIndex) async {
+    Word currentWord = _words[_currentIndex];
+    Word chosenWord = currentWord.choices[choiceIndex];
+    bool isCorrect = currentWord == chosenWord;
+
+    updateAnswerProgress(isCorrect);
+    widget.controller.playFeedbackAudio(isCorrect);
+    recordAnswer(currentWord, chosenWord);
+
+    await Future.delayed(Duration(milliseconds: 700));
+    moveToNextWord();
   }
 
-  void _nextWord() {
+  void updateAnswerProgress(bool isCorrect) {
+    setState(() {
+      _answerProgress = isCorrect ? 'correct' : 'incorrect';
+    });
+  }
+
+  void recordAnswer(Word chosenWord, Word currentWord) {
+    widget.controller.recordScore(chosenWord, currentWord);
+    _exercisedWords.add(currentWord);
+  }
+
+  void moveToNextWord() {
     setState(() {
       _currentIndex = (_currentIndex + 1) % _words.length;
+      _answerProgress = 'hidden';
     });
 
     if (_currentIndex == PER_WORD) {
       routeTo('/result', data: _exercisedWords);
     } else {
-      _speak(_words[_currentIndex].text);
-    }
-  }
-
-  void _speak(word) {
-    _tts.setLanguage('ko-KR');
-    _tts.setSpeechRate(0.6);
-    _tts.setVolume(1);
-    word = word.replaceAll(RegExp(r'\(.*?\)'), ''); // カッコの中身は読み上げない
-    _tts.speak(word);
-  }
-
-  Future<void> _recordAnswer(response) async {
-    await NyStorage.deleteFromCollectionWhere((wordId) => wordId == _words[_currentIndex].id, key: "correctWordIds");
-
-    if (_words[_currentIndex] == response) {
-      await NyStorage.addToCollection("correctWordIds", item: _words[_currentIndex].id);
+      widget.controller.speak(_words[_currentIndex].text);
     }
   }
 
   Widget _buildChoiceButton(int choiceIndex) {
     return OutlinedButton(
       onPressed: () async {
-        _checkAnswer(_words[_currentIndex].choices[choiceIndex]);
-        await _recordAnswer(_words[_currentIndex].choices[choiceIndex]);
-        _exercisedWords.add(_words[_currentIndex]);
-        await Future.delayed(Duration(milliseconds: 700));
-        setState(() {
-          _answerProgress = 'hidden';
-        });
-        _player.stop(); // この処理がないと、連続で正解（or不正解）の時に音声が再生されない
-        _nextWord();
+        await onAnswered(choiceIndex);
       },
       child: Text(_words[_currentIndex].choices[choiceIndex].translation),
       style: OutlinedButton.styleFrom(
