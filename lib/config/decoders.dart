@@ -1,3 +1,4 @@
+import '/app/controllers/word_controller.dart';
 import '/app/models/course.dart';
 import '/app/models/lesson.dart';
 import '/app/models/word.dart';
@@ -52,8 +53,6 @@ final Map<Type, dynamic> apiDecoders = {
 |-------------------------------------------------------------------------- */
 final Map<Type, dynamic> controllers = {
   HomeController: () => HomeController(),
-
-  // ...
-
+  WordController: () => WordController(),
 };
 
