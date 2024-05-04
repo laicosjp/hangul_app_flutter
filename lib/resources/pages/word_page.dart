@@ -37,14 +37,14 @@ class _WordPageState extends NyState<WordPage> {
       // 正解の時の処理
       setState(() {
         _answerProgress = 'correct';
-        _player.play(AssetSource('audio/correct.mp3'));
       });
+      _player.play(AssetSource('audio/correct.mp3'));
     } else {
       // 不正解の時の処理
       setState(() {
         _answerProgress = 'incorrect';
-        _player.play(AssetSource('audio/incorrect.mp3'));
       });
+      _player.play(AssetSource('audio/incorrect.mp3'));
     }
   }
 
@@ -60,17 +60,9 @@ class _WordPageState extends NyState<WordPage> {
     }
   }
 
-  Future<void> _recordAnswer(response) async {
-    await NyStorage.deleteFromCollectionWhere((wordId) => wordId == _words[_currentIndex].id, key: "correctWordIds");
-
-    if (_words[_currentIndex] == response) {
-      await NyStorage.addToCollection("correctWordIds", item: _words[_currentIndex].id);
-    }
-  }
-
   Future<void> onAnswered(int choiceIndex) async {
     _checkAnswer(_words[_currentIndex].choices[choiceIndex]);
-    await _recordAnswer(_words[_currentIndex].choices[choiceIndex]);
+    widget.controller.recordScore(_words[_currentIndex].choices[choiceIndex], _words[_currentIndex]);
     _exercisedWords.add(_words[_currentIndex]);
     await Future.delayed(Duration(milliseconds: 700));
     setState(() {
