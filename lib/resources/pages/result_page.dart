@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/controllers/result_controller.dart';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
@@ -8,7 +9,7 @@ import 'package:gap/gap.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
-class ResultPage extends NyStatefulWidget {
+class ResultPage extends NyStatefulWidget<ResultController> {
   static const path = '/result';
 
   ResultPage({super.key}) : super(path, child: _ResultPageState());
@@ -16,7 +17,6 @@ class ResultPage extends NyStatefulWidget {
 
 class _ResultPageState extends NyState<ResultPage> {
   List<Word> _words = [];
-  final _player = AudioPlayer();
   FlutterTts _tts = FlutterTts();
   List<int> _correctWordIds = [];
 
@@ -29,8 +29,7 @@ class _ResultPageState extends NyState<ResultPage> {
   }
 
   void _shoutYay() {
-    _player.audioCache = AudioCache(prefix: 'public/assets/');
-    _player.play(AssetSource("audio/yay.mp3"));
+    widget.controller.playAudio('audio/yay.mp3');
   }
 
   Future<void> _retrieveCorrectWordIds() async {

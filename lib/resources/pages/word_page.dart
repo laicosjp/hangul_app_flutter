@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controllers/word_controller.dart';
@@ -18,7 +17,6 @@ class _WordPageState extends NyState<WordPage> {
   List<Word> _words = [];
   int _currentIndex = 0;
   String _answerProgress = 'hidden';
-  final _player = AudioPlayer();
   final _wordsService = WordsService();
   final PER_WORD = 9;
   List<Word> _exercisedWords = [];
@@ -26,7 +24,6 @@ class _WordPageState extends NyState<WordPage> {
   @override
   init() async {
     super.init();
-    _player.audioCache = AudioCache(prefix: 'public/assets/');
     _lessonId = int.parse(widget.queryParameters()['lessonId']);
     _words = await _wordsService.findAll(lessonId: _lessonId, onlyNew: true);
     widget.controller.speak(_words[_currentIndex].text);
@@ -38,13 +35,13 @@ class _WordPageState extends NyState<WordPage> {
       setState(() {
         _answerProgress = 'correct';
       });
-      _player.play(AssetSource('audio/correct.mp3'));
+      widget.controller.playAudio('audio/correct.mp3');
     } else {
       // 不正解の時の処理
       setState(() {
         _answerProgress = 'incorrect';
       });
-      _player.play(AssetSource('audio/incorrect.mp3'));
+      widget.controller.playAudio('audio/incorrect.mp3');
     }
   }
 
@@ -68,7 +65,6 @@ class _WordPageState extends NyState<WordPage> {
     setState(() {
       _answerProgress = 'hidden';
     });
-    _player.stop(); // この処理がないと、連続で正解（or不正解）の時に音声が再生されない
     _nextWord();
   }
 

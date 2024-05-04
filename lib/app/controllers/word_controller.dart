@@ -12,7 +12,7 @@ class WordController extends Controller {
     super.construct(context);
   }
 
-  void speak(_word) {
+  speak(_word) {
     _tts.setLanguage('ko-KR');
     _tts.setSpeechRate(0.6);
     _tts.setVolume(1);
@@ -20,7 +20,7 @@ class WordController extends Controller {
     _tts.speak(_word);
   }
 
-  Future<void> recordScore(_response, _answer) async {
+  recordScore(_response, _answer) async {
     await NyStorage.deleteFromCollectionWhere((wordId) => wordId == _answer.id, key: "correctWordIds");
     if (_answer == _response) {
       await NyStorage.addToCollection("correctWordIds", item: _answer.id);
