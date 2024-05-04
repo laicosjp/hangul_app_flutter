@@ -59,7 +59,7 @@ class _WordPageState extends NyState<WordPage> {
       _answerProgress = 'hidden';
     });
 
-    if (_currentIndex == PER_WORD) {
+    if (_currentIndex == PER_WORD || (_words.length < PER_WORD && _currentIndex == 0)) {
       routeTo('/result', data: _exercisedWords);
     } else {
       widget.controller.speak(_words[_currentIndex].text);
