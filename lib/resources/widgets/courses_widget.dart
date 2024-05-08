@@ -4,13 +4,19 @@ import 'package:flutter_app/resources/services/courses_service.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
-class CoursesPage extends NyStatefulWidget {
-  static const path = '/courses';
+class Courses extends StatefulWidget {
+  const Courses({super.key});
 
-  CoursesPage({super.key}) : super(path, child: _CoursesPageState());
+  static String state = "courses";
+
+  @override
+  createState() => _CoursesState();
 }
 
-class _CoursesPageState extends NyState<CoursesPage> {
+class _CoursesState extends NyState<Courses> {
+  _CoursesState() {
+    stateName = Courses.state;
+  }
   final _coursesService = CoursesService();
   List<Course> courses = [];
 
@@ -18,12 +24,6 @@ class _CoursesPageState extends NyState<CoursesPage> {
   init() async {
     courses = await _coursesService.findAll();
   }
-
-  /// Use boot if you need to load data before the [view] is rendered.
-  // @override
-  // boot() async {
-  //
-  // }
 
   @override
   Widget view(BuildContext context) {

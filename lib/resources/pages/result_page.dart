@@ -67,7 +67,7 @@ class _ResultPageState extends NyState<ResultPage> {
                         Expanded(
                           child: OutlinedButton(
                             onPressed: () {
-                              routeTo('/courses');
+                              routeTo('/welcome');
                             },
                             child: Text("ホームヘ"),
                             style: ButtonStyle(

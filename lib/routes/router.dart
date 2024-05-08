@@ -3,7 +3,6 @@ import '/resources/pages/complete_page.dart';
 import '/resources/pages/result_page.dart';
 import '/resources/pages/course_page.dart';
 import '/resources/pages/word_page.dart';
-import '/resources/pages/courses_page.dart';
 import '/resources/pages/home_page.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -29,7 +28,6 @@ appRouter() => nyRoutes((router) {
   //
   //   router.route(AccountPage.path, (context) => AccountPage());
   // });
-  router.route(CoursesPage.path, (context) => CoursesPage());
   router.route(WordPage.path, (context) => WordPage());
   router.route(CoursePage.path, (context) => CoursePage());
   router.route(ResultPage.path, (context) => ResultPage());

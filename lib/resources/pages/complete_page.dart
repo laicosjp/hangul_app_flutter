@@ -40,7 +40,7 @@ class _CompletePageState extends NyState<CompletePage> {
             Gap(20),
             OutlinedButton(
               onPressed: () {
-                routeTo('/courses');
+                routeTo('/welcome');
               },
               child: Text('他のレッスンへ'),
               style: ButtonStyle(
