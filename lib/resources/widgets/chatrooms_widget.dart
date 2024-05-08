@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/resources/pages/chatroom_page.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -47,7 +48,7 @@ class _ChatroomsState extends NyState<Chatrooms> {
                 title: Text(chatrooms[index]['name']),
                 subtitle: Text(chatrooms[index]['lastMessage']),
                 onTap: () {
-                  print('チャットルーム ${chatrooms[index]['name']} が選択されました');
+                  routeTo(ChatroomPage.path);
                 },
               );
             },

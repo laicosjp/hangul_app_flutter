@@ -1,3 +1,4 @@
+import '/resources/pages/chatroom_page.dart';
 import '/resources/pages/welcome_page.dart';
 import '/resources/pages/complete_page.dart';
 import '/resources/pages/result_page.dart';
@@ -33,4 +34,5 @@ appRouter() => nyRoutes((router) {
   router.route(ResultPage.path, (context) => ResultPage());
   router.route(CompletePage.path, (context) => CompletePage());
   router.route(WelcomePage.path, (context) => WelcomePage(), initialRoute: true);
+  router.route(ChatroomPage.path, (context) => ChatroomPage());
 });
