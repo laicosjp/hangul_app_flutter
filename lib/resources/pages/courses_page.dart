@@ -70,10 +70,10 @@ class _CoursesPageState extends NyState<CoursesPage> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Icon(Icons.timelapse, size: 16, color: Colors.orange),
-                                    SizedBox(width: 2),
+                                    // Icon(Icons.timelapse, size: 16, color: Colors.orange),
+                                    // SizedBox(width: 2),
                                     Text(
-                                      "04 / 100",
+                                      "Start!",
                                       style: TextStyle(fontSize: 12),
                                     ),
                                   ],

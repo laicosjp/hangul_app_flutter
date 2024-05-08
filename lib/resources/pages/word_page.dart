@@ -90,7 +90,7 @@ class _WordPageState extends NyState<WordPage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("レッスンの名前")),
+      appBar: AppBar(title: Text("レッスン")),
       body: Container(
         child: Column(children: [
           Expanded(
