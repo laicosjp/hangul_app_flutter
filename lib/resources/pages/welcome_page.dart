@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_app/resources/widgets/courses_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -38,14 +39,17 @@ class _WelcomePageState extends NyState<WelcomePage> {
             _currentIndex = index;
           });
         },
+        selectedItemColor: ThemeColor.get(context).primaryContent,
+        unselectedItemColor: ThemeColor.get(context).primaryAccent,
+        selectedIconTheme: IconThemeData(color: ThemeColor.get(context).primaryContent),
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Tab 1',
+            icon: Icon(Icons.translate_rounded),
+            label: 'Word',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Tab 2',
+            icon: Icon(Icons.chat_outlined),
+            label: 'Book',
           ),
         ],
       ),
