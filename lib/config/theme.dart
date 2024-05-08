@@ -26,6 +26,9 @@ final List<BaseThemeConfig<ColorStyles>> appThemes = [
     id: getEnv('DARK_THEME_ID'),
     description: "Dark theme",
     theme: darkTheme,
-    colors: DarkThemeColors(),
+
+    // memo: ダークテーマを有効にするためにはコメントアウトを外すこと
+    // colors: DarkThemeColors(),
+    colors: LightThemeColors(),
   ),
 ];
