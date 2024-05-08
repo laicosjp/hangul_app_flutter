@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_app/resources/pages/chatroom_page.dart';
+import 'package:flutter_app/resources/pages/new_chatroom_page.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -54,6 +57,13 @@ class _ChatroomsState extends NyState<Chatrooms> {
             },
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: ThemeColor.get(context).primaryContent,
+        onPressed: () {
+          routeTo(NewChatroomPage.path);
+        },
       ),
     );
   }
