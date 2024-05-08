@@ -16,6 +16,12 @@ class _ChatroomsState extends NyState<Chatrooms> {
     stateName = Chatrooms.state;
   }
 
+  final List<Map<String, dynamic>> chatrooms = [
+    {'name': '山田 太郎', 'lastMessage': 'こんにちは！'},
+    {'name': '鈴木 一郎', 'lastMessage': 'プロジェクトの更新がありますか？'},
+    {'name': '佐藤 花子', 'lastMessage': '昨日の会議について'},
+  ];
+
   @override
   init() async {}
 
@@ -28,9 +34,25 @@ class _ChatroomsState extends NyState<Chatrooms> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('チャット一覧'), automaticallyImplyLeading: false),
+      appBar: AppBar(title: Text('ワードリリック'), automaticallyImplyLeading: false),
       body: SafeAreaWidget(
-        child: Container(child: Column(children: [Text("Hello")])),
+        child: Container(
+          child: ListView.builder(
+            itemCount: chatrooms.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: CircleAvatar(
+                  child: Text(chatrooms[index]['name'][0]),
+                ),
+                title: Text(chatrooms[index]['name']),
+                subtitle: Text(chatrooms[index]['lastMessage']),
+                onTap: () {
+                  print('チャットルーム ${chatrooms[index]['name']} が選択されました');
+                },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

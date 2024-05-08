@@ -47,8 +47,8 @@ class _WelcomePageState extends NyState<WelcomePage> {
             label: 'Word',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat_outlined),
-            label: 'Chat',
+            icon: Icon(Icons.music_note),
+            label: 'Music',
           ),
         ],
       ),
