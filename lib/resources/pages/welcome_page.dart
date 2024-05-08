@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
+import 'package:flutter_app/resources/widgets/chatrooms_widget.dart';
 import 'package:flutter_app/resources/widgets/courses_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -14,9 +15,7 @@ class _WelcomePageState extends NyState<WelcomePage> {
 
   final List<Widget> _pages = [
     Container(child: Courses()),
-    Container(
-      child: Text("Tab 2"),
-    ),
+    Container(child: Chatrooms()),
   ];
 
   @override
@@ -49,7 +48,7 @@ class _WelcomePageState extends NyState<WelcomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_outlined),
-            label: 'Book',
+            label: 'Chat',
           ),
         ],
       ),
