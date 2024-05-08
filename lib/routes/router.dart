@@ -1,3 +1,4 @@
+import '/resources/pages/welcome_page.dart';
 import '/resources/pages/complete_page.dart';
 import '/resources/pages/result_page.dart';
 import '/resources/pages/course_page.dart';
@@ -28,9 +29,10 @@ appRouter() => nyRoutes((router) {
   //
   //   router.route(AccountPage.path, (context) => AccountPage());
   // });
-  router.route(CoursesPage.path, (context) => CoursesPage(), initialRoute: true);
+  router.route(CoursesPage.path, (context) => CoursesPage());
   router.route(WordPage.path, (context) => WordPage());
   router.route(CoursePage.path, (context) => CoursePage());
   router.route(ResultPage.path, (context) => ResultPage());
   router.route(CompletePage.path, (context) => CompletePage());
+  router.route(WelcomePage.path, (context) => WelcomePage(), initialRoute: true);
 });
