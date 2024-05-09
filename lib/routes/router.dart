@@ -1,3 +1,4 @@
+import '/resources/pages/policy_page.dart';
 import '/resources/pages/complete_page.dart';
 import '/resources/pages/result_page.dart';
 import '/resources/pages/course_page.dart';
@@ -33,4 +34,5 @@ appRouter() => nyRoutes((router) {
   router.route(CoursePage.path, (context) => CoursePage());
   router.route(ResultPage.path, (context) => ResultPage());
   router.route(CompletePage.path, (context) => CompletePage());
+  router.route(PolicyPage.path, (context) => PolicyPage());
 });
