@@ -28,7 +28,17 @@ class _CoursesPageState extends NyState<CoursesPage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("コース選択"), automaticallyImplyLeading: false),
+      appBar: AppBar(
+        title: Text("コース選択"),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                routeTo('/policy');
+              },
+              icon: Icon(Icons.info_outline))
+        ],
+      ),
       body: SafeAreaWidget(
         child: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
