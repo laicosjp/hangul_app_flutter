@@ -35,6 +35,8 @@ dependencies:
   audioplayers: ^6.0.0
   percent_indicator: ^4.2.3
   flutter_inappwebview: ^6.0.0
+  introduction_screen: ^3.1.14
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
@@ -65,5 +67,7 @@ flutter:
     - public/assets/app_icon/
     - public/assets/csv/
     - public/assets/audio/
+    - public/assets/svg/
+    - public/assets/svg/undraw/
     - lang/
     - .env
