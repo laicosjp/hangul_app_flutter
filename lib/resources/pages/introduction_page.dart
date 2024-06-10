@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_app/resources/pages/courses_page.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -28,7 +29,15 @@ class _IntroductionPageState extends NyState<IntroductionPage> {
           PageViewModel(
             title: "アルダへようこそ！",
             body: "韓国語の単語学習をはじめましょう。",
-            image: Center(child: SvgPicture.asset('public/assets/svg/undraw/undraw_studying_re_deca.svg', width: 200, height: 200)),
+            image: Center(
+                child: SvgPicture.asset(
+              getPublicAsset('svg/undraw/undraw_studying_re_deca.svg'),
+              width: 200,
+              height: 200,
+            )),
+            // decoration: const PageDecoration(
+            //   pageColor: Colors.white,
+            // ),
           ),
           PageViewModel(
             title: "Title of introduction page",
@@ -41,8 +50,17 @@ class _IntroductionPageState extends NyState<IntroductionPage> {
         onDone: () {
           routeTo(CoursesPage.path);
         },
-        done: const Text("Start"),
-        next: const Text("Next"),
+        done: Text("Start", style: TextStyle(color: ThemeColor.get(context).primaryContent)),
+        next: Text("Next", style: TextStyle(color: ThemeColor.get(context).primaryContent)),
+        globalBackgroundColor: Colors.white,
+        dotsDecorator: DotsDecorator(
+          size: const Size.square(10.0),
+          activeSize: const Size(20.0, 10.0),
+          activeColor: ThemeColor.get(context).primaryContent,
+          color: Colors.black26,
+          spacing: const EdgeInsets.symmetric(horizontal: 3.0),
+          activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+        ),
       ),
     );
   }
