@@ -35,17 +35,17 @@ class _IntroductionPageState extends NyState<IntroductionPage> {
               width: 200,
               height: 200,
             )),
-            // decoration: const PageDecoration(
-            //   pageColor: Colors.white,
-            // ),
           ),
           PageViewModel(
-            title: "Title of introduction page",
-            body: "Welcome to the app! This is a description of how it works.",
-            image: const Center(
-              child: Icon(Icons.waving_hand, size: 50.0),
-            ),
-          )
+            title: "学習と復習",
+            body: "コースを選択し、単語を学習します。間違えた単語を復習します。",
+            image: Center(
+                child: SvgPicture.asset(
+              getPublicAsset('svg/undraw/undraw_accept_request_re_d81h.svg'),
+              width: 200,
+              height: 200,
+            )),
+          ),
         ],
         onDone: () {
           routeTo(CoursesPage.path);
