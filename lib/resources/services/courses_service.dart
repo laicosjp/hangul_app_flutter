@@ -18,14 +18,13 @@ import 'package:flutter_app/resources/services/data_loader_service.dart';
 //   }
 // }
 
-
 class CoursesService extends DataLoaderService {
   static const COURSE_JSON_FILES = [
-    'data/hangulFirstTest.json',
-    'data/hangulSecondTest.json',
-    'data/hangulThirdTest.json',
     'data/hangulFifthTest.json',
-    'data/hangulFifthTest.json'
+    'data/hangulFourthTest.json',
+    'data/hangulThirdTest.json',
+    'data/hangulSecondTest.json',
+    'data/hangulFirstTest.json',
   ];
 
   Future<List<Course>> findAll() async {

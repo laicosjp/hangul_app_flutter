@@ -49,7 +49,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
               padding: EdgeInsets.only(bottom: 16),
               child: GestureDetector(
                 onTap: () {
-                  routeTo('/course', queryParameters: {'course_id': courses[position].id.toString()});
+                  routeTo('/course', queryParameters: {'slug': courses[position].slug});
                 },
                 child: Row(
                   children: <Widget>[

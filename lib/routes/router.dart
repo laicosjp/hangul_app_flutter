@@ -1,3 +1,4 @@
+import '/resources/pages/course_page.dart';
 import '/resources/pages/policy_page.dart';
 import '/resources/pages/courses_page.dart';
 import '/resources/pages/home_page.dart';
@@ -27,4 +28,5 @@ appRouter() => nyRoutes((router) {
   // });
   router.route(CoursesPage.path, (context) => CoursesPage(), initialRoute: true);
   router.route(PolicyPage.path, (context) => PolicyPage());
+  router.route(CoursePage.path, (context) => CoursePage());
 });
