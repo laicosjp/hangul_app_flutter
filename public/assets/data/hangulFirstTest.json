@@ -1,6 +1,6 @@
 {
   "id": 5,
-  "slug": "hangul_test_1",
+  "slug": "hangulFirstTest",
   "title": "ハングル検定1級",
   "words": [
     {"id": 5000001, "origin": "아이스박스", "translation": "アイスボックス", "course_id": 5, "created_at": "2024-06-14T09:56:57.809+09:00", "updated_at": "2024-06-14T09:56:57.809+09:00"},
