@@ -53,17 +53,18 @@ class _CoursesPageState extends NyState<CoursesPage> {
                 },
                 child: Row(
                   children: <Widget>[
-                    Container(
-                      width: 120,
-                      height: 120,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image(
-                          image: AssetImage("public/assets/images/seoul${courses[position].id}.png"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+                    // TODO: 後で戻す
+                    // Container(
+                    //   width: 120,
+                    //   height: 120,
+                    //   child: ClipRRect(
+                    //     borderRadius: BorderRadius.circular(10),
+                    //     child: Image(
+                    //       image: AssetImage("public/assets/images/seoul${courses[position].id}.png"),
+                    //       fit: BoxFit.cover,
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(width: 8),
                     Expanded(
                       child: Container(
