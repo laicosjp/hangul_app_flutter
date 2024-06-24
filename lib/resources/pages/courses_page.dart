@@ -41,7 +41,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
       ),
       body: SafeAreaWidget(
         child: ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
+          physics: AlwaysScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           itemBuilder: (context, position) {
