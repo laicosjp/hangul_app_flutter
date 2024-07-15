@@ -51,6 +51,8 @@ flutter_launcher_icons:
   ios: true
   image_path: "public/assets/app_icon/icon.png"
   remove_alpha_ios: true
+  adaptive_icon_background: "#FF9900"
+  adaptive_icon_foreground: "public/assets/app_icon/icon_for_android.png" # androidだと余白がついてしまうので、アダプティブアイコン用でこちらを使用する
 
 flutter:
   # The following line ensures that the Material Icons font is
