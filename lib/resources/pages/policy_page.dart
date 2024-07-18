@@ -10,7 +10,7 @@ class PolicyPage extends NyStatefulWidget {
 }
 
 class _PolicyPageState extends NyState<PolicyPage> {
-  final url = "https://aldablitz-production.up.railway.app/policy";
+  final url = "https://hangul-app-astro.web.app/policy";
 
   @override
   Widget view(BuildContext context) {
