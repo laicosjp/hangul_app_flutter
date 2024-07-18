@@ -13,11 +13,11 @@ class CoursesPage extends NyStatefulWidget {
 class _CoursesPageState extends NyState<CoursesPage> {
   final _coursesApiService = CoursesApiService();
 
-  List<Course> _courses = [];
+  late List<Course> _courses;
 
   @override
   init() async {
-    _courses = await _coursesApiService.findAll();
+    _courses = await _coursesApiService.findAll() ?? [];
   }
 
   /// Use boot if you need to load data before the [view] is rendered.

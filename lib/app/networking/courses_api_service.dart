@@ -10,7 +10,7 @@ class CoursesApiService extends NyApiService {
   @override
   String get baseUrl => getEnv('API_BASE_URL');
 
-  Future<dynamic> findAll() async {
+  Future<List<Course>?> findAll() async {
     return await network<List<Course>>(
       request: (request) => request.get("/courses"),
     );
