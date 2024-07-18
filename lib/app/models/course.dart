@@ -5,19 +5,19 @@ import 'package:nylo_framework/nylo_framework.dart';
 class Course extends Model {
   final int id;
   final String title;
-  final bool isPublished;
+  final String slug;
 
   Course({
     required this.id,
     required this.title,
-    required this.isPublished,
+    required this.slug,
   });
 
   factory Course.fromJson(data) {
     return Course(
       id: data['id'],
       title: data['title'],
-      isPublished: data['isPublished'],
+      slug: data['slug'],
     );
   }
 
@@ -30,7 +30,7 @@ class Course extends Model {
     return Course(
       id: int.parse(csvRow[0]),
       title: csvRow[1],
-      isPublished: csvRow[2].toLowerCase() == "true",
+      slug: csvRow[2] ?? '',
     );
   }
 }
