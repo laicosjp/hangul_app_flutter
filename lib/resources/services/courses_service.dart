@@ -4,7 +4,7 @@ import 'package:flutter_app/resources/services/csv_loader_service.dart';
 class CoursesService extends CsvLoaderService {
   Future<List<Course>> findAll() async {
     final List<List<String>> _csvList = await convertCsv(model: "courses");
-    final _courses = _csvList.map((csvRow) => Course.fromCsv(csvRow)).where((course) => course.isPublished).toList();
+    final _courses = _csvList.map((csvRow) => Course.fromCsv(csvRow)).toList();
 
     return _courses;
   }

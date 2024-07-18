@@ -1,3 +1,4 @@
+import '/app/networking/courses_api_service.dart';
 import '/app/controllers/result_controller.dart';
 import '/app/controllers/word_controller.dart';
 import '/app/models/course.dart';
@@ -43,6 +44,8 @@ final Map<Type, dynamic> apiDecoders = {
   ApiService: () => ApiService(),
 
   // ...
+
+  CoursesApiService: CoursesApiService(),
 };
 
 
