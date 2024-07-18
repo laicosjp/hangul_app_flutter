@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/course.dart';
 import '/config/decoders.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -9,9 +10,9 @@ class CoursesApiService extends NyApiService {
   @override
   String get baseUrl => getEnv('API_BASE_URL');
 
-  Future<dynamic> fetchData() async {
-    return await network(
-        request: (request) => request.get("/courses"),
+  Future<dynamic> findAll() async {
+    return await network<List<Course>>(
+      request: (request) => request.get("/courses"),
     );
   }
 }

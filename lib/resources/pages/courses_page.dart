@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/course.dart';
-import 'package:flutter_app/resources/services/courses_service.dart';
+import 'package:flutter_app/app/networking/courses_api_service.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -11,12 +11,13 @@ class CoursesPage extends NyStatefulWidget {
 }
 
 class _CoursesPageState extends NyState<CoursesPage> {
-  final _coursesService = CoursesService();
-  List<Course> courses = [];
+  final _coursesApiService = CoursesApiService();
+
+  List<Course> _courses = [];
 
   @override
   init() async {
-    courses = await _coursesService.findAll();
+    _courses = await _coursesApiService.findAll();
   }
 
   /// Use boot if you need to load data before the [view] is rendered.
@@ -49,7 +50,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
               padding: EdgeInsets.only(bottom: 16),
               child: GestureDetector(
                 onTap: () {
-                  routeTo('/course', queryParameters: {'course_id': courses[position].id.toString()});
+                  routeTo('/course', queryParameters: {'course_id': _courses[position].id.toString()});
                 },
                 child: Row(
                   children: <Widget>[
@@ -59,7 +60,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image(
-                          image: AssetImage("public/assets/images/seoul${courses[position].id}.png"),
+                          image: AssetImage("public/assets/images/seoul${_courses[position].id}.png"),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -73,7 +74,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text(courses[position].title, style: TextStyle(fontWeight: FontWeight.w600)),
+                            Text(_courses[position].title, style: TextStyle(fontWeight: FontWeight.w600)),
                             SizedBox(height: 8),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,7 +109,7 @@ class _CoursesPageState extends NyState<CoursesPage> {
               ),
             );
           },
-          itemCount: courses.length,
+          itemCount: _courses.length,
         ),
       ),
     );
