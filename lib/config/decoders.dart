@@ -1,3 +1,4 @@
+import '/app/controllers/auth_controller.dart';
 import '/app/networking/courses_api_service.dart';
 import '/app/controllers/result_controller.dart';
 import '/app/controllers/word_controller.dart';
@@ -59,5 +60,6 @@ final Map<Type, dynamic> controllers = {
   HomeController: () => HomeController(),
   WordController: () => WordController(),
   ResultController: () => ResultController(),
+  AuthController: () => AuthController(),
 };
 
