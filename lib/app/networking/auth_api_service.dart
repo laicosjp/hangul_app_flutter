@@ -12,20 +12,19 @@ class AuthApiService extends NyApiService {
 
   Future<dynamic> login(flutter_login.LoginData data) async {
     return await network(
-        request: (request) => request.post("/auth/sign_in", data: {
-          'email': data.name, // flutter_loginの仕様でemailをnameで渡す
-          'password': data.password,
-        }),
-        handleSuccess: (response) async {
-          User user = User.fromJson(response.data);
-          await Auth.set(user);
+      request: (request) => request.post("/auth/sign_in", data: {
+        'email': data.name, // flutter_loginの仕様でemailをnameで渡す
+        'password': data.password,
+      }),
+      handleSuccess: (response) async {
+        User user = User.fromJson(response.data);
+        await Auth.set(user);
 
-          return user;
-        },
-        handleFailure: (DioException dioError) {
-
-          return dioError.response?.data['errors'].join(',');
-        },
+        return user;
+      },
+      handleFailure: (DioException dioError) {
+        return dioError.response?.data['errors'].join(',');
+      },
     );
   }
 
@@ -42,7 +41,7 @@ class AuthApiService extends NyApiService {
         return user;
       },
       handleFailure: (DioException dioError) {
-        return dioError.response?.data['errors'].join(',');
+        return dioError.response?.data['errors']['full_messages'].join(',');
       },
     );
   }

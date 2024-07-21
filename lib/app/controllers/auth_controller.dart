@@ -14,6 +14,7 @@ class AuthController extends Controller {
   }
 
   Future<String?> login(flutter_login.LoginData data) async {
+    Auth.remove();
     dynamic response = await _apiService.login(data);
 
     if (Auth.user() == null) {
@@ -24,6 +25,7 @@ class AuthController extends Controller {
   }
 
   Future<String?> signup(flutter_login.SignupData data) async {
+    Auth.remove();
     dynamic response = await _apiService.signup(data);
 
     if (Auth.user() == null) {
