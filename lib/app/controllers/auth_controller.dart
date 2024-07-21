@@ -14,7 +14,7 @@ class AuthController extends Controller {
   }
 
   Future<String?> login(flutter_login.LoginData data) async {
-    dynamic response = await _apiService.login();
+    dynamic response = await _apiService.login(data);
 
     if (Auth.user() == null) {
       return response;
@@ -24,7 +24,13 @@ class AuthController extends Controller {
   }
 
   Future<String?> signup(flutter_login.SignupData data) async {
-    return null;
+    dynamic response = await _apiService.signup(data);
+
+    if (Auth.user() == null) {
+      return response;
+    }
+
+    return null;  // nullを返すと、flutter_loginでサインアップ成功とみなされる仕様
   }
 
   Future<String?> recoverPassword(String name) async {

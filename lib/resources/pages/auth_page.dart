@@ -22,7 +22,7 @@ class _AuthPageState extends NyState<AuthPage> {
         logo: AssetImage('public/assets/app_icon/icon_without_bg_color.png'),
         title: 'Learn words without effort!',
         onLogin: (loginData) async => await _controller.login(loginData),
-        // onSignup: (signupData) => _controller.signup(signupData, context),
+        onSignup: (signupData) async => await _controller.signup(signupData),
         onSubmitAnimationCompleted: () {
           routeTo('/courses');
         },
