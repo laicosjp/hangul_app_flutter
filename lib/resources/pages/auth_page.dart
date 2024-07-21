@@ -19,13 +19,22 @@ class _AuthPageState extends NyState<AuthPage> {
   Widget view(BuildContext context) {
     return Scaffold(
       body: FlutterLogin(
-        title: 'Auth',
+        logo: AssetImage('public/assets/app_icon/icon_without_bg_color.png'),
+        title: 'Learn words without effort!',
         onLogin: _controller.login,
         onSignup: _controller.signup,
         onSubmitAnimationCompleted: () {
           routeTo('/courses');
         },
         onRecoverPassword: _controller.recoverPassword,
+        theme: LoginTheme(
+          titleStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Inter',
+          ),
+        ),
       ),
     );
   }
