@@ -21,8 +21,8 @@ class _AuthPageState extends NyState<AuthPage> {
       body: FlutterLogin(
         logo: AssetImage('public/assets/app_icon/icon_without_bg_color.png'),
         title: 'Learn words without effort!',
-        onLogin: _controller.login,
-        onSignup: _controller.signup,
+        onLogin: (loginData) async => await _controller.login(loginData),
+        onSignup: (signupData) async => await _controller.signup(signupData),
         onSubmitAnimationCompleted: () {
           routeTo('/courses');
         },

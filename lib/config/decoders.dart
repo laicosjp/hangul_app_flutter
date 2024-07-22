@@ -1,3 +1,4 @@
+import '/app/networking/auth_api_service.dart';
 import '/app/controllers/auth_controller.dart';
 import '/app/networking/courses_api_service.dart';
 import '/app/controllers/result_controller.dart';
@@ -47,6 +48,8 @@ final Map<Type, dynamic> apiDecoders = {
   // ...
 
   CoursesApiService: CoursesApiService(),
+
+  AuthApiService: AuthApiService(),
 };
 
 
