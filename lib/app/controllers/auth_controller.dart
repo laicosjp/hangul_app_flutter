@@ -18,7 +18,7 @@ class AuthController extends Controller {
     dynamic response = await _apiService.login(data);
 
     if (Auth.user() == null) {
-      return response;
+      return response ?? "Fail to connect to server.";
     }
 
     return null; // nullを返すと、flutter_loginでログイン成功とみなされる仕様
@@ -29,7 +29,7 @@ class AuthController extends Controller {
     dynamic response = await _apiService.signup(data);
 
     if (Auth.user() == null) {
-      return response;
+      return response ?? "Fail to connect to server.";
     }
 
     return null;  // nullを返すと、flutter_loginでサインアップ成功とみなされる仕様
