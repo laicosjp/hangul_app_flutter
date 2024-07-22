@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controllers/auth_controller.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 import 'package:flutter_login/flutter_login.dart';
 
@@ -23,6 +24,14 @@ class _AuthPageState extends NyState<AuthPage> {
         title: 'Learn words without effort!',
         onLogin: (loginData) async => await _controller.login(loginData),
         onSignup: (signupData) async => await _controller.signup(signupData),
+        loginProviders: [
+          LoginProvider(
+            icon: FontAwesomeIcons.google,
+            callback: () async {
+              return 'fail to login.';
+            },
+          ),
+        ],
         onSubmitAnimationCompleted: () {
           routeTo('/courses');
         },
