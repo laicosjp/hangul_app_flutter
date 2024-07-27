@@ -17,24 +17,30 @@ import 'package:nylo_framework/nylo_framework.dart';
 |-------------------------------------------------------------------------- */
 
 appRouter() => nyRoutes((router) {
-  router.route(HomePage.path, (context) => HomePage());
-  // Add your routes here
+      router.route(
+        HomePage.path,
+        (context) => HomePage(),
+        authPage: false,
+        transition: PageTransitionType.fade,
+      );
 
-  // router.route(NewPage.path, (context) => NewPage(), transition: PageTransitionType.fade);
+      // Add your routes here
 
-  // Example using grouped routes
-  // router.group(() => {
-  //   "route_guards": [AuthRouteGuard()],
-  //   "prefix": "/dashboard"
-  // }, (router) {
-  //
-  //   router.route(AccountPage.path, (context) => AccountPage());
-  // });
-  router.route(CoursesPage.path, (context) => CoursesPage(), authPage: true);
-  router.route(WordPage.path, (context) => WordPage());
-  router.route(CoursePage.path, (context) => CoursePage());
-  router.route(ResultPage.path, (context) => ResultPage());
-  router.route(CompletePage.path, (context) => CompletePage());
-  router.route(PolicyPage.path, (context) => PolicyPage());
-  router.route(AuthPage.path, (context) => AuthPage(), initialRoute: true);
-});
+      // router.route(NewPage.path, (context) => NewPage(), transition: PageTransitionType.fade);
+
+      // Example using grouped routes
+      // router.group(() => {
+      //   "route_guards": [AuthRouteGuard()],
+      //   "prefix": "/dashboard"
+      // }, (router) {
+      //
+      //   router.route(AccountPage.path, (context) => AccountPage());
+      // });
+      router.route(CoursesPage.path, (context) => CoursesPage());
+      router.route(WordPage.path, (context) => WordPage());
+      router.route(CoursePage.path, (context) => CoursePage());
+      router.route(ResultPage.path, (context) => ResultPage());
+      router.route(CompletePage.path, (context) => CompletePage());
+      router.route(PolicyPage.path, (context) => PolicyPage());
+      router.route(AuthPage.path, (context) => AuthPage(), initialRoute: true);
+    });

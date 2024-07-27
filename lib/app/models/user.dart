@@ -1,16 +1,14 @@
 import 'package:nylo_framework/nylo_framework.dart';
 
 class User extends Model {
-  String? name;
-  String? email;
+  late String email;
 
-  User();
+  User({required this.email});
 
-  User.fromJson(dynamic data) {
-    name = data['name'];
-    email = data['email'];
+  factory User.fromJson(dynamic data) {
+    return User(email: data['email'] ?? "");
   }
 
   @override
-  toJson() => {"name": name, "email": email};
+  toJson() => {"email": email};
 }
