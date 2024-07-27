@@ -1,157 +1,52 @@
-import 'package:nylo_framework/nylo_framework.dart';
-import 'package:nylo_framework/theme/helper/ny_theme.dart';
 import 'package:flutter/material.dart';
-import '/bootstrap/extensions.dart';
-import '/resources/widgets/logo_widget.dart';
-import '/resources/widgets/safearea_widget.dart';
-import '/bootstrap/helpers.dart';
-import '/app/controllers/home_controller.dart';
+import 'package:flutter_app/resources/widgets/courses_widget.dart';
+import 'package:flutter_app/resources/widgets/profile_widget.dart';
+import 'package:nylo_framework/nylo_framework.dart';
 
-class HomePage extends NyStatefulWidget<HomeController> {
+class HomePage extends NyStatefulWidget {
   static const path = '/home';
 
   HomePage({super.key}) : super(path, child: _HomePageState());
 }
 
 class _HomePageState extends NyState<HomePage> {
+  int _currentIndex = 0;
 
-  /// The boot method is called before the [view] is rendered.
-  /// You can override this method to perform any async operations.
-  /// Try uncommenting the code below.
+  final List<Map<String, dynamic>> _pages = [
+    {"title": "Home", "icon": Icons.home_outlined, "widget": Courses()},
+    {"title": "Profile", "icon": Icons.person_outline, "widget": Profile()},
+  ];
+
+  @override
+  init() async {}
+
+  /// Use boot if you need to load data before the [view] is rendered.
   // @override
   // boot() async {
-  //   dump("boot");
-  //   await Future.delayed(Duration(seconds: 2));
+  //
   // }
 
-  /// If you would like to use the Skeletonizer loader,
-  /// uncomment the code below.
-  // bool get useSkeletonizer => true;
-
-  /// The Loading widget is shown while the [boot] method is running.
-  /// You can override this method to show a custom loading widget.
-  // @override
-  // Widget loading(BuildContext context) {
-  //   return Scaffold(
-  //       body: Center(child: Text("Loading..."))
-  //   );
-  // }
-
-  /// The [view] method should display your page.
   @override
   Widget view(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello World".tr()),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: widget.controller.showAbout,
-            icon: const Icon(Icons.info_outline),
-          ),
-        ],
+        title: Text(_pages[_currentIndex]['title']),
       ),
-      body: SafeAreaWidget(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Logo(),
-              Text(
-                getEnv("APP_NAME"),
-              ).displayMedium(context),
-              const Text("Micro-framework for Flutter", textAlign: TextAlign.center)
-                  .titleMedium(context)
-                  .setColor(context, (color) => color.primaryAccent),
-              const Text(
-                "Build something amazing 💡",
-              ).bodyMedium(context).alignCenter(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  const Divider(),
-                  Container(
-                    height: 250,
-                    width: double.infinity,
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                    decoration: BoxDecoration(
-                        color: ThemeColor.get(context).surfaceBackground,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 9,
-                            offset: const Offset(0, 3),
-                          ),
-                        ]),
-                    child: Center(
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        children:
-                        ListTile.divideTiles(context: context, tiles: [
-                          MaterialButton(
-                            onPressed: widget.controller.onTapDocumentation,
-                            child: Text(
-                              "documentation".tr().capitalize(),
-                            ).bodyLarge(context).setColor(
-                                context, (color) => color.surfaceContent),
-                          ),
-                          MaterialButton(
-                            onPressed: widget.controller.onTapGithub,
-                            child: const Text(
-                              "GitHub",
-                            ).bodyLarge(context).setColor(
-                                context, (color) => color.surfaceContent),
-                          ),
-                          MaterialButton(
-                            onPressed: widget.controller.onTapChangeLog,
-                            child: Text(
-                              "changelog".tr().capitalize(),
-                            ).bodyLarge(context).setColor(
-                                context, (color) => color.surfaceContent),
-                          ),
-                          MaterialButton(
-                            onPressed: widget.controller.onTapYouTube,
-                            child: Text(
-                              "YouTube Channel".tr().capitalize(),
-                            ).bodyLarge(context).setColor(
-                                context, (color) => color.surfaceContent),
-                          ),
-                        ]).toList(),
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    "Framework Version: $nyloVersion",
-                  )
-                      .bodyMedium(context)
-                      .setColor(context, (color) => Colors.grey),
-                  if (!context.isDarkMode)
-                    Switch(
-                        value: isThemeDark,
-                        onChanged: (_) {
-                          NyTheme.set(context,
-                              id: getEnv(isThemeDark != true
-                                  ? 'DARK_THEME_ID'
-                                  : 'LIGHT_THEME_ID'));
-                        }),
-                  if (!context.isDarkMode)
-                    Text("${isThemeDark ? "Dark" : "Light"} Mode"),
-                ],
-              ),
-            ],
-          ),
-        ),
+      body: _pages[_currentIndex]['widget'],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: _pages.map((page) {
+          return BottomNavigationBarItem(
+            icon: Icon(page['icon']),
+            label: '',
+          );
+        }).toList(),
       ),
     );
   }
-
-  bool get isThemeDark =>
-      ThemeProvider.controllerOf(context).currentThemeId ==
-          getEnv('DARK_THEME_ID');
 }
