@@ -13,14 +13,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends NyState<Profile> {
-
   _ProfileState() {
     stateName = Profile.state;
   }
 
   @override
-  init() async {
-  }
+  init() async {}
 
   @override
   stateUpdated(dynamic data) async {
@@ -31,10 +29,35 @@ class _ProfileState extends NyState<Profile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text(
-            "My email is...${widget.user.email}  / authorization: ${Backpack.instance.read("authorization")}"),
+        child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.user.email,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0),
+                  ),
+                ],
+              ),
+            ),
+            width: double.infinity,
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.orange,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+          ),
+        ],
       ),
-    );
+    ));
   }
 }
