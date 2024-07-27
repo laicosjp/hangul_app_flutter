@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/user.dart';
+import 'package:flutter_app/app/networking/profile_api_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class Profile extends StatefulWidget {
@@ -11,15 +13,17 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends NyState<Profile> {
-  final String accessToken =
-      Backpack.instance.read("authorization") ?? "Not found";
+  final ProfileApiService _apiService = ProfileApiService();
+  late User _user;
 
   _ProfileState() {
     stateName = Profile.state;
   }
 
   @override
-  init() async {}
+  boot() async {
+    _user = await _apiService.fetchData();
+  }
 
   @override
   stateUpdated(dynamic data) async {
@@ -31,7 +35,8 @@ class _ProfileState extends NyState<Profile> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text("My access token is: $accessToken"),
+        child: Text(
+            "My email is...${_user.email}  / authorization: ${Backpack.instance.read("authorization")}"),
       ),
     );
   }
