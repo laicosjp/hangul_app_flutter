@@ -17,7 +17,13 @@ import 'package:nylo_framework/nylo_framework.dart';
 |-------------------------------------------------------------------------- */
 
 appRouter() => nyRoutes((router) {
-      router.route(HomePage.path, (context) => HomePage(), authPage: true);
+      router.route(
+        HomePage.path,
+        (context) => HomePage(),
+        authPage: false,
+        transition: PageTransitionType.fade,
+      );
+
       // Add your routes here
 
       // router.route(NewPage.path, (context) => NewPage(), transition: PageTransitionType.fade);

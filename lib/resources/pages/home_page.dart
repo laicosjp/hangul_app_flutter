@@ -32,6 +32,7 @@ class _HomePageState extends NyState<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_pages[_currentIndex]["title"]),
+        automaticallyImplyLeading: false,
       ),
       body: _pages[_currentIndex]["widget"],
       bottomNavigationBar: CurvedNavigationBar(

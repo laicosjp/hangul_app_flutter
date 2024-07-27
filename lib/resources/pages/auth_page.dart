@@ -24,7 +24,7 @@ class _AuthPageState extends NyState<AuthPage> {
         onLogin: (loginData) async => await _controller.login(loginData),
         onSignup: (signupData) async => await _controller.signup(signupData),
         onSubmitAnimationCompleted: () {
-          routeTo('/courses');
+          routeTo('/home');
         },
         onRecoverPassword: _controller.recoverPassword,
         theme: LoginTheme(
