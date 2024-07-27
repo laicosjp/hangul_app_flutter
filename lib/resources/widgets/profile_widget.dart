@@ -35,27 +35,30 @@ class _ProfileState extends NyState<Profile> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.email ?? "",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0),
-                  ),
-                ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.email ?? "",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            width: double.infinity,
-            height: 80,
-            decoration: BoxDecoration(
-              color: Colors.orange,
-              borderRadius: BorderRadius.circular(20.0),
+              width: double.infinity,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.orange,
+                borderRadius: BorderRadius.circular(20.0),
+              ),
             ),
           ),
           Padding(
