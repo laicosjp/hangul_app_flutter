@@ -4,8 +4,8 @@ import 'package:flutter_app/app/models/user.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class Profile extends StatefulWidget {
-  final User user;
-  const Profile({super.key, required this.user});
+  final String? email;
+  const Profile({super.key, this.email});
 
   static String state = "profile";
 
@@ -43,7 +43,7 @@ class _ProfileState extends NyState<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.user.email,
+                    widget.email ?? "",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

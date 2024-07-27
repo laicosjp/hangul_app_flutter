@@ -10,9 +10,12 @@ class ProfileApiService extends NyApiService {
   @override
   String get baseUrl => getEnv('API_BASE_URL');
 
-  Future<dynamic> fetchData() async {
+  Future<User?> fetchData() async {
     return await network<User>(
         request: (request) => request.get("/profile"),
-        headers: {'Authorization': Backpack.instance.read("authorization")});
+        headers: {'Authorization': Backpack.instance.read("authorization")},
+        handleFailure: (DioException) {
+          return null;
+        });
   }
 }

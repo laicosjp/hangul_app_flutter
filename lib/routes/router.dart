@@ -20,7 +20,7 @@ appRouter() => nyRoutes((router) {
       router.route(
         HomePage.path,
         (context) => HomePage(),
-        authPage: false,
+        authPage: true,
         transition: PageTransitionType.fade,
       );
 
