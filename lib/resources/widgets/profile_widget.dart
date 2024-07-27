@@ -56,6 +56,62 @@ class _ProfileState extends NyState<Profile> {
               borderRadius: BorderRadius.circular(20.0),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Color(0xFFF2F4FA),
+              ),
+              child: ListTile(
+                leading: Icon(Icons.notifications_outlined),
+                trailing: Icon(Icons.arrow_forward_ios),
+                title: Text("Notifications"),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Color(0xFFF2F4FA),
+              ),
+              child: ListTile(
+                leading: Icon(Icons.info_outline),
+                trailing: Icon(Icons.arrow_forward_ios),
+                title: Text("Privaciy Policy"),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Color(0xFFF2F4FA),
+              ),
+              child: ListTile(
+                leading: Icon(Icons.support_agent_outlined),
+                trailing: Icon(Icons.arrow_forward_ios),
+                title: Text("Help Center"),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Color(0xFFF2F4FA),
+              ),
+              child: ListTile(
+                  leading: Icon(Icons.logout_outlined),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  title: Text("Logout"),
+                  onTap: () {}),
+            ),
+          ),
         ],
       ),
     ));
