@@ -11,9 +11,10 @@ class ProfileApiService extends NyApiService {
   String get baseUrl => getEnv('API_BASE_URL');
 
   Future<User?> fetchData() async {
+    String authorization = await NyStorage.read("authorization");
     return await network<User>(
         request: (request) => request.get("/profile"),
-        headers: {'Authorization': Backpack.instance.read("authorization")},
+        headers: {'Authorization': authorization},
         handleFailure: (DioException) {
           return null;
         });

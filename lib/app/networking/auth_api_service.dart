@@ -20,8 +20,7 @@ class AuthApiService extends NyApiService {
       handleSuccess: (response) async {
         User user = User.fromJson(response.data);
         await Auth.set(user);
-        Backpack.instance
-            .set('authorization', response.headers['authorization']![0]);
+        NyStorage.store('authorization', response.headers['authorization']![0]);
 
         return user;
       },
@@ -40,8 +39,7 @@ class AuthApiService extends NyApiService {
       handleSuccess: (response) async {
         User user = User.fromJson(response.data);
         await Auth.set(user);
-        Backpack.instance
-            .set('authorization', response.headers['authorization']![0]);
+        NyStorage.store('authorization', response.headers['authorization']![0]);
 
         return user;
       },

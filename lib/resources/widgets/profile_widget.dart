@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controllers/home_controller.dart';
-import 'package:flutter_app/app/models/user.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class Profile extends StatefulWidget {
