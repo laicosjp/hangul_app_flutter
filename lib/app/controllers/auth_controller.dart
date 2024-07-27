@@ -32,7 +32,7 @@ class AuthController extends Controller {
       return response ?? "Fail to connect to server.";
     }
 
-    return null;  // nullを返すと、flutter_loginでサインアップ成功とみなされる仕様
+    return null; // nullを返すと、flutter_loginでサインアップ成功とみなされる仕様
   }
 
   Future<String?> recoverPassword(String name) async {

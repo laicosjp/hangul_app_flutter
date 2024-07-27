@@ -11,6 +11,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends NyState<Profile> {
+  final String accessToken =
+      Backpack.instance.read("authorization") ?? "Not found";
+
   _ProfileState() {
     stateName = Profile.state;
   }
@@ -28,7 +31,7 @@ class _ProfileState extends NyState<Profile> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text("My name is higakijin"),
+        child: Text("My access token is: $accessToken"),
       ),
     );
   }

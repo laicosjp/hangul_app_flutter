@@ -5,7 +5,8 @@ import 'package:nylo_framework/nylo_framework.dart';
 import 'package:flutter_login/flutter_login.dart' as flutter_login;
 
 class AuthApiService extends NyApiService {
-  AuthApiService({BuildContext? buildContext}) : super(buildContext, decoders: modelDecoders);
+  AuthApiService({BuildContext? buildContext})
+      : super(buildContext, decoders: modelDecoders);
 
   @override
   String get baseUrl => getEnv('API_BASE_URL');
@@ -19,6 +20,8 @@ class AuthApiService extends NyApiService {
       handleSuccess: (response) async {
         User user = User.fromJson(response.data);
         await Auth.set(user);
+        Backpack.instance
+            .set('authorization', response.headers['authorization']![0]);
 
         return user;
       },
@@ -37,6 +40,8 @@ class AuthApiService extends NyApiService {
       handleSuccess: (response) async {
         User user = User.fromJson(response.data);
         await Auth.set(user);
+        Backpack.instance
+            .set('authorization', response.headers['authorization']![0]);
 
         return user;
       },
