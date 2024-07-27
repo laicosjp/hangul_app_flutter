@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/user.dart';
-import 'package:flutter_app/app/networking/profile_api_service.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  final User user;
+  const Profile({super.key, required this.user});
 
   static String state = "profile";
 
@@ -13,16 +13,13 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends NyState<Profile> {
-  final ProfileApiService _apiService = ProfileApiService();
-  late User _user;
 
   _ProfileState() {
     stateName = Profile.state;
   }
 
   @override
-  boot() async {
-    _user = await _apiService.fetchData();
+  init() async {
   }
 
   @override
@@ -36,7 +33,7 @@ class _ProfileState extends NyState<Profile> {
     return Container(
       child: Center(
         child: Text(
-            "My email is...${_user.email}  / authorization: ${Backpack.instance.read("authorization")}"),
+            "My email is...${widget.user.email}  / authorization: ${Backpack.instance.read("authorization")}"),
       ),
     );
   }

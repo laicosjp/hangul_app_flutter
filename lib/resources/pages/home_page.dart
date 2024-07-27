@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/user.dart';
+import 'package:flutter_app/app/networking/profile_api_service.dart';
 import 'package:flutter_app/resources/widgets/courses_widget.dart';
 import 'package:flutter_app/resources/widgets/profile_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
@@ -11,15 +13,29 @@ class HomePage extends NyStatefulWidget {
 }
 
 class _HomePageState extends NyState<HomePage> {
+  final ProfileApiService _profileApiService = ProfileApiService();
+  final List<Map<String, dynamic>> _pages = [];
   int _currentIndex = 0;
 
-  final List<Map<String, dynamic>> _pages = [
-    {"title": "Home", "icon": Icons.home_outlined, "widget": Courses()},
-    {"title": "Profile", "icon": Icons.person_outline, "widget": Profile()},
-  ];
-
+  late User _user;
   @override
-  init() async {}
+  init() async {
+    _user = await _profileApiService.fetchData();
+    setState(() {
+      _pages.addAll([
+        {
+          "title": "Home",
+          "icon": Icons.home_outlined,
+          "widget": Courses(),
+        },
+        {
+          "title": "Profile",
+          "icon": Icons.person_outline,
+          "widget": Profile(user: _user)
+        },
+      ]);
+    });
+  }
 
   /// Use boot if you need to load data before the [view] is rendered.
   // @override
