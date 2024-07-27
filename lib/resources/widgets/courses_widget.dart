@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/resources/widgets/course_card_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class Courses extends StatefulWidget {
@@ -27,9 +28,9 @@ class _CoursesState extends NyState<Courses> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text("Courses"),
-      ),
-    );
+        child: Column(children: [
+      CourseCard(),
+      CourseCard(),
+    ]));
   }
 }
