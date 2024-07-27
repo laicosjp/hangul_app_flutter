@@ -17,14 +17,11 @@ class _HomePageState extends NyState<HomePage> {
   final List<Map<String, dynamic>> _pages = [];
   int _currentIndex = 0;
 
-  late User _user;
+  User? _user;
   @override
   init() async {
-    if (Auth.user() == null) {
-      routeTo('/auth');
-    }
-
     _user = await _profileApiService.fetchData();
+
     setState(() {
       _pages.addAll([
         {
@@ -35,7 +32,7 @@ class _HomePageState extends NyState<HomePage> {
         {
           "title": "Profile",
           "icon": Icons.person_outline,
-          "widget": Profile(user: _user)
+          "widget": Profile(email: _user?.email)
         },
       ]);
     });
@@ -64,7 +61,6 @@ class _HomePageState extends NyState<HomePage> {
           Icon(Icons.person_outline, color: Colors.white),
         ],
         onTap: (index) {
-          //Handle button tap
           setState(() {
             _currentIndex = index;
           });
