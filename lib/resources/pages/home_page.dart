@@ -20,6 +20,10 @@ class _HomePageState extends NyState<HomePage> {
   late User _user;
   @override
   init() async {
+    if (Auth.user() == null) {
+      routeTo('/auth');
+    }
+
     _user = await _profileApiService.fetchData();
     setState(() {
       _pages.addAll([

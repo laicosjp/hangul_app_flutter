@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/controllers/home_controller.dart';
 import 'package:flutter_app/app/models/user.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -13,6 +14,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends NyState<Profile> {
+  final HomeController _controller = HomeController();
+
   _ProfileState() {
     stateName = Profile.state;
   }
@@ -109,7 +112,9 @@ class _ProfileState extends NyState<Profile> {
                   leading: Icon(Icons.logout_outlined),
                   trailing: Icon(Icons.arrow_forward_ios),
                   title: Text("Logout"),
-                  onTap: () {}),
+                  onTap: () {
+                    _controller.onLogout();
+                  }),
             ),
           ),
         ],
