@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/resources/widgets/courses_widget.dart';
 import 'package:flutter_app/resources/widgets/profile_widget.dart';
@@ -30,22 +31,23 @@ class _HomePageState extends NyState<HomePage> {
   Widget view(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_pages[_currentIndex]['title']),
+        title: Text(_pages[_currentIndex]["title"]),
       ),
-      body: _pages[_currentIndex]['widget'],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+      body: _pages[_currentIndex]["widget"],
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.white,
+        buttonBackgroundColor: Theme.of(context).primaryColor,
+        color: Theme.of(context).primaryColor,
+        items: <Widget>[
+          Icon(Icons.home_outlined, color: Colors.white),
+          Icon(Icons.person_outline, color: Colors.white),
+        ],
         onTap: (index) {
+          //Handle button tap
           setState(() {
             _currentIndex = index;
           });
         },
-        items: _pages.map((page) {
-          return BottomNavigationBarItem(
-            icon: Icon(page['icon']),
-            label: '',
-          );
-        }).toList(),
       ),
     );
   }
