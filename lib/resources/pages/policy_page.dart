@@ -3,6 +3,7 @@ import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
+// --TODO:delete this page after update courses_page.dart
 class PolicyPage extends NyStatefulWidget {
   static const path = '/policy';
 

@@ -81,10 +81,12 @@ class _ProfileState extends NyState<Profile> {
                 color: Color(0xFFF2F4FA),
               ),
               child: ListTile(
-                leading: Icon(Icons.info_outline),
-                trailing: Icon(Icons.arrow_forward_ios),
-                title: Text("Privaciy Policy"),
-              ),
+                  leading: Icon(Icons.info_outline),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  title: Text("Privaciy Policy"),
+                  onTap: () async {
+                    await _controller.onTapPolicy();
+                  }),
             ),
           ),
           Padding(

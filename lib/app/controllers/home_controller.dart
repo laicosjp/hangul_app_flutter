@@ -21,6 +21,10 @@ class HomeController extends Controller {
     await launchUrl(Uri.parse("https://m.youtube.com/@nylo_dev"));
   }
 
+  onTapPolicy() async {
+    await launchUrl(Uri.parse("https://hangul-app-astro.web.app/policy"));
+  }
+
   showAbout() {
     showAboutDialog(
       context: context!,
