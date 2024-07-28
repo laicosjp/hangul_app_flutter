@@ -106,43 +106,21 @@ class _CoursePageState extends NyState<CoursePage> {
                     ),
                     Gap(8),
                     Wrap(
-                      spacing: 4,
-                      runSpacing: 4,
-                      children: [
-                        Chip(
-                          label: Text("Hello"),
-                          backgroundColor: Color(0xffEBEBEb),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: BorderSide(
-                              color: Colors.transparent,
-                              width: 0,
-                            ),
-                          ),
-                        ),
-                        Chip(
-                          label: Text("End of this year"),
-                          backgroundColor: Color(0xffEBEBEb),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: BorderSide(
-                              color: Colors.transparent,
-                              width: 0,
-                            ),
-                          ),
-                        ),
-                        Chip(
-                          label: Text("End of this year"),
-                          backgroundColor: Color(0xffEBEBEb),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: BorderSide(
-                              color: Colors.transparent,
-                              width: 0,
-                            ),
-                          ),
-                        ),
-                      ],
+                      spacing: 2,
+                      runSpacing: 2,
+                      children: (_course?.words ?? [])
+                          .map((word) => Chip(
+                                label: Text(word.name),
+                                backgroundColor: Color(0xffEBEBEb),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  side: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 0,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
                     ),
                   ],
                 ),
