@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/course.dart';
 import 'package:flutter_app/resources/widgets/course_card_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
-class Courses extends StatefulWidget {
-  const Courses({super.key});
+class CoursesWidget extends StatefulWidget {
+  List<Course> courses = [];
+  CoursesWidget({super.key, this.courses = const []});
 
   static String state = "courses";
 
   @override
-  createState() => _CoursesState();
+  createState() => _CoursesWidgetState();
 }
 
-class _CoursesState extends NyState<Courses> {
-  _CoursesState() {
-    stateName = Courses.state;
+class _CoursesWidgetState extends NyState<CoursesWidget> {
+  _CoursesWidgetState() {
+    stateName = CoursesWidget.state;
   }
 
   @override
@@ -28,17 +30,13 @@ class _CoursesState extends NyState<Courses> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Column(children: [
-      CourseCard(
-          title: "How Sweet",
-          wordsCount: 100,
-          thumbnailUrl:
-              'https://t2.genius.com/unsafe/255x255/https%3A%2F%2Fimages.genius.com%2F2f2c553bf84b85ccc17daef3da1a3dbc.1000x1000x1.png'),
-      CourseCard(
-          title: "light",
-          wordsCount: 150,
-          thumbnailUrl:
-              'https://t2.genius.com/unsafe/255x255/https%3A%2F%2Fimages.genius.com%2F859f4416f956c1a641b82143930c511e.729x729x1.jpg'),
-    ]));
+        child: Column(
+            children: widget.courses
+                .map((course) => CourseCard(
+                      title: course.title,
+                      wordsCount: 100,
+                      thumbnailUrl: course.thumbnailUrl,
+                    ))
+                .toList()));
   }
 }

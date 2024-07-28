@@ -1,6 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/course.dart';
 import 'package:flutter_app/app/models/user.dart';
+import 'package:flutter_app/app/networking/courses_api_service.dart';
 import 'package:flutter_app/app/networking/profile_api_service.dart';
 import 'package:flutter_app/resources/widgets/courses_widget.dart';
 import 'package:flutter_app/resources/widgets/profile_widget.dart';
@@ -14,20 +16,24 @@ class HomePage extends NyStatefulWidget {
 
 class _HomePageState extends NyState<HomePage> {
   final ProfileApiService _profileApiService = ProfileApiService();
+  final CoursesApiService _coursesApiService = CoursesApiService();
   final List<Map<String, dynamic>> _pages = [];
   int _currentIndex = 0;
 
   User? _user;
+  List<Course>? _courses;
+
   @override
   init() async {
     _user = await _profileApiService.fetchData();
+    _courses = await _coursesApiService.findAll();
 
     setState(() {
       _pages.addAll([
         {
           "title": "Home",
           "icon": Icons.home_outlined,
-          "widget": Courses(),
+          "widget": CoursesWidget(courses: _courses ?? []),
         },
         {
           "title": "Profile",

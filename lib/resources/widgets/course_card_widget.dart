@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class CourseCard extends StatelessWidget {
-  final String? title;
-  final int? wordsCount;
-  final String? thumbnailUrl;
+  String? title;
+  int? wordsCount;
+  String? thumbnailUrl;
 
-  const CourseCard({
+  CourseCard({
     super.key,
     this.title,
     this.wordsCount,
