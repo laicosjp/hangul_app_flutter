@@ -6,11 +6,13 @@ class Course extends Model {
   final int id;
   final String title;
   final String slug;
+  final String thumbnailUrl;
 
   Course({
     required this.id,
     required this.title,
     required this.slug,
+    required this.thumbnailUrl,
   });
 
   factory Course.fromJson(data) {
@@ -18,6 +20,7 @@ class Course extends Model {
       id: data['id'],
       title: data['title'],
       slug: data['slug'],
+      thumbnailUrl: data['thumbnailUrl'],
     );
   }
 
@@ -31,6 +34,7 @@ class Course extends Model {
       id: int.parse(csvRow[0]),
       title: csvRow[1],
       slug: csvRow[2] ?? '',
+      thumbnailUrl: csvRow[3] ?? '',
     );
   }
 }

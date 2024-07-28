@@ -35,8 +35,7 @@ class _CoursesWidgetState extends NyState<CoursesWidget> {
                 .map((course) => CourseCard(
                       title: course.title,
                       wordsCount: 100,
-                      thumbnailUrl:
-                          "https://t2.genius.com/unsafe/510x510/https%3A%2F%2Fimages.genius.com%2F29f5cefb3e025b9e43c3affb81fd69d2.742x742x1.jpg",
+                      thumbnailUrl: course.thumbnailUrl,
                     ))
                 .toList()));
   }
