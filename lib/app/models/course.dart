@@ -7,12 +7,14 @@ class Course extends Model {
   final String title;
   final String slug;
   final String thumbnailUrl;
+  final int wordsCount;
 
   Course({
     required this.id,
     required this.title,
     required this.slug,
     required this.thumbnailUrl,
+    required this.wordsCount,
   });
 
   factory Course.fromJson(data) {
@@ -21,6 +23,7 @@ class Course extends Model {
       title: data['title'],
       slug: data['slug'],
       thumbnailUrl: data['thumbnailUrl'],
+      wordsCount: data['wordsCount'],
     );
   }
 
@@ -28,13 +31,4 @@ class Course extends Model {
   // toJson() {
   //   return {};
   // }
-
-  factory Course.fromCsv(csvRow) {
-    return Course(
-      id: int.parse(csvRow[0]),
-      title: csvRow[1],
-      slug: csvRow[2] ?? '',
-      thumbnailUrl: csvRow[3] ?? '',
-    );
-  }
 }

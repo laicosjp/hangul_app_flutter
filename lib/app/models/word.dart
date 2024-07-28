@@ -4,26 +4,20 @@ import 'package:nylo_framework/nylo_framework.dart';
 
 class Word extends Model {
   final int id;
-  final int lessonId;
-  final String text;
-  final String translation;
-  final List<Word> choices;
+  final String name;
+  final String answer;
 
   Word({
     required this.id,
-    required this.text,
-    required this.lessonId,
-    required this.translation,
-    required this.choices,
+    required this.name,
+    required this.answer,
   });
 
   factory Word.fromJson(data) {
     return Word(
       id: data['id'],
-      text: data['text'],
-      lessonId: data['lessonId'],
-      translation: data['translation'],
-      choices: data['choices'],
+      name: data['name'],
+      answer: data['answer'],
     );
   }
 
@@ -31,14 +25,4 @@ class Word extends Model {
   // toJson() {
   //   return {};
   // }
-
-  factory Word.fromCsv(List<String> csvRow) {
-    return Word(
-      id: int.parse(csvRow[0]),
-      lessonId: int.parse(csvRow[1]),
-      text: csvRow[2],
-      translation: csvRow[3],
-      choices: [],
-    );
-  }
 }
