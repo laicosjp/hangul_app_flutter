@@ -29,8 +29,16 @@ class _CoursesState extends NyState<Courses> {
   Widget build(BuildContext context) {
     return Container(
         child: Column(children: [
-      CourseCard(),
-      CourseCard(),
+      CourseCard(
+          title: "How Sweet",
+          wordsCount: 100,
+          thumbnailUrl:
+              'https://t2.genius.com/unsafe/255x255/https%3A%2F%2Fimages.genius.com%2F2f2c553bf84b85ccc17daef3da1a3dbc.1000x1000x1.png'),
+      CourseCard(
+          title: "light",
+          wordsCount: 150,
+          thumbnailUrl:
+              'https://t2.genius.com/unsafe/255x255/https%3A%2F%2Fimages.genius.com%2F859f4416f956c1a641b82143930c511e.729x729x1.jpg'),
     ]));
   }
 }

@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class CourseCard extends StatelessWidget {
+  final String? title;
+  final int? wordsCount;
+  final String? thumbnailUrl;
+
   const CourseCard({
     super.key,
+    this.title,
+    this.wordsCount,
+    this.thumbnailUrl,
   });
 
   @override
@@ -18,37 +25,42 @@ class CourseCard extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(children: [
-            Container(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  'https://t2.genius.com/unsafe/193x193/https%3A%2F%2Fimages.genius.com%2F2f2c553bf84b85ccc17daef3da1a3dbc.1000x1000x1.png',
-                  width: 100,
-                  height: 100,
+          child: Container(
+            height: 100,
+            child: Row(children: [
+              Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    thumbnailUrl ?? 'https://via.placeholder.com/100',
+                    width: 100,
+                  ),
                 ),
               ),
-            ),
-            Gap(16),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                'How Sweet',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Row(children: [
-                Icon(Icons.menu_book, color: Colors.black54, size: 16),
-                Gap(4),
-                Text('102 words',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 12,
-                    )),
-              ])
-            ])
-          ]),
+              Gap(16),
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title ?? '',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(children: [
+                      Icon(Icons.menu_book, color: Colors.black54, size: 16),
+                      Gap(4),
+                      Text('${wordsCount} words',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 12,
+                          )),
+                    ])
+                  ])
+            ]),
+          ),
         ),
       ),
     );
