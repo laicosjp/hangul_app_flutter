@@ -1,14 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/app/models/course.dart';
-import 'package:flutter_app/app/models/lesson.dart';
-import 'package:flutter_app/resources/services/courses_service.dart';
-import 'package:flutter_app/resources/services/lessons_service.dart';
+import 'package:flutter_app/app/networking/courses_api_service.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class CoursePage extends NyStatefulWidget {
   static const path = '/course';
@@ -17,166 +12,115 @@ class CoursePage extends NyStatefulWidget {
 }
 
 class _CoursePageState extends NyState<CoursePage> {
-  final _lessonsService = LessonsService();
-  final _coursesService = CoursesService();
+  late Course? _course;
 
-  late List<Lesson> _lessons = [];
-  late Course course;
-  late List<Map<int, double>> learningProgresses = [];
-
-  int currentLessonPosition = 0;
+  final CoursesApiService _apiService = CoursesApiService();
 
   @override
   init() async {
-    super.init();
-    _lessons = await _lessonsService.findAll(courseId: int.parse(queryParameters()['course_id']));
-    course = await _coursesService.findOne(int.parse(queryParameters()['course_id']));
-    await setLearningProgress();
-  }
-
-  Future<void> setLearningProgress() async {
-    for (Lesson lesson in _lessons) {
-      List<int> learnedWordIds = await lesson.learnedWordIds();
-      double percent = double.parse((learnedWordIds.length / lesson.words.length * 100).toStringAsFixed(1));
-      learningProgresses.add({lesson.id: percent});
-    }
+    _course = await _apiService.findById(int.parse(widget.queryParameters()['id']));
   }
 
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(course.title)),
+      appBar: AppBar(title: Text(_course?.title ?? '')),
       body: SafeAreaWidget(
         child: Container(
           child: Column(
             children: [
               Container(
-                height: 60,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _lessons.length,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              currentLessonPosition = index;
-                            });
-                          },
-                          child: CircularPercentIndicator(
-                            radius: 26.0,
-                            lineWidth: 7,
-                            percent: learningProgresses[index].values.last / 100,
-                            center: Text("${index + 1}", style: TextStyle(fontWeight: FontWeight.w600)),
-                            backgroundColor: Colors.grey,
-                            progressColor: Colors.lightGreen,
-                          ),
-                        ),
-                        Gap(16),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              Gap(40),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text("${course.title} ${_lessons[currentLessonPosition].title}", style: TextStyle(fontWeight: FontWeight.w600)),
-              ),
-              Gap(20),
-              Container(
-                  height: 200,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CircularPercentIndicator(
-                          radius: 80.0,
-                          lineWidth: 14,
-                          percent: learningProgresses[currentLessonPosition].values.last / 100,
-                          center: Center(
-                            child: Text(
-                              "${learningProgresses[currentLessonPosition].values.last}%",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                          backgroundColor: Colors.grey,
-                          progressColor: Colors.lightGreen,
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                  child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.circle,
-                                    color: Colors.lightGreen,
-                                    size: 18,
-                                  ),
-                                  Text("覚えた", style: TextStyle(fontSize: 14)),
-                                  Spacer(),
-                                  Text("${learningProgresses[currentLessonPosition].values.last}", style: TextStyle(fontSize: 34)),
-                                  Gap(4),
-                                  Text("%")
-                                ],
-                              )),
-                              Expanded(
-                                  child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.circle,
-                                    color: Colors.grey,
-                                    size: 18,
-                                  ),
-                                  Text("未修得", style: TextStyle(fontSize: 14)),
-                                  Spacer(),
-                                  Text("${(100 - (learningProgresses[currentLessonPosition].values.last)).toStringAsFixed(1)}", style: TextStyle(fontSize: 24)),
-                                  Gap(4),
-                                  Text("%")
-                                ],
-                              )),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
-              Gap(20),
-              Container(
                 child: Row(
                   children: [
                     Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text("苦手"),
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.grey, foregroundColor: Colors.white),
+                      child: Text(
+                        _course?.title ?? '',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    Gap(10),
-                    Expanded(
-                      child: learningProgresses[currentLessonPosition].values.last == 100
-                          ? ElevatedButton(
-                              onPressed: () async {
-                                Lesson _lesson = _lessons[currentLessonPosition];
-                                List<int> _learnedWordIds = await _lesson.learnedWordIds();
-                                await NyStorage.deleteFromCollectionWhere((id) => _learnedWordIds.contains(id), key: 'correctWordIds');
-
-                                routeTo('/word', queryParameters: {"lessonId": _lesson.id.toString()});
-                              },
-                              child: Text("総復習"),
-                              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, foregroundColor: Colors.white),
-                            )
-                          : ElevatedButton(
-                              onPressed: () {
-                                routeTo('/word', queryParameters: {"lessonId": _lessons[currentLessonPosition].id.toString()});
-                              },
-                              child: Text("未学習"),
-                              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white),
+                    Spacer(),
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          padding: EdgeInsets.zero,
+                          backgroundColor: Color(0xff465AFF).withOpacity(0.1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.share_outlined,
+                            color: Color(0xff465AFF),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Gap(8),
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          padding: EdgeInsets.zero,
+                          backgroundColor: Colors.green.shade50,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.bookmark_border,
+                            color: Colors.orange,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Gap(8),
+              Divider(),
+              Gap(8),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Words you'll learn",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Gap(8),
+                    Wrap(
+                      spacing: 2,
+                      runSpacing: 2,
+                      children: (_course?.words ?? []).take(15).map((word) {
+                        return Chip(
+                          label: Text(word.name),
+                          backgroundColor: Color(0xffEBEBEb),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.transparent,
+                              width: 0,
                             ),
-                    )
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ],
                 ),
               )

@@ -18,4 +18,13 @@ class CoursesApiService extends NyApiService {
       },
     );
   }
+
+  Future<Course?> findById(int id) async {
+    return await network<Course>(
+      request: (request) => request.get("/courses/$id"),
+      handleFailure: (DioException) {
+        return null;
+      },
+    );
+  }
 }

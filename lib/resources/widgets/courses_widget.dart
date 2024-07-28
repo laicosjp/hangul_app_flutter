@@ -33,6 +33,7 @@ class _CoursesWidgetState extends NyState<CoursesWidget> {
         child: Column(
             children: widget.courses
                 .map((course) => CourseCard(
+                      id: course.id,
                       title: course.title,
                       wordsCount: 100,
                       thumbnailUrl: course.thumbnailUrl,
