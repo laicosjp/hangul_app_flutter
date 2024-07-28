@@ -35,7 +35,7 @@ class _CoursesWidgetState extends NyState<CoursesWidget> {
                 .map((course) => CourseCard(
                       id: course.id,
                       title: course.title,
-                      wordsCount: 100,
+                      wordsCount: course.wordsCount,
                       thumbnailUrl: course.thumbnailUrl,
                     ))
                 .toList()));
