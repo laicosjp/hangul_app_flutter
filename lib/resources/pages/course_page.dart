@@ -18,8 +18,7 @@ class _CoursePageState extends NyState<CoursePage> {
 
   @override
   init() async {
-    _course =
-        await _apiService.findById(int.parse(widget.queryParameters()['id']));
+    _course = await _apiService.findById(int.parse(widget.queryParameters()['id']));
   }
 
   @override
@@ -108,19 +107,19 @@ class _CoursePageState extends NyState<CoursePage> {
                     Wrap(
                       spacing: 2,
                       runSpacing: 2,
-                      children: (_course?.words ?? [])
-                          .map((word) => Chip(
-                                label: Text(word.name),
-                                backgroundColor: Color(0xffEBEBEb),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  side: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 0,
-                                  ),
-                                ),
-                              ))
-                          .toList(),
+                      children: (_course?.words ?? []).take(15).map((word) {
+                        return Chip(
+                          label: Text(word.name),
+                          backgroundColor: Color(0xffEBEBEb),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.transparent,
+                              width: 0,
+                            ),
+                          ),
+                        );
+                      }).toList(),
                     ),
                   ],
                 ),
