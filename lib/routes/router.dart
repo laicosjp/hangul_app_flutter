@@ -38,7 +38,11 @@ appRouter() => nyRoutes((router) {
       // });
       router.route(CoursesPage.path, (context) => CoursesPage());
       router.route(WordPage.path, (context) => WordPage());
-      router.route(CoursePage.path, (context) => CoursePage());
+      router.route(
+        CoursePage.path,
+        (context) => CoursePage(),
+        transition: PageTransitionType.fade,
+      );
       router.route(ResultPage.path, (context) => ResultPage());
       router.route(CompletePage.path, (context) => CompletePage());
       router.route(PolicyPage.path, (context) => PolicyPage());
