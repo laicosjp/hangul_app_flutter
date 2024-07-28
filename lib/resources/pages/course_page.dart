@@ -88,6 +88,64 @@ class _CoursePageState extends NyState<CoursePage> {
                     ),
                   ],
                 ),
+              ),
+              Gap(8),
+              Divider(),
+              Gap(8),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Words you'll learn",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Gap(8),
+                    Wrap(
+                      spacing: 4,
+                      runSpacing: 4,
+                      children: [
+                        Chip(
+                          label: Text("Hello"),
+                          backgroundColor: Color(0xffEBEBEb),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.transparent,
+                              width: 0,
+                            ),
+                          ),
+                        ),
+                        Chip(
+                          label: Text("End of this year"),
+                          backgroundColor: Color(0xffEBEBEb),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.transparent,
+                              width: 0,
+                            ),
+                          ),
+                        ),
+                        Chip(
+                          label: Text("End of this year"),
+                          backgroundColor: Color(0xffEBEBEb),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: Colors.transparent,
+                              width: 0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               )
             ],
           ),
