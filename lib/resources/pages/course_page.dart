@@ -148,6 +148,23 @@ class _CoursePageState extends NyState<CoursePage> {
           ),
         ),
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            backgroundColor: Colors.orange,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+          ),
+          child: Text(
+            'Learn this course',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+      ),
     );
   }
 }
