@@ -151,7 +151,9 @@ class _CoursePageState extends NyState<CoursePage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            routeTo('/quiz', data: _course!.words ?? []);
+          },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 16),
             backgroundColor: Colors.orange,

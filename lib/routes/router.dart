@@ -1,5 +1,6 @@
 import '/resources/pages/general_announcement_page.dart';
 import '/resources/pages/announcements_page.dart';
+import '/resources/pages/quiz_page.dart';
 import '/resources/pages/auth_page.dart';
 import '/resources/pages/policy_page.dart';
 import '/resources/pages/course_page.dart';
@@ -48,5 +49,13 @@ appRouter() => nyRoutes((router) {
         (context) => AnnouncementsPage(),
         transition: PageTransitionType.fade,
       );
-      router.route(GeneralAnnouncementPage.path, (context) => GeneralAnnouncementPage());
-});
+      router.route(
+        QuizPage.path,
+        (context) => QuizPage(),
+        transition: PageTransitionType.fade,
+      );
+      router.route(
+        GeneralAnnouncementPage.path,
+        (context) => GeneralAnnouncementPage(),
+      );
+    });

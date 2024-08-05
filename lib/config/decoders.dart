@@ -1,5 +1,6 @@
 import '/app/networking/general_announcements_api_service.dart';
 import '/app/models/general_announcement.dart';
+import '/app/models/choice.dart';
 import '/app/networking/profile_api_service.dart';
 import '/app/networking/auth_api_service.dart';
 import '/app/controllers/auth_controller.dart';
@@ -39,6 +40,10 @@ final Map<Type, dynamic> modelDecoders = {
   List<GeneralAnnouncement>: (data) => List.from(data).map((json) => GeneralAnnouncement.fromJson(json)).toList(),
 
   GeneralAnnouncement: (data) => GeneralAnnouncement.fromJson(data),
+
+  List<Choice>: (data) => List.from(data).map((json) => Choice.fromJson(json)).toList(),
+
+  Choice: (data) => Choice.fromJson(data),
 };
 
 /* API Decoders
