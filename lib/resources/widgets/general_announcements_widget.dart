@@ -33,9 +33,19 @@ class _GeneralAnnouncementsState extends NyState<GeneralAnnouncements> {
       body: SafeArea(
         child: NyListView(child: (BuildContext context, dynamic data) {
           return ListTile(
-            title: Text(data.title),
+            title: Text(
+              data.title,
+              style: TextStyle(fontWeight: FontWeight.bold),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+            subtitle: Text(
+              data.body.replaceAll("\n", ""),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
             onTap: () {
-              routeTo('/general-announcement', data: { 'id': 1 });
+              routeTo('/general-announcement', data: {'id': 1});
             },
           );
         }, data: () async {
