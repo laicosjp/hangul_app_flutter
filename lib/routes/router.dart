@@ -42,5 +42,9 @@ appRouter() => nyRoutes((router) {
       );
       router.route(PolicyPage.path, (context) => PolicyPage());
       router.route(AuthPage.path, (context) => AuthPage(), initialRoute: true);
-      router.route(AnnouncementsPage.path, (context) => AnnouncementsPage());
-});
+      router.route(
+        AnnouncementsPage.path,
+        (context) => AnnouncementsPage(),
+        transition: PageTransitionType.fade,
+      );
+    });

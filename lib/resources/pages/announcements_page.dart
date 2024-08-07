@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/resources/widgets/general_announcements_widget.dart';
+import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class AnnouncementsPage extends NyStatefulWidget {
   static const path = '/announcements';
-  
-  AnnouncementsPage({super.key}) : super(path, child: _AnnouncementsPageState());
+
+  AnnouncementsPage({super.key})
+      : super(path, child: _AnnouncementsPageState());
 }
 
 class _AnnouncementsPageState extends NyState<AnnouncementsPage> {
-
   @override
-  init() async {
+  init() async {}
 
-  }
-  
   /// Use boot if you need to load data before the [view] is rendered.
   // @override
   // boot() async {
@@ -23,11 +23,9 @@ class _AnnouncementsPageState extends NyState<AnnouncementsPage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Announcements")
-      ),
-      body: SafeArea(
-         child: Container(),
+      appBar: AppBar(title: Text("Notifications")),
+      body: SafeAreaWidget(
+        child: GeneralAnnouncements(),
       ),
     );
   }
