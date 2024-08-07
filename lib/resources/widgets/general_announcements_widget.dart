@@ -32,9 +32,13 @@ class _GeneralAnnouncementsState extends NyState<GeneralAnnouncements> {
     return Scaffold(
       body: SafeArea(
         child: NyListView(child: (BuildContext context, dynamic data) {
-          return ListTile(title: Text(data.title));
+          return ListTile(
+            title: Text(data.title),
+            onTap: () {
+              routeTo('/general-announcement', data: { 'id': 1 });
+            },
+          );
         }, data: () async {
-          // return _general_announcements;
           return await _apiService.findAll();
         }),
       ),

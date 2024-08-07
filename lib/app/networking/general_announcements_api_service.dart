@@ -18,4 +18,13 @@ class GeneralAnnouncementsApiService extends NyApiService {
       },
     );
   }
+
+  Future<dynamic> find() async {
+    return await network<GeneralAnnouncement>(
+      request: (request) => request.get("/general_announcements/1"),
+      handleFailure: (error) {
+        return null;
+      },
+    );
+  }
 }
