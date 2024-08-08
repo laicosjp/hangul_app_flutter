@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/resources/widgets/general_announcements_widget.dart';
 import 'package:flutter_app/resources/widgets/personal_announcements_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
@@ -27,20 +28,24 @@ class _AnnouncementsPageState extends NyState<AnnouncementsPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white),
-          title: const Text('Notifications',
-              style: TextStyle(color: Colors.white)),
-          bottom: const TabBar(
+          title: const Text('Notifications'),
+          shape: Border(
+            bottom: BorderSide(
+              color: Colors.black12,
+              width: 1,
+            ),
+          ),
+          bottom: TabBar(
             tabs: <Widget>[
               Tab(child: Text("For you")),
               Tab(child: Text("News")),
             ],
-            dividerColor: Colors.orange,
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white,
-            indicatorColor: Colors.white,
+            dividerColor: Colors.white,
+            labelColor: Colors.orange,
+            unselectedLabelColor: Colors.orange,
+            indicatorColor: Colors.orange,
           ),
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.white,
         ),
         body: const TabBarView(
           children: <Widget>[
