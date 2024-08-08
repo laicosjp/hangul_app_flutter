@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/resources/widgets/general_announcements_widget.dart';
+import 'package:flutter_app/resources/widgets/personal_announcements_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class AnnouncementsPage extends NyStatefulWidget {
@@ -43,7 +44,7 @@ class _AnnouncementsPageState extends NyState<AnnouncementsPage> {
         ),
         body: const TabBarView(
           children: <Widget>[
-            GeneralAnnouncements(),
+            PersonalAnnouncements(),
             GeneralAnnouncements(),
           ],
         ),
