@@ -1,3 +1,5 @@
+import '/app/networking/general_announcements_api_service.dart';
+import '/app/models/general_announcement.dart';
 import '/app/networking/profile_api_service.dart';
 import '/app/networking/auth_api_service.dart';
 import '/app/controllers/auth_controller.dart';
@@ -33,6 +35,10 @@ final Map<Type, dynamic> modelDecoders = {
   List<Course>: (data) => List.from(data).map((json) => Course.fromJson(json)).toList(),
 
   Course: (data) => Course.fromJson(data),
+
+  List<GeneralAnnouncement>: (data) => List.from(data).map((json) => GeneralAnnouncement.fromJson(json)).toList(),
+
+  GeneralAnnouncement: (data) => GeneralAnnouncement.fromJson(data),
 };
 
 /* API Decoders
@@ -53,6 +59,8 @@ final Map<Type, dynamic> apiDecoders = {
   AuthApiService: AuthApiService(),
 
   ProfileApiService: ProfileApiService(),
+
+  GeneralAnnouncementsApiService: GeneralAnnouncementsApiService(),
 };
 
 

@@ -72,6 +72,9 @@ class _ProfileState extends NyState<Profile> {
                 leading: Icon(Icons.notifications_outlined),
                 trailing: Icon(Icons.arrow_forward_ios),
                 title: Text("Notifications"),
+                onTap: () {
+                  routeTo('/announcements');
+                },
               ),
             ),
           ),
