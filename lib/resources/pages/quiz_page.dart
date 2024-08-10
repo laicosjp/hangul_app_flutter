@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/controllers/quiz_controller.dart';
 import 'package:flutter_app/app/models/choice.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -18,6 +19,8 @@ class _QuizPageState extends NyState<QuizPage> {
   String _answerProgress = 'hidden'; // or 'correct' and 'incorrect'
   FlutterTts _flutterTts = FlutterTts();
 
+  final _controller = QuizController();
+
   @override
   init() async {
     super.init();
@@ -28,6 +31,7 @@ class _QuizPageState extends NyState<QuizPage> {
 
   Future<void> onAnswered(bool isCorrect) async {
     judgeAnswer(isCorrect);
+    playFeedbackAudio(isCorrect);
 
     await Future.delayed(Duration(milliseconds: 700));
 
@@ -41,6 +45,10 @@ class _QuizPageState extends NyState<QuizPage> {
     setState(() {
       _answerProgress = isCorrect ? "correct" : 'incorrect';
     });
+  }
+
+  void playFeedbackAudio (bool isCorrect) {
+    _controller.playFeedbackAudio(isCorrect);
   }
 
   void moveToResultPage() {

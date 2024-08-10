@@ -1,3 +1,4 @@
+import '/app/controllers/quiz_controller.dart';
 import '/app/networking/general_announcements_api_service.dart';
 import '/app/models/general_announcement.dart';
 import '/app/models/choice.dart';
@@ -80,5 +81,7 @@ final Map<Type, dynamic> controllers = {
   WordController: () => WordController(),
   ResultController: () => ResultController(),
   AuthController: () => AuthController(),
+
+  QuizController: () => QuizController(),
 };
 
