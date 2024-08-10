@@ -47,7 +47,7 @@ class _QuizPageState extends NyState<QuizPage> {
     });
   }
 
-  void playFeedbackAudio (bool isCorrect) {
+  void playFeedbackAudio(bool isCorrect) {
     _controller.playFeedbackAudio(isCorrect);
   }
 
