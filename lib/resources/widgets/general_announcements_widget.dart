@@ -31,7 +31,7 @@ class _GeneralAnnouncementsState extends NyState<GeneralAnnouncements> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: NyListView(child: (BuildContext context, dynamic data) {
+        child: NyListView(child: (BuildContext context, data) {
           return ListTile(
             title: Text(
               data.title,
@@ -45,11 +45,14 @@ class _GeneralAnnouncementsState extends NyState<GeneralAnnouncements> {
               maxLines: 1,
             ),
             onTap: () {
-              routeTo('/general-announcement', data: {'id': 1});
+              routeTo(
+                '/general-announcement',
+                data: {'id': data.id},
+              );
             },
           );
         }, data: () async {
-          return await _apiService.findAll();
+          return (await _apiService.findAll()).reversed.toList();
         }),
       ),
     );
