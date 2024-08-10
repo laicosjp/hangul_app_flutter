@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/choice.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,60 +15,60 @@ class QuizPage extends NyStatefulWidget {
 class _QuizPageState extends NyState<QuizPage> {
   List<Word> _words = [];
   int _currentIndex = 0;
-  String _answerProgress = 'hidden';
-  final PER_WORD = 10;
+  String _answerProgress = 'hidden'; // or 'correct' and 'incorrect'
+  FlutterTts _flutterTts = FlutterTts();
 
   @override
   init() async {
     super.init();
     _words = widget.data();
 
-    // if (_words.isEmpty) {
-    //   routeTo(CompletePage.path,
-    //       queryParameters: {'lessonId': _lessonId.toString()});
-    //   return;
-    // }
-    //
-    // widget.controller.speak(_words[_currentIndex].text);
+    await speak(_words[_currentIndex].name);
   }
 
-  Future<void> onAnswered(int choiceIndex) async {
-    // Word currentWord = _words[_currentIndex];
-    // Word chosenWord = currentWord.choices[choiceIndex];
-    // bool isCorrect = currentWord == chosenWord;
-
-    // widget.controller.playFeedbackAudio(isCorrect);
+  Future<void> onAnswered(bool isCorrect) async {
+    judgeAnswer(isCorrect);
 
     await Future.delayed(Duration(milliseconds: 700));
+
+    moveToResultPage();
     moveToNextWord();
+
+    await speakNextWord();
   }
 
-  void updateAnswerProgress(bool isCorrect) {
+  void judgeAnswer(bool isCorrect) {
     setState(() {
-      _answerProgress = isCorrect ? 'correct' : 'incorrect';
+      _answerProgress = isCorrect ? "correct" : 'incorrect';
     });
+  }
+
+  void moveToResultPage() {
+    (_currentIndex == _words.length) ? routeTo('/result') : null;
   }
 
   void moveToNextWord() {
     setState(() {
-      _currentIndex = (_currentIndex + 1) % _words.length;
+      _currentIndex += 1;
       _answerProgress = 'hidden';
     });
-
-    if (_currentIndex == PER_WORD ||
-        (_words.length < PER_WORD && _currentIndex == 0)) {
-      // routeTo('/result', data: _exercisedWords);
-    } else {
-      // widget.controller.speak(_words[_currentIndex].name);
-    }
   }
 
-  Widget _buildChoiceButton(int choiceIndex) {
+  Future<void> speakNextWord() async {
+    await speak(_words[_currentIndex].name);
+  }
+
+  Future<void> speak(String text) async {
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.speak(text);
+  }
+
+  Widget _buildChoiceButton(Choice _choice) {
     return OutlinedButton(
       onPressed: () async {
-        await onAnswered(choiceIndex);
+        await onAnswered(_choice.isCorrect);
       },
-      child: Text(_words[_currentIndex].choices![choiceIndex].answer),
+      child: Text(_choice.answer),
       style: OutlinedButton.styleFrom(
         minimumSize: Size(double.infinity, 58),
         side: BorderSide(color: ThemeColor.get(context).primaryAccent),
@@ -77,8 +79,10 @@ class _QuizPageState extends NyState<QuizPage> {
 
   @override
   Widget view(BuildContext context) {
+    final Word _thisWord = _words[_currentIndex];
+
     return Scaffold(
-      appBar: AppBar(title: Text("レッスン")),
+      appBar: AppBar(title: Text("Lesson")),
       body: Container(
         child: Column(children: [
           Expanded(
@@ -87,7 +91,7 @@ class _QuizPageState extends NyState<QuizPage> {
                 child: Stack(
               children: [
                 Center(
-                    child: Text(_words[_currentIndex].name,
+                    child: Text(_thisWord.name,
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold))),
                 Center(
@@ -136,7 +140,9 @@ class _QuizPageState extends NyState<QuizPage> {
                 4,
                 (index) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: _buildChoiceButton(index),
+                  child: _buildChoiceButton(
+                    _thisWord.choices![index],
+                  ),
                 ),
               ),
             ),
