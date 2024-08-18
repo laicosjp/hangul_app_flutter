@@ -36,11 +36,7 @@ class _QuizPageState extends NyState<QuizPage> {
     playFeedbackAudio(isCorrect);
 
     await Future.delayed(Duration(milliseconds: 700));
-
-    moveToResultPage();
-    moveToNextWord();
-
-    await speakNextWord();
+    await moveToNextWord();
   }
 
   void judgeAnswer(bool isCorrect) {
@@ -53,19 +49,18 @@ class _QuizPageState extends NyState<QuizPage> {
     _controller.playFeedbackAudio(isCorrect);
   }
 
-  void moveToResultPage() {
-    (_currentIndex == _words.length) ? routeTo('/result') : null;
-  }
+  Future<void> moveToNextWord() async {
+    int _nextIndex = _words.length - (_currentIndex + 1);
 
-  void moveToNextWord() {
-    setState(() {
-      _currentIndex += 1;
-      _answerProgress = 'hidden';
-    });
-  }
-
-  Future<void> speakNextWord() async {
-    await speak(_words[_currentIndex].name);
+    if (_nextIndex != 0) {
+      setState(() {
+        _currentIndex = _nextIndex;
+        _answerProgress = 'hidden';
+      });
+      await speak(_words[_currentIndex].name);
+    } else {
+      routeTo('/result');
+    }
   }
 
   Future<void> speak(String text) async {

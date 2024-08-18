@@ -3,7 +3,7 @@ import 'package:nylo_framework/nylo_framework.dart';
 
 class ResultPage extends NyStatefulWidget {
   static const path = '/result';
-  
+
   ResultPage({super.key}) : super(path, child: _ResultPageState());
 }
 
@@ -13,7 +13,7 @@ class _ResultPageState extends NyState<ResultPage> {
   init() async {
 
   }
-  
+
   /// Use boot if you need to load data before the [view] is rendered.
   // @override
   // boot() async {
@@ -24,6 +24,7 @@ class _ResultPageState extends NyState<ResultPage> {
   Widget view(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Result")
       ),
       body: SafeArea(
