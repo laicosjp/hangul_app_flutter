@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controllers/quiz_controller.dart';
 import 'package:flutter_app/app/models/choice.dart';
+import 'package:flutter_app/app/networking/words_api_service.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
@@ -14,17 +15,18 @@ class QuizPage extends NyStatefulWidget {
 }
 
 class _QuizPageState extends NyState<QuizPage> {
-  List<Word> _words = [];
+  late List<Word> _words = [];
   int _currentIndex = 0;
   String _answerProgress = 'hidden'; // or 'correct' and 'incorrect'
   FlutterTts _flutterTts = FlutterTts();
 
   final _controller = QuizController();
+  final _wordsApiService = WordsApiService();
 
   @override
   init() async {
     super.init();
-    _words = widget.data();
+    _words = await _wordsApiService.findAll() ?? [];
 
     await speak(_words[_currentIndex].name);
   }

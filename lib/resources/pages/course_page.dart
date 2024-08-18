@@ -127,7 +127,7 @@ class _CoursePageState extends NyState<CoursePage> {
                     Wrap(
                       spacing: 2,
                       runSpacing: 2,
-                      children: (_course?.words ?? []).take(15).map((word) {
+                      children: (_course?.exampleWords ?? []).take(15).map((word) {
                         return Chip(
                           label: Text(word.name),
                           backgroundColor: Color(0xffEBEBEb),
@@ -152,7 +152,7 @@ class _CoursePageState extends NyState<CoursePage> {
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed: () {
-            routeTo('/quiz', data: _course!.words ?? []);
+            routeTo('/quiz', data: _course!.exampleWords ?? []);
           },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 16),

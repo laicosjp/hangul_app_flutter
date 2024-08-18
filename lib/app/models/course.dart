@@ -10,7 +10,7 @@ class Course extends Model {
   final String thumbnailUrl;
   final int wordsCount;
 
-  List<Word>? words;
+  List<Word>? exampleWords;
 
   Course({
     required this.id,
@@ -18,7 +18,7 @@ class Course extends Model {
     required this.slug,
     required this.thumbnailUrl,
     required this.wordsCount,
-    this.words,
+    this.exampleWords,
   });
 
   factory Course.fromJson(data) {
@@ -28,8 +28,8 @@ class Course extends Model {
       slug: data['slug'],
       thumbnailUrl: data['thumbnailUrl'],
       wordsCount: data['wordsCount'],
-      words: data['words'] != null
-          ? List<Word>.from(data['words'].map((word) => Word.fromJson(word)))
+      exampleWords: data['exampleWords'] != null
+          ? List<Word>.from(data['exampleWords'].map((word) => Word.fromJson(word)))
           : [],
     );
   }

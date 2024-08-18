@@ -1,3 +1,4 @@
+import '/app/networking/words_api_service.dart';
 import '/app/controllers/quiz_controller.dart';
 import '/app/networking/general_announcements_api_service.dart';
 import '/app/models/general_announcement.dart';
@@ -67,6 +68,8 @@ final Map<Type, dynamic> apiDecoders = {
   ProfileApiService: ProfileApiService(),
 
   GeneralAnnouncementsApiService: GeneralAnnouncementsApiService(),
+
+  WordsApiService: WordsApiService(),
 };
 
 
