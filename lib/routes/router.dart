@@ -1,3 +1,4 @@
+import '/resources/pages/result_page.dart';
 import '/resources/pages/general_announcement_page.dart';
 import '/resources/pages/announcements_page.dart';
 import '/resources/pages/quiz_page.dart';
@@ -58,4 +59,5 @@ appRouter() => nyRoutes((router) {
         GeneralAnnouncementPage.path,
         (context) => GeneralAnnouncementPage(),
       );
-    });
+      router.route(ResultPage.path, (context) => ResultPage());
+});
