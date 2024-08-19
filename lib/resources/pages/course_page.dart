@@ -152,7 +152,7 @@ class _CoursePageState extends NyState<CoursePage> {
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed: () {
-            routeTo('/quiz', data: _course!.exampleWords ?? []);
+            routeTo('/quiz', queryParameters: { 'courseId': _course?.id.toString() });
           },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 16),

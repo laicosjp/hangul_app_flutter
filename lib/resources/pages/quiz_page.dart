@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controllers/quiz_controller.dart';
 import 'package:flutter_app/app/models/choice.dart';
+import 'package:flutter_app/app/networking/courses_api_service.dart';
 import 'package:flutter_app/app/networking/words_api_service.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -21,12 +22,12 @@ class _QuizPageState extends NyState<QuizPage> {
   FlutterTts _flutterTts = FlutterTts();
 
   final _controller = QuizController();
-  final _wordsApiService = WordsApiService();
+  final CoursesApiService _coursesApiService = CoursesApiService();
 
   @override
   init() async {
     super.init();
-    _words = await _wordsApiService.findAll() ?? [];
+    _words = await  _coursesApiService.findWithWords(int.parse(widget.queryParameters()['courseId'])) ?? [];
 
     await speak(_words[_currentIndex].name);
   }

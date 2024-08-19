@@ -18,7 +18,6 @@ class ResultPage extends NyStatefulWidget<ResultController> {
 class _ResultPageState extends NyState<ResultPage> {
   List<Word> _words = [];
   FlutterTts _tts = FlutterTts();
-  List<int> _correctWordIds = [];
 
   @override
   init() async {
