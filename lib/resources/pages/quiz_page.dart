@@ -50,11 +50,9 @@ class _QuizPageState extends NyState<QuizPage> {
   }
 
   Future<void> moveToNextWord() async {
-    int _nextIndex = _words.length - (_currentIndex + 1);
-
-    if (_nextIndex != 0) {
+    if (_currentIndex + 1 != _words.length) {
       setState(() {
-        _currentIndex = _nextIndex;
+        _currentIndex += 1;
         _answerProgress = 'hidden';
       });
       await speak(_words[_currentIndex].name);
