@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/models/course.dart';
 import 'package:flutter_app/app/networking/courses_api_service.dart';
+import 'package:flutter_app/resources/widgets/horizontal_bar_widget.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
@@ -127,7 +128,8 @@ class _CoursePageState extends NyState<CoursePage> {
                     Wrap(
                       spacing: 2,
                       runSpacing: 2,
-                      children: (_course?.exampleWords ?? []).take(15).map((word) {
+                      children:
+                          (_course?.exampleWords ?? []).take(15).map((word) {
                         return Chip(
                           label: Text(word.name),
                           backgroundColor: Color(0xffEBEBEb),
@@ -141,6 +143,22 @@ class _CoursePageState extends NyState<CoursePage> {
                         );
                       }).toList(),
                     ),
+                    Gap(20),
+                    Text(
+                      "Progress",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Gap(8),
+                    HorizontalBar(
+                      data: [
+                        BarSegment(percentage: (_course?.correctedWordsCount ?? 0).toDouble(), color: Colors.lightGreen),
+                        BarSegment(percentage: (_course?.incorrectedWordsCount ?? 0).toDouble(), color: Colors.lightBlue),
+                        BarSegment(percentage: (_course?.unstudiedWordsCount ?? 0).toDouble(), color: Colors.black12),
+                      ],
+                    ),
                   ],
                 ),
               )
@@ -152,7 +170,8 @@ class _CoursePageState extends NyState<CoursePage> {
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed: () {
-            routeTo('/quiz', queryParameters: { 'courseId': _course?.id.toString() });
+            routeTo('/quiz',
+                queryParameters: {'courseId': _course?.id.toString()});
           },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 16),
