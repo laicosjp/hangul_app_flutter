@@ -23,11 +23,14 @@ class _QuizPageState extends NyState<QuizPage> {
 
   final _controller = QuizController();
   final CoursesApiService _coursesApiService = CoursesApiService();
+  final WordsApiService _wordsApiService = WordsApiService();
 
   @override
   init() async {
     super.init();
-    _words = await  _coursesApiService.findWithWords(int.parse(widget.queryParameters()['courseId'])) ?? [];
+    _words = await _coursesApiService
+            .findWithWords(int.parse(widget.queryParameters()['courseId'])) ??
+        [];
 
     await speak(_words[_currentIndex].name);
   }
@@ -35,6 +38,7 @@ class _QuizPageState extends NyState<QuizPage> {
   Future<void> onAnswered(bool isCorrect) async {
     judgeAnswer(isCorrect);
     playFeedbackAudio(isCorrect);
+    updateRecord(isCorrect);
 
     await Future.delayed(Duration(milliseconds: 700));
     await moveToNextWord();
@@ -60,6 +64,13 @@ class _QuizPageState extends NyState<QuizPage> {
     } else {
       routeTo('/result', data: _words);
     }
+  }
+
+  void updateRecord(bool isCorrect) {
+    final data = {
+      'word_records': {'status': isCorrect ? 'correct' : 'incorrect'}
+    };
+    _wordsApiService.updateRecord(_words[_currentIndex].id, data);
   }
 
   Future<void> speak(String text) async {
