@@ -57,7 +57,7 @@ class _QuizPageState extends NyState<QuizPage> {
       });
       await speak(_words[_currentIndex].name);
     } else {
-      routeTo('/result');
+      routeTo('/result', data: _words);
     }
   }
 
