@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/app/models/word.dart';
+import 'package:flutter_app/app/models/word_record.dart';
 import '/config/decoders.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -22,4 +22,16 @@ class WordsApiService extends NyApiService {
   //     },
   //   );
   // }
+  //
+  Future<WordRecord?> updateRecord(int id, dynamic data) async {
+    String authorization = await NyStorage.read("authorization");
+
+    return await network<WordRecord>(
+      request: (request) => request.put('/words/$id/records', data: data),
+      headers: {'Authorization': 'Bearer ${authorization}'},
+      handleFailure: (DioException) {
+        return null;
+      },
+    );
+  }
 }
