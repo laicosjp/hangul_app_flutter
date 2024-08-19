@@ -40,7 +40,10 @@ class _ResultPageState extends NyState<ResultPage> {
                   itemCount: _words.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(_words[index].name + " （" + _words[index].answer + "）"),
+                      title: Text(_words[index].name +
+                          " （" +
+                          _words[index].answer +
+                          "）"),
                       onTap: () {
                         _tts.speak(_words[index].name);
                       },
@@ -60,9 +63,13 @@ class _ResultPageState extends NyState<ResultPage> {
                             },
                             child: Text("ホームヘ"),
                             style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(ThemeColor.get(context).primaryAccent),
-                              side: MaterialStateProperty.all(BorderSide(color: ThemeColor.get(context).primaryAccent)),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  ThemeColor.get(context).primaryAccent),
+                              side: MaterialStateProperty.all(BorderSide(
+                                  color:
+                                      ThemeColor.get(context).primaryAccent)),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -78,12 +85,18 @@ class _ResultPageState extends NyState<ResultPage> {
                         Expanded(
                           child: OutlinedButton(
                             onPressed: () {
+                              routeTo('/quiz', queryParameters: {
+                                'courseId': queryParameters()['courseId']
+                              });
                             },
                             child: Text("つぎのレッスンへ"),
                             style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(ThemeColor.get(context).primaryContent),
-                              side: MaterialStateProperty.all(BorderSide(color: ThemeColor.get(context).primaryContent)),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.orange),
+                              side: MaterialStateProperty.all(
+                                  BorderSide(color: Colors.orange)),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
