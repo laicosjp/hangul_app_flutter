@@ -9,6 +9,9 @@ class Course extends Model {
   final String slug;
   final String thumbnailUrl;
   final int wordsCount;
+  final int? correctedWordsCount;
+  final int? incorrectedWordsCount;
+  final int? unstudiedWordsCount;
 
   List<Word>? exampleWords;
 
@@ -18,6 +21,9 @@ class Course extends Model {
     required this.slug,
     required this.thumbnailUrl,
     required this.wordsCount,
+    this.correctedWordsCount,
+    this.incorrectedWordsCount,
+    this.unstudiedWordsCount,
     this.exampleWords,
   });
 
@@ -28,6 +34,9 @@ class Course extends Model {
       slug: data['slug'],
       thumbnailUrl: data['thumbnailUrl'],
       wordsCount: data['wordsCount'],
+      correctedWordsCount: data['correctedWordsCount'] ?? 0,
+      incorrectedWordsCount: data['incorrectedWordsCount'] ?? 0,
+      unstudiedWordsCount: data['unstudiedWordsCount'] ?? 0,
       exampleWords: data['exampleWords'] != null
           ? List<Word>.from(data['exampleWords'].map((word) => Word.fromJson(word)))
           : [],

@@ -62,7 +62,7 @@ class _QuizPageState extends NyState<QuizPage> {
       });
       await speak(_words[_currentIndex].name);
     } else {
-      routeTo('/result', data: _words);
+      routeTo('/result', data: _words, queryParameters: { 'courseId': widget.queryParameters()['courseId']});
     }
   }
 

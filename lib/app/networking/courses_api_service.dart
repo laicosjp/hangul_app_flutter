@@ -21,8 +21,11 @@ class CoursesApiService extends NyApiService {
   }
 
   Future<Course?> findById(int id) async {
+    String authorization = await NyStorage.read("authorization");
+
     return await network<Course>(
       request: (request) => request.get("/courses/$id"),
+      headers: {'Authorization': 'Bearer ${authorization}'},
       handleFailure: (DioException) {
         return null;
       },
