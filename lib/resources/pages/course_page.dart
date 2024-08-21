@@ -3,6 +3,7 @@ import 'package:flutter_app/app/models/course.dart';
 import 'package:flutter_app/app/networking/courses_api_service.dart';
 import 'package:flutter_app/resources/widgets/horizontal_bar_widget.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
+import 'package:flutter_app/resources/widgets/start_quiz_button_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -26,166 +27,156 @@ class _CoursePageState extends NyState<CoursePage> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_course?.title ?? '')),
-      body: SafeAreaWidget(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              _course?.title ?? '',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Spacer(),
-                          SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                padding: EdgeInsets.zero,
-                                backgroundColor:
-                                    Color(0xff465AFF).withOpacity(0.1),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.share_outlined,
-                                  color: Color(0xff465AFF),
+        appBar: AppBar(title: Text(_course?.title ?? '')),
+        body: SafeAreaWidget(
+          child: Container(
+            child: Column(
+              children: [
+                Container(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                _course?.title ?? '',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                          ),
-                          Gap(8),
-                          SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                padding: EdgeInsets.zero,
-                                backgroundColor: Colors.green.shade50,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
+                            Spacer(),
+                            SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  padding: EdgeInsets.zero,
+                                  backgroundColor:
+                                      Color(0xff465AFF).withOpacity(0.1),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.public_outlined,
-                                  color: Colors.orange,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.share_outlined,
+                                    color: Color(0xff465AFF),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(children: [
-                        Icon(
-                          Icons.menu_book,
-                          color: Colors.black54,
-                          size: 16,
+                            Gap(8),
+                            SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  padding: EdgeInsets.zero,
+                                  backgroundColor: Colors.green.shade50,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.public_outlined,
+                                    color: Colors.orange,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Gap(4),
-                        Text(
-                          "${_course?.wordsCount} words",
-                          style: TextStyle(color: Colors.black54, fontSize: 14),
-                        ),
-                      ])
-                    ],
-                  ),
-                ),
-              ),
-              Gap(8),
-              Divider(),
-              Gap(8),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Words you'll learn",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Gap(8),
-                    Wrap(
-                      spacing: 2,
-                      runSpacing: 2,
-                      children:
-                          (_course?.exampleWords ?? []).take(15).map((word) {
-                        return Chip(
-                          label: Text(word.name),
-                          backgroundColor: Color(0xffEBEBEb),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: BorderSide(
-                              color: Colors.transparent,
-                              width: 0,
-                            ),
+                        Row(children: [
+                          Icon(
+                            Icons.menu_book,
+                            color: Colors.black54,
+                            size: 16,
                           ),
-                        );
-                      }).toList(),
-                    ),
-                    Gap(20),
-                    Text(
-                      "Progress",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Gap(8),
-                    HorizontalBar(
-                      data: [
-                        BarSegment(percentage: (_course?.correctedWordsCount ?? 0).toDouble(), color: Colors.lightGreen),
-                        BarSegment(percentage: (_course?.incorrectedWordsCount ?? 0).toDouble(), color: Colors.lightBlue),
-                        BarSegment(percentage: (_course?.unstudiedWordsCount ?? 0).toDouble(), color: Colors.black12),
+                          Gap(4),
+                          Text(
+                            "${_course?.wordsCount} words",
+                            style:
+                                TextStyle(color: Colors.black54, fontSize: 14),
+                          ),
+                        ])
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed: () {
-            routeTo('/quiz',
-                queryParameters: {'courseId': _course?.id.toString()});
-          },
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            backgroundColor: Colors.orange,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
+                Gap(8),
+                Divider(),
+                Gap(8),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Words you'll learn",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Gap(8),
+                      Wrap(
+                        spacing: 2,
+                        runSpacing: 2,
+                        children:
+                            (_course?.exampleWords ?? []).take(15).map((word) {
+                          return Chip(
+                            label: Text(word.name),
+                            backgroundColor: Color(0xffEBEBEb),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              side: BorderSide(
+                                color: Colors.transparent,
+                                width: 0,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      Gap(20),
+                      Text(
+                        "Progress",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Gap(8),
+                      HorizontalBar(
+                        data: [
+                          BarSegment(
+                              percentage: (_course?.correctedWordsCount ?? 0)
+                                  .toDouble(),
+                              color: Colors.lightGreen),
+                          BarSegment(
+                              percentage: (_course?.incorrectedWordsCount ?? 0)
+                                  .toDouble(),
+                              color: Colors.lightBlue),
+                          BarSegment(
+                              percentage: (_course?.unstudiedWordsCount ?? 0)
+                                  .toDouble(),
+                              color: Colors.black12),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
-          child: Text(
-            'Learn this course',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
         ),
-      ),
-    );
+        bottomNavigationBar: StartQuizButton(courseId: _course?.id ?? 0));
   }
 }
