@@ -21,68 +21,51 @@ class StartQuizButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // 着手前：「learn this course」
     if (wordsCount == unstudiedWordsCount) {
-      return LearnThisCourse(courseId: courseId);
+      return QuizActionButton(
+        courseId: courseId,
+        buttonText: 'Learn this course',
+        buttonColor: Colors.orange,
+      );
     }
 
     // 未学習が0：「retry incorrect words」
     if (unstudiedWordsCount == 0) {
-      return RetryIncorrectWords(courseId: courseId);
+      return QuizActionButton(
+        courseId: courseId,
+        buttonText: 'Retry incorrect words',
+        buttonColor: Colors.blue,
+      );
     }
 
     // すべてcorrect: 「restart this course」
     if (wordsCount == correctWordsCount) {
-      return RestartThisCourse(courseId: courseId);
+      return QuizActionButton(
+        courseId: courseId,
+        buttonText: 'Ret records and start to learn again',
+        buttonColor: Colors.grey,
+      );
     }
 
     // 着手中：「learn this course」「retry incorrect words」
-    return LearntThisCourseAndRetryIncorrectWords(courseId: courseId);
-  }
-}
-
-class LearnThisCourse extends StatelessWidget {
-  const LearnThisCourse({
-    super.key,
-    required this.courseId,
-  });
-
-  final int courseId;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-        onPressed: () {
-          routeTo(
-            '/quiz',
-            queryParameters: {
-              'courseId': courseId.toString(),
-            },
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          backgroundColor: Colors.orange,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-        ),
-        child: Text(
-          'Learn this course',
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-      ),
+    return QuizActionButton(
+      courseId: courseId,
+      buttonText: 'two buttons',
+      buttonColor: Colors.blue,
     );
   }
 }
 
-class RetryIncorrectWords extends StatelessWidget {
-  const RetryIncorrectWords({
+class QuizActionButton extends StatelessWidget {
+  final int courseId;
+  final String buttonText;
+  final Color buttonColor;
+
+  const QuizActionButton({
     super.key,
     required this.courseId,
+    required this.buttonText,
+    required this.buttonColor,
   });
-
-  final int courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -99,87 +82,13 @@ class RetryIncorrectWords extends StatelessWidget {
         },
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 16),
-          backgroundColor: Colors.blue,
+          backgroundColor: buttonColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
         ),
         child: Text(
-          'Retry incorrect words',
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-      ),
-    );
-  }
-}
-
-class RestartThisCourse extends StatelessWidget {
-  const RestartThisCourse({
-    super.key,
-    required this.courseId,
-  });
-
-  final int courseId;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-        onPressed: () {
-          routeTo(
-            '/quiz',
-            queryParameters: {
-              'courseId': courseId.toString(),
-            },
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          backgroundColor: Colors.grey,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-        ),
-        child: Text(
-          'Ret records and start to learn again',
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-      ),
-    );
-  }
-}
-
-class LearntThisCourseAndRetryIncorrectWords extends StatelessWidget {
-  const LearntThisCourseAndRetryIncorrectWords({
-    super.key,
-    required this.courseId,
-  });
-
-  final int courseId;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-        onPressed: () {
-          routeTo(
-            '/quiz',
-            queryParameters: {
-              'courseId': courseId.toString(),
-            },
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          backgroundColor: Colors.blue,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-        ),
-        child: Text(
-          'two buttons',
+          buttonText,
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
       ),
