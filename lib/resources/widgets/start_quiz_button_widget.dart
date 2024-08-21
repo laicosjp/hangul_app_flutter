@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nylo_framework/nylo_framework.dart';
+import 'package:gap/gap.dart';
 
 class StartQuizButton extends StatelessWidget {
   final int courseId;
@@ -47,10 +48,24 @@ class StartQuizButton extends StatelessWidget {
     }
 
     // 着手中：「learn this course」「retry incorrect words」
-    return QuizActionButton(
-      courseId: courseId,
-      buttonText: 'two buttons',
-      buttonColor: Colors.blue,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Expanded(
+          child: QuizActionButton(
+            courseId: courseId,
+            buttonText: 'Retry incorrect words',
+            buttonColor: Colors.blue,
+          ),
+        ),
+        Expanded(
+          child: QuizActionButton(
+            courseId: courseId,
+            buttonText: 'Learn this course',
+            buttonColor: Colors.orange,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -70,7 +85,7 @@ class QuizActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8),
       child: ElevatedButton(
         onPressed: () {
           routeTo(
