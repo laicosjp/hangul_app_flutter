@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controllers/quiz_controller.dart';
 import 'package:flutter_app/app/models/choice.dart';
 import 'package:flutter_app/app/networking/courses_api_service.dart';
-import 'package:flutter_app/app/networking/words_api_service.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 import 'package:flutter_app/app/models/word.dart';
@@ -21,7 +20,6 @@ class _QuizPageState extends NyState<QuizPage> {
 
   final _controller = QuizController();
   final CoursesApiService _coursesApiService = CoursesApiService();
-  final WordsApiService _wordsApiService = WordsApiService();
 
   @override
   init() async {
@@ -49,7 +47,7 @@ class _QuizPageState extends NyState<QuizPage> {
   Future<void> onAnswered(bool isCorrect) async {
     judgeAnswer(isCorrect);
     _controller.playFeedbackAudio(isCorrect);
-    updateRecord(isCorrect);
+    _controller.updateRecord(isCorrect, _words[_currentIndex].id);
 
     await Future.delayed(Duration(milliseconds: 700));
     await moveToNextWord();
@@ -75,12 +73,6 @@ class _QuizPageState extends NyState<QuizPage> {
     }
   }
 
-  void updateRecord(bool isCorrect) {
-    final data = {
-      'word_records': {'status': isCorrect ? 'correct' : 'incorrect'}
-    };
-    _wordsApiService.updateRecord(_words[_currentIndex].id, data);
-  }
 
   Widget _buildChoiceButton(Choice _choice) {
     return OutlinedButton(
