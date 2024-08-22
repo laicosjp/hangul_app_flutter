@@ -19,8 +19,8 @@ class StartQuizButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 着手前：「learn this course」
-    if (wordsCount == unstudiedWordsCount) {
+    // 間違いが0：「learn this course」
+    if (incorrectWordsCount == 0) {
       return QuizActionButton(
         courseId: courseId,
         buttonText: 'Learn this course',
