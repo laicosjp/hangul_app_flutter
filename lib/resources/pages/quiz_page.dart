@@ -28,9 +28,22 @@ class _QuizPageState extends NyState<QuizPage> {
   @override
   init() async {
     super.init();
-    _words = await _coursesApiService
-            .findWithWords(int.parse(widget.queryParameters()['courseId']), status: queryParameters()['status']) ??
+    _words = await _coursesApiService.findWithWords(
+            int.parse(widget.queryParameters()['courseId']),
+            status: queryParameters()['status']) ??
         [];
+
+    if (_words.isEmpty) {
+      routeTo('/course',
+          queryParameters: {'id': widget.queryParameters()['courseId']});
+      showDialog(
+        context: context!,
+        builder: (context) => AlertDialog(
+          title: Text('No words found'),
+        ),
+      );
+      return;
+    }
 
     await speak(_words[_currentIndex].name);
   }
@@ -62,7 +75,9 @@ class _QuizPageState extends NyState<QuizPage> {
       });
       await speak(_words[_currentIndex].name);
     } else {
-      routeTo('/result', data: _words, queryParameters: { 'courseId': widget.queryParameters()['courseId']});
+      routeTo('/result',
+          data: _words,
+          queryParameters: {'courseId': widget.queryParameters()['courseId']});
     }
   }
 
@@ -94,6 +109,10 @@ class _QuizPageState extends NyState<QuizPage> {
 
   @override
   Widget view(BuildContext context) {
+    if (_words.isEmpty) {
+      return Container(); // 空のコンテナを返す
+    }
+
     final Word _thisWord = _words[_currentIndex];
 
     return Scaffold(
