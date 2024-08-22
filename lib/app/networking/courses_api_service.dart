@@ -32,12 +32,12 @@ class CoursesApiService extends NyApiService {
     );
   }
 
-  Future<List<Word>?> findWithWords(int id) async {
+  Future<List<Word>?> findWithWords(int id, { String? status }) async {
     String authorization = await NyStorage.read("authorization");
     int WORD_NUMBER_PER_QUIZ = 10;
 
     return await network<List<Word>>(
-      request: (Dio request) => request.get("/courses/$id/words?per_page=$WORD_NUMBER_PER_QUIZ"),
+      request: (Dio request) => request.get("/courses/$id/words?per_page=$WORD_NUMBER_PER_QUIZ&status=$status"),
       headers: {'Authorization': 'Bearer ${authorization}'},
       handleFailure: (DioException DioException) {
         return null;

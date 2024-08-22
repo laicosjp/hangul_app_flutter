@@ -3,6 +3,7 @@ import 'package:flutter_app/app/models/course.dart';
 import 'package:flutter_app/app/networking/courses_api_service.dart';
 import 'package:flutter_app/resources/widgets/horizontal_bar_widget.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
+import 'package:flutter_app/resources/widgets/start_quiz_button_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
@@ -154,9 +155,18 @@ class _CoursePageState extends NyState<CoursePage> {
                     Gap(8),
                     HorizontalBar(
                       data: [
-                        BarSegment(percentage: (_course?.correctedWordsCount ?? 0).toDouble(), color: Colors.lightGreen),
-                        BarSegment(percentage: (_course?.incorrectedWordsCount ?? 0).toDouble(), color: Colors.lightBlue),
-                        BarSegment(percentage: (_course?.unstudiedWordsCount ?? 0).toDouble(), color: Colors.black12),
+                        BarSegment(
+                            percentage:
+                                (_course?.correctedWordsCount ?? 0).toDouble(),
+                            color: Colors.lightGreen),
+                        BarSegment(
+                            percentage: (_course?.incorrectedWordsCount ?? 0)
+                                .toDouble(),
+                            color: Colors.lightBlue),
+                        BarSegment(
+                            percentage:
+                                (_course?.unstudiedWordsCount ?? 0).toDouble(),
+                            color: Colors.black12),
                       ],
                     ),
                   ],
@@ -166,25 +176,12 @@ class _CoursePageState extends NyState<CoursePage> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed: () {
-            routeTo('/quiz',
-                queryParameters: {'courseId': _course?.id.toString()});
-          },
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            backgroundColor: Colors.orange,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-          ),
-          child: Text(
-            'Learn this course',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
+      bottomNavigationBar: StartQuizButton(
+        courseId: _course?.id ?? 0,
+        wordsCount: _course?.wordsCount ?? 0,
+        correctWordsCount: _course?.correctedWordsCount ?? 0,
+        incorrectWordsCount: _course?.incorrectedWordsCount ?? 0,
+        unstudiedWordsCount: _course?.unstudiedWordsCount ?? 0,
       ),
     );
   }
