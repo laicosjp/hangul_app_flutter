@@ -29,7 +29,7 @@ class _QuizPageState extends NyState<QuizPage> {
   init() async {
     super.init();
     _words = await _coursesApiService
-            .findWithWords(int.parse(widget.queryParameters()['courseId'])) ??
+            .findWithWords(int.parse(widget.queryParameters()['courseId']), status: queryParameters()['status']) ??
         [];
 
     await speak(_words[_currentIndex].name);

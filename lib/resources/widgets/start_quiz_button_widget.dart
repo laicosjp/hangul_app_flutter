@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nylo_framework/nylo_framework.dart';
-import 'package:gap/gap.dart';
 
 class StartQuizButton extends StatelessWidget {
   final int courseId;
@@ -26,6 +25,14 @@ class StartQuizButton extends StatelessWidget {
         courseId: courseId,
         buttonText: 'Learn this course',
         buttonColor: Colors.orange,
+        onPressed: () {
+          routeTo(
+            '/quiz',
+            queryParameters: {
+              'courseId': courseId.toString(),
+            },
+          );
+        },
       );
     }
 
@@ -35,6 +42,15 @@ class StartQuizButton extends StatelessWidget {
         courseId: courseId,
         buttonText: 'Retry incorrect words',
         buttonColor: Colors.blue,
+        onPressed: () {
+          routeTo(
+            '/quiz',
+            queryParameters: {
+              'courseId': courseId.toString(),
+              'status': 'incorrect'
+            },
+          );
+        },
       );
     }
 
@@ -44,6 +60,9 @@ class StartQuizButton extends StatelessWidget {
         courseId: courseId,
         buttonText: 'Ret records and start to learn again',
         buttonColor: Colors.grey,
+        onPressed: () {
+          print('Restart this course button pressed');
+        },
       );
     }
 
@@ -56,6 +75,15 @@ class StartQuizButton extends StatelessWidget {
             courseId: courseId,
             buttonText: 'Retry incorrect words',
             buttonColor: Colors.blue,
+            onPressed: () {
+              routeTo(
+                '/quiz',
+                queryParameters: {
+                  'courseId': courseId.toString(),
+                  'status': 'incorrect'
+                },
+              );
+            },
           ),
         ),
         Expanded(
@@ -63,6 +91,14 @@ class StartQuizButton extends StatelessWidget {
             courseId: courseId,
             buttonText: 'Learn this course',
             buttonColor: Colors.orange,
+            onPressed: () {
+              routeTo(
+                '/quiz',
+                queryParameters: {
+                  'courseId': courseId.toString(),
+                },
+              );
+            },
           ),
         ),
       ],
@@ -74,12 +110,14 @@ class QuizActionButton extends StatelessWidget {
   final int courseId;
   final String buttonText;
   final Color buttonColor;
+  final VoidCallback onPressed;
 
   const QuizActionButton({
     super.key,
     required this.courseId,
     required this.buttonText,
     required this.buttonColor,
+    required this.onPressed,
   });
 
   @override
@@ -87,14 +125,7 @@ class QuizActionButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: ElevatedButton(
-        onPressed: () {
-          routeTo(
-            '/quiz',
-            queryParameters: {
-              'courseId': courseId.toString(),
-            },
-          );
-        },
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 16),
           backgroundColor: buttonColor,
