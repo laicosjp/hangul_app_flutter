@@ -45,7 +45,7 @@ class _QuizPageState extends NyState<QuizPage> {
       return;
     }
 
-    await speak(_words[_currentIndex].name);
+    await _controller.speak(_words[_currentIndex].name);
   }
 
   Future<void> onAnswered(bool isCorrect) async {
@@ -73,7 +73,7 @@ class _QuizPageState extends NyState<QuizPage> {
         _currentIndex += 1;
         _answerProgress = 'hidden';
       });
-      await speak(_words[_currentIndex].name);
+      await _controller.speak(_words[_currentIndex].name);
     } else {
       routeTo('/result',
           data: _words,
@@ -86,11 +86,6 @@ class _QuizPageState extends NyState<QuizPage> {
       'word_records': {'status': isCorrect ? 'correct' : 'incorrect'}
     };
     _wordsApiService.updateRecord(_words[_currentIndex].id, data);
-  }
-
-  Future<void> speak(String text) async {
-    await _flutterTts.setLanguage("ko-KR");
-    await _flutterTts.speak(text);
   }
 
   Widget _buildChoiceButton(Choice _choice) {
