@@ -4,7 +4,6 @@ import 'package:flutter_app/app/models/choice.dart';
 import 'package:flutter_app/app/networking/courses_api_service.dart';
 import 'package:flutter_app/app/networking/words_api_service.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +18,6 @@ class _QuizPageState extends NyState<QuizPage> {
   late List<Word> _words = [];
   int _currentIndex = 0;
   String _answerProgress = 'hidden'; // or 'correct' and 'incorrect'
-  FlutterTts _flutterTts = FlutterTts();
 
   final _controller = QuizController();
   final CoursesApiService _coursesApiService = CoursesApiService();
@@ -50,7 +48,7 @@ class _QuizPageState extends NyState<QuizPage> {
 
   Future<void> onAnswered(bool isCorrect) async {
     judgeAnswer(isCorrect);
-    playFeedbackAudio(isCorrect);
+    _controller.playFeedbackAudio(isCorrect);
     updateRecord(isCorrect);
 
     await Future.delayed(Duration(milliseconds: 700));
@@ -62,11 +60,7 @@ class _QuizPageState extends NyState<QuizPage> {
       _answerProgress = isCorrect ? "correct" : 'incorrect';
     });
   }
-
-  void playFeedbackAudio(bool isCorrect) {
-    _controller.playFeedbackAudio(isCorrect);
-  }
-
+  
   Future<void> moveToNextWord() async {
     if (_currentIndex + 1 != _words.length) {
       setState(() {
