@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controllers/quiz_controller.dart';
-import 'package:flutter_app/app/models/choice.dart';
 import 'package:flutter_app/app/networking/courses_api_service.dart';
-import 'package:flutter_app/bootstrap/helpers.dart';
+import 'package:flutter_app/resources/widgets/quiz_page/quiz_choice_buttons_widget.dart';
 import 'package:flutter_app/resources/widgets/quiz_page/quiz_judge_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 import 'package:flutter_app/app/models/word.dart';
@@ -57,7 +56,7 @@ class _QuizPageState extends NyState<QuizPage> {
       _answerProgress = isCorrect ? "correct" : 'incorrect';
     });
   }
-  
+
   Future<void> moveToNextWord() async {
     if (_currentIndex + 1 != _words.length) {
       setState(() {
@@ -70,21 +69,6 @@ class _QuizPageState extends NyState<QuizPage> {
           data: _words,
           queryParameters: {'courseId': widget.queryParameters()['courseId']});
     }
-  }
-
-
-  Widget _buildChoiceButton(Choice _choice) {
-    return OutlinedButton(
-      onPressed: () async {
-        await onAnswered(_choice.isCorrect);
-      },
-      child: Text(_choice.answer),
-      style: OutlinedButton.styleFrom(
-        minimumSize: Size(double.infinity, 58),
-        side: BorderSide(color: ThemeColor.get(context).primaryAccent),
-        foregroundColor: ThemeColor.get(context).buttonPrimaryContent,
-      ),
-    );
   }
 
   @override
@@ -127,21 +111,7 @@ class _QuizPageState extends NyState<QuizPage> {
             )),
           ),
           QuizJudge(),
-          Expanded(
-            flex: 6,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(
-                4,
-                (index) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: _buildChoiceButton(
-                    _thisWord.choices![index],
-                  ),
-                ),
-              ),
-            ),
-          )
+          QuizChoiceButtons(thisWord: _thisWord),
         ]),
       ),
     );
