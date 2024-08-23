@@ -47,11 +47,8 @@ class _QuizPageState extends NyState<QuizPage> {
 
   Future<void> onAnswered(bool isCorrect) async {
     judgeAnswer(isCorrect);
-    _controller.answer(isCorrect);
-    _controller.playFeedbackAudio(isCorrect);
-    _controller.updateRecord(isCorrect, _words[_currentIndex].id);
+    await _controller.answer(isCorrect, _words[_currentIndex].id);
 
-    await Future.delayed(Duration(milliseconds: 700));
     await moveToNextWord();
   }
 

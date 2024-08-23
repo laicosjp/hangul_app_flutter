@@ -20,9 +20,13 @@ class QuizController extends Controller {
     _wordsApiService.updateRecord(wordId, {'word_records': {'status': isCorrect ? 'correct' : 'incorrect'}});
   }
 
-  answer(bool isCorrect) async {
+  Future<void> answer(bool isCorrect, int wordId) async {
     updateState(QuizJudge.state, data: isCorrect ? 'correct' : 'incorrect');
+    playFeedbackAudio(isCorrect);
+
     await Future.delayed(Duration(milliseconds: 700));
+
     updateState(QuizJudge.state, data: 'hidden');
+    updateRecord(isCorrect, wordId);
   }
 }
