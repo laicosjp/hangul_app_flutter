@@ -3,6 +3,7 @@ import 'package:flutter_app/app/controllers/quiz_controller.dart';
 import 'package:flutter_app/app/models/choice.dart';
 import 'package:flutter_app/app/networking/courses_api_service.dart';
 import 'package:flutter_app/bootstrap/helpers.dart';
+import 'package:flutter_app/resources/widgets/quiz_page/quiz_judge_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,6 +47,7 @@ class _QuizPageState extends NyState<QuizPage> {
 
   Future<void> onAnswered(bool isCorrect) async {
     judgeAnswer(isCorrect);
+    _controller.answer(isCorrect);
     _controller.playFeedbackAudio(isCorrect);
     _controller.updateRecord(isCorrect, _words[_currentIndex].id);
 
@@ -127,26 +129,7 @@ class _QuizPageState extends NyState<QuizPage> {
               ],
             )),
           ),
-          Expanded(
-            flex: 1,
-            child: _answerProgress == 'correct'
-                ? Text(
-                    "Correct!",
-                    style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.lightGreen.withOpacity(0.7)),
-                  )
-                : _answerProgress == 'incorrect'
-                    ? Text(
-                        "Incorrect...",
-                        style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue.withOpacity(0.7)),
-                      )
-                    : Container(),
-          ),
+          QuizJudge(),
           Expanded(
             flex: 6,
             child: Column(
