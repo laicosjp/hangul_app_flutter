@@ -28,6 +28,7 @@ class _QuizFontState extends NyState<QuizFont> {
   stateUpdated(dynamic data) async {
     // e.g. to update this state from another class
     // updateState(QuizFont.state, data: "example payload");
+    answerProgress = data;
   }
 
   @override
