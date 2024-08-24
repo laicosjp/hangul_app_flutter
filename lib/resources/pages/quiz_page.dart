@@ -15,10 +15,15 @@ class QuizPage extends NyStatefulWidget {
 
 class _QuizPageState extends NyState<QuizPage> {
   late List<Word> _words = [];
-  int _currentIndex = 0;
+  Word? _thisWord;
 
   final _controller = QuizController();
   final CoursesApiService _coursesApiService = CoursesApiService();
+
+  @override
+  stateUpdated(dynamic data) {
+    _thisWord = data;
+  }
 
   @override
   init() async {
@@ -27,6 +32,7 @@ class _QuizPageState extends NyState<QuizPage> {
             int.parse(widget.queryParameters()['courseId']),
             status: queryParameters()['status']) ??
         [];
+    _thisWord = _words[0];
 
     if (_words.isEmpty) {
       routeTo('/course',
@@ -40,24 +46,22 @@ class _QuizPageState extends NyState<QuizPage> {
       return;
     }
 
-    await _controller.speak(_words[_currentIndex].name);
+    await _controller.speak(_thisWord!.name);
   }
 
   @override
   Widget view(BuildContext context) {
-    if (_words.isEmpty) {
+    if (_thisWord == null) {
       return Container();
     }
-
-    final Word _thisWord = _words[_currentIndex];
 
     return Scaffold(
       appBar: AppBar(title: Text("Lesson")),
       body: Container(
         child: Column(children: [
-          QuizFont(thisWord: _thisWord),
+          QuizFont(thisWord: _thisWord!),
           QuizJudge(),
-          QuizChoiceButtons(thisWord: _thisWord, words: _words),
+          QuizChoiceButtons(thisWord: _thisWord!, words: _words),
         ]),
       ),
     );

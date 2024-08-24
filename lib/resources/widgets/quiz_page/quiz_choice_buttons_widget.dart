@@ -8,7 +8,8 @@ class QuizChoiceButtons extends StatefulWidget {
   final Word thisWord;
   final List<Word> words;
 
-  const QuizChoiceButtons({super.key, required this.thisWord, required this.words});
+  const QuizChoiceButtons(
+      {super.key, required this.thisWord, required this.words});
 
   static String state = "quiz_choice_buttons";
 
@@ -35,6 +36,10 @@ class _QuizChoiceButtonsState extends NyState<QuizChoiceButtons> {
   @override
   Widget build(BuildContext context) {
     final Word thisWord = widget.thisWord;
+    final Word? nextWord =
+        widget.words.indexOf(thisWord) + 1 < widget.words.length
+            ? widget.words[widget.words.indexOf(thisWord) + 1]
+            : null;
 
     return Expanded(
       flex: 6,
@@ -46,8 +51,12 @@ class _QuizChoiceButtonsState extends NyState<QuizChoiceButtons> {
             padding: const EdgeInsets.symmetric(horizontal: 14),
             child: OutlinedButton(
               onPressed: () async {
-                await _controller.answer(thisWord.choices![index].isCorrect, thisWord.id);
-                await _controller.moveToNextWord(thisWord, index, widget.words);
+                await _controller.answer(
+                  thisWord.choices![index].isCorrect,
+                  thisWord.id,
+                  nextWord,
+                );
+                await _controller.moveToNextWord(nextWord, widget.words);
               },
               child: Text(thisWord.choices![index].answer),
               style: OutlinedButton.styleFrom(

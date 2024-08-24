@@ -1,5 +1,6 @@
 import 'package:flutter_app/app/models/word.dart';
 import 'package:flutter_app/app/networking/words_api_service.dart';
+import 'package:flutter_app/resources/pages/quiz_page.dart';
 import 'package:flutter_app/resources/widgets/quiz_page/quiz_font_widget.dart';
 import 'package:flutter_app/resources/widgets/quiz_page/quiz_judge_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
@@ -24,7 +25,7 @@ class QuizController extends Controller {
     });
   }
 
-  Future<void> answer(bool isCorrect, int wordId) async {
+  Future<void> answer(bool isCorrect, int wordId, Word? nextWord) async {
     updateState(QuizJudge.state, data: isCorrect ? 'correct' : 'incorrect');
     updateState(QuizFont.state, data: isCorrect ? 'correct' : 'incorrect');
 
@@ -32,14 +33,15 @@ class QuizController extends Controller {
 
     await Future.delayed(Duration(milliseconds: 700));
 
+    updateState(QuizPage.path, data: nextWord);
     updateState(QuizJudge.state, data: 'hidden');
     updateState(QuizFont.state, data: 'hidden');
     updateRecord(isCorrect, wordId);
   }
 
-  moveToNextWord(Word thisWord, int currentIndex, List<Word> words) async {
-    if (currentIndex + 1 != words.length) {
-      await speak(thisWord.name);
+  moveToNextWord(Word? nextWord, List<Word> words) async {
+    if (nextWord != null) {
+      await speak(nextWord.name);
     } else {
       routeTo(
         '/result',
