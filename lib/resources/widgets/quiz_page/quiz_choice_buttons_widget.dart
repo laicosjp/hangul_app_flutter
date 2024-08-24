@@ -7,9 +7,10 @@ import 'package:flutter_app/app/models/word.dart';
 class QuizChoiceButtons extends StatefulWidget {
   final Word thisWord;
   final List<Word> words;
+  final int courseId;
 
   const QuizChoiceButtons(
-      {super.key, required this.thisWord, required this.words});
+      {super.key, required this.thisWord, required this.words, required this.courseId});
 
   static String state = "quiz_choice_buttons";
 
@@ -56,7 +57,7 @@ class _QuizChoiceButtonsState extends NyState<QuizChoiceButtons> {
                   thisWord.id,
                   nextWord,
                 );
-                await _controller.moveToNextWord(nextWord, widget.words);
+                await _controller.moveToNextWord(nextWord, widget.words, widget.courseId);
               },
               child: Text(thisWord.choices![index].answer),
               style: OutlinedButton.styleFrom(

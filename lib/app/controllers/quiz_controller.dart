@@ -39,14 +39,14 @@ class QuizController extends Controller {
     updateRecord(isCorrect, wordId);
   }
 
-  moveToNextWord(Word? nextWord, List<Word> words) async {
+  moveToNextWord(Word? nextWord, List<Word> words, int courseId) async {
     if (nextWord != null) {
       await speak(nextWord.name);
     } else {
       routeTo(
         '/result',
         data: words,
-        queryParameters: {'courseId': queryParameters()['courseId']},
+        queryParameters: {'courseId': courseId.toString()},
       );
     }
   }

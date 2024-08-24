@@ -32,7 +32,6 @@ class _QuizPageState extends NyState<QuizPage> {
             int.parse(widget.queryParameters()['courseId']),
             status: queryParameters()['status']) ??
         [];
-    _thisWord = _words[0];
 
     if (_words.isEmpty) {
       routeTo('/course',
@@ -45,6 +44,8 @@ class _QuizPageState extends NyState<QuizPage> {
       );
       return;
     }
+
+    _thisWord = _words[0];
 
     await _controller.speak(_thisWord!.name);
   }
@@ -61,7 +62,10 @@ class _QuizPageState extends NyState<QuizPage> {
         child: Column(children: [
           QuizFont(thisWord: _thisWord!),
           QuizJudge(),
-          QuizChoiceButtons(thisWord: _thisWord!, words: _words),
+          QuizChoiceButtons(
+              thisWord: _thisWord!,
+              words: _words,
+              courseId: int.parse(widget.queryParameters()['courseId'])),
         ]),
       ),
     );
