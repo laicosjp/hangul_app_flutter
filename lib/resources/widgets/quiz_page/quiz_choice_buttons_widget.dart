@@ -5,9 +5,10 @@ import 'package:nylo_framework/nylo_framework.dart';
 import 'package:flutter_app/app/models/word.dart';
 
 class QuizChoiceButtons extends StatefulWidget {
-  final Word thisWord; // Added thisWord as a parameter
+  final Word thisWord;
+  final List<Word> words;
 
-  const QuizChoiceButtons({super.key, required this.thisWord});
+  const QuizChoiceButtons({super.key, required this.thisWord, required this.words});
 
   static String state = "quiz_choice_buttons";
 
@@ -46,6 +47,7 @@ class _QuizChoiceButtonsState extends NyState<QuizChoiceButtons> {
             child: OutlinedButton(
               onPressed: () async {
                 await _controller.answer(thisWord.choices![index].isCorrect, thisWord.id);
+                await _controller.moveToNextWord(thisWord, index, widget.words);
               },
               child: Text(thisWord.choices![index].answer),
               style: OutlinedButton.styleFrom(
