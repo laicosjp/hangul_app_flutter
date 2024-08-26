@@ -19,89 +19,18 @@ class StartQuizButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 間違いが0：「learn this course」
-    if (incorrectWordsCount == 0) {
-      return QuizActionButton(
-        courseId: courseId,
-        buttonText: 'Learn this course',
-        buttonColor: Colors.orange,
-        onPressed: () {
-          routeTo(
-            '/quiz',
-            queryParameters: {
-              'courseId': courseId.toString(),
-            },
-          );
-        },
-      );
-    }
-
-    // 未学習が0：「retry incorrect words」
-    if (unstudiedWordsCount == 0) {
-      return QuizActionButton(
-        courseId: courseId,
-        buttonText: 'Retry incorrect words',
-        buttonColor: Colors.blue,
-        onPressed: () {
-          routeTo(
-            '/quiz',
-            queryParameters: {
-              'courseId': courseId.toString(),
-              'status': 'incorrect'
-            },
-          );
-        },
-      );
-    }
-
-    // すべてcorrect: 「restart this course」
-    if (wordsCount == correctWordsCount) {
-      return QuizActionButton(
-        courseId: courseId,
-        buttonText: 'Ret records and start to learn again',
-        buttonColor: Colors.grey,
-        onPressed: () {
-          print('Restart this course button pressed');
-        },
-      );
-    }
-
-    // 着手中：「learn this course」「retry incorrect words」
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Expanded(
-          child: QuizActionButton(
-            courseId: courseId,
-            buttonText: 'Retry incorrect words',
-            buttonColor: Colors.blue,
-            onPressed: () {
-              routeTo(
-                '/quiz',
-                queryParameters: {
-                  'courseId': courseId.toString(),
-                  'status': 'incorrect'
-                },
-              );
-            },
-          ),
-        ),
-        Expanded(
-          child: QuizActionButton(
-            courseId: courseId,
-            buttonText: 'Learn this course',
-            buttonColor: Colors.orange,
-            onPressed: () {
-              routeTo(
-                '/quiz',
-                queryParameters: {
-                  'courseId': courseId.toString(),
-                },
-              );
-            },
-          ),
-        ),
-      ],
+    return QuizActionButton(
+      courseId: courseId,
+      buttonText: 'Learn this course',
+      buttonColor: Colors.orange,
+      onPressed: () {
+        routeTo(
+          '/quiz',
+          queryParameters: {
+            'courseId': courseId.toString(),
+          },
+        );
+      },
     );
   }
 }

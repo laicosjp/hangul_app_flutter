@@ -48,7 +48,7 @@ class _CoursePageState extends NyState<CoursePage> {
                             ),
                           ),
                           Spacer(),
-                          SizedBox(
+                          /* SizedBox(
                             width: 40,
                             height: 40,
                             child: ElevatedButton(
@@ -91,7 +91,7 @@ class _CoursePageState extends NyState<CoursePage> {
                                 ),
                               ),
                             ),
-                          ),
+                          ), */
                         ],
                       ),
                       Row(children: [
