@@ -30,14 +30,15 @@ class _CoursesWidgetState extends NyState<CoursesWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Column(
-            children: widget.courses
-                .map((course) => CourseCard(
-                      id: course.id,
-                      title: course.title,
-                      wordsCount: course.wordsCount,
-                      thumbnailUrl: course.thumbnailUrl,
-                    ))
-                .toList()));
+        child: SingleChildScrollView( 
+            child: Column(
+                children: widget.courses
+                    .map((course) => CourseCard(
+                          id: course.id,
+                          title: course.title,
+                          wordsCount: course.wordsCount,
+                          thumbnailUrl: course.thumbnailUrl,
+                        ))
+                    .toList())));
   }
 }
