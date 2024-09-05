@@ -11,12 +11,8 @@ class PurchasePage extends NyStatefulWidget {
 }
 
 class _PurchasePageState extends NyState<PurchasePage> {
-  int? courseId;
-
   @override
   init() async {
-    courseId = int.parse(queryParameters()['id'] ?? '0');
-
     initPlatformState();
   }
 
@@ -31,10 +27,10 @@ class _PurchasePageState extends NyState<PurchasePage> {
 
     PurchasesConfiguration configuration;
     if (Platform.isIOS) {
-      configuration =
-          PurchasesConfiguration('hangul_test_fourth_lifetime_access');
+      configuration = PurchasesConfiguration(getEnv('REVENUECAT_API_KEY'));
       await Purchases.configure(configuration);
-    }
+    } 
+    // ---TDOO: Android版のロジックを追加する
   }
 
   @override
