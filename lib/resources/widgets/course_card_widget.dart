@@ -22,7 +22,8 @@ class CourseCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
         onTap: () {
-          routeTo('/course', queryParameters: {'id': id.toString()});
+          // routeTo('/course', queryParameters: {'id': id.toString()});
+          routeTo('/purchase', queryParameters: {'id': id.toString()});
         },
         child: Container(
           width: double.infinity,
