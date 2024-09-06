@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/controllers/home_controller.dart';
 import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 
 class CourseCard extends StatelessWidget {
+  final _homeController = HomeController();
+
   int? id;
   String? title;
   int? wordsCount;
@@ -23,13 +25,7 @@ class CourseCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
         onTap: () async {
-          CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-
-          if (customerInfo.entitlements.all['monthly']?.isActive == true) {
-            routeTo('/course', queryParameters: {'id': id.toString()});
-          } else {
-            routeTo('/purchase', queryParameters: {'id': id.toString()});
-          }
+          await _homeController.onStartCourse(id!);
         },
         child: Container(
           width: double.infinity,

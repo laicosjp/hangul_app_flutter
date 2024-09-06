@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '/resources/widgets/logo_widget.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -37,5 +38,21 @@ class HomeController extends Controller {
   onLogout() {
     Auth.remove();
     routeTo('/auth');
+  }
+
+  onStartCourse(int id) async {
+    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+
+    // ハングル検定5級は初級なので無料にする
+    if (id == 5) {
+      routeTo('/course', queryParameters: {'id': id.toString()});
+      return;
+    }
+
+    if (customerInfo.entitlements.all['monthly']?.isActive == true) {
+      routeTo('/course', queryParameters: {'id': id.toString()});
+    } else {
+      routeTo('/purchase', queryParameters: {'id': id.toString()});
+    }
   }
 }
