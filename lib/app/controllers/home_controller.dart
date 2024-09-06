@@ -44,7 +44,7 @@ class HomeController extends Controller {
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 
     // ハングル検定5級は初級なので無料にする
-    if (id == 5) {
+    if (id == 13) {
       routeTo('/course', queryParameters: {'id': id.toString()});
       return;
     }

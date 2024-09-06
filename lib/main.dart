@@ -33,6 +33,7 @@ Future<void> initPlatformState() async {
   PurchasesConfiguration configuration;
   if (Platform.isIOS) {
     configuration = PurchasesConfiguration(getEnv('REVENUECAT_API_KEY'));
+    configuration.appUserID = Auth.user().email;
     await Purchases.configure(configuration);
   }
   // ---TDOO: Android版のロジックを追加する
