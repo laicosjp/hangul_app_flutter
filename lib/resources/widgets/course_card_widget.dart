@@ -24,9 +24,12 @@ class CourseCard extends StatelessWidget {
       child: InkWell(
         onTap: () async {
           CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-          print(customerInfo.entitlements);
-          // routeTo('/course', queryParameters: {'id': id.toString()});
-          routeTo('/purchase', queryParameters: {'id': id.toString()});
+
+          if (customerInfo.entitlements.all['monthly']?.isActive == true) {
+            routeTo('/course', queryParameters: {'id': id.toString()});
+          } else {
+            routeTo('/purchase', queryParameters: {'id': id.toString()});
+          }
         },
         child: Container(
           width: double.infinity,
