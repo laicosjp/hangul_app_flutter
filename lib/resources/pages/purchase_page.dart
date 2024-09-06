@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nylo_framework/nylo_framework.dart';
-import 'dart:io' show Platform;
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
@@ -13,7 +12,6 @@ class PurchasePage extends NyStatefulWidget {
 class _PurchasePageState extends NyState<PurchasePage> {
   @override
   init() async {
-    initPlatformState();
   }
 
   /// Use boot if you need to load data before the [view] is rendered.
@@ -22,16 +20,6 @@ class _PurchasePageState extends NyState<PurchasePage> {
   //
   // }
 
-  Future<void> initPlatformState() async {
-    await Purchases.setLogLevel(LogLevel.debug);
-
-    PurchasesConfiguration configuration;
-    if (Platform.isIOS) {
-      configuration = PurchasesConfiguration(getEnv('REVENUECAT_API_KEY'));
-      await Purchases.configure(configuration);
-    } 
-    // ---TDOO: Android版のロジックを追加する
-  }
 
   @override
   Widget view(BuildContext context) {
@@ -44,6 +32,7 @@ class _PurchasePageState extends NyState<PurchasePage> {
           }, onDismiss: () {
             // Dismiss the paywall, i.e. remove the view, navigate to another screen, etc.
             // Will be called when the close button is pressed (if enabled) or when a purchase succeeds.
+            routeTo('/home');
           }),
         ));
   }

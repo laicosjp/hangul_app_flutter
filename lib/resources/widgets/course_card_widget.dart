@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 class CourseCard extends StatelessWidget {
   int? id;
@@ -21,7 +22,9 @@ class CourseCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
+          CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+          print(customerInfo.entitlements);
           // routeTo('/course', queryParameters: {'id': id.toString()});
           routeTo('/purchase', queryParameters: {'id': id.toString()});
         },
