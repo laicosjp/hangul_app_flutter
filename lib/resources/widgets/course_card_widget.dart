@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/app/controllers/home_controller.dart';
 import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
 class CourseCard extends StatelessWidget {
-  final _homeController = HomeController();
-
   int? id;
   String? title;
   int? wordsCount;
@@ -24,8 +21,8 @@ class CourseCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
-        onTap: () async {
-          await _homeController.onStartCourse(id!);
+        onTap: () {
+          routeTo('/course', queryParameters: {'id': id.toString()});
         },
         child: Container(
           width: double.infinity,

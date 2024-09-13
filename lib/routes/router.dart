@@ -1,4 +1,3 @@
-import '/resources/pages/purchase_page.dart';
 import '/resources/pages/result_page.dart';
 import '/resources/pages/general_announcement_page.dart';
 import '/resources/pages/announcements_page.dart';
@@ -61,5 +60,4 @@ appRouter() => nyRoutes((router) {
         (context) => GeneralAnnouncementPage(),
       );
       router.route(ResultPage.path, (context) => ResultPage());
-  router.route(PurchasePage.path, (context) => PurchasePage());
 });
