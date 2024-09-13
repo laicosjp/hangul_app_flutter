@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controllers/home_controller.dart';
 import 'package:nylo_framework/nylo_framework.dart';
-import 'package:purchases_flutter/models/customer_info_wrapper.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 
 class Profile extends StatefulWidget {
   final String? email;
@@ -16,20 +14,13 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends NyState<Profile> {
   final HomeController _controller = HomeController();
-  bool isMonthlyPlan = false;
 
   _ProfileState() {
     stateName = Profile.state;
   }
 
   @override
-  init() async {
-    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-
-    if (customerInfo.entitlements.all['monthly']?.isActive == true) {
-      isMonthlyPlan = true;
-    }
-  }
+  init() async {}
 
   @override
   stateUpdated(dynamic data) async {
@@ -59,16 +50,11 @@ class _ProfileState extends NyState<Profile> {
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0),
                     ),
-                    if (isMonthlyPlan)
-                      Text(
-                        'Plan: monthly',
-                        style: TextStyle(color: Colors.white),
-                      )
                   ],
                 ),
               ),
               width: double.infinity,
-              height: 100,
+              height: 80,
               decoration: BoxDecoration(
                 color: Colors.orange,
                 borderRadius: BorderRadius.circular(20.0),
