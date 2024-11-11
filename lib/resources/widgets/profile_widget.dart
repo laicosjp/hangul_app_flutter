@@ -105,6 +105,9 @@ class _ProfileState extends NyState<Profile> {
                 leading: Icon(Icons.warning_amber_rounded),
                 trailing: Icon(Icons.arrow_forward_ios),
                 title: Text(trans("withdrawal")),
+                onTap: () {
+                  routeTo('/withdrawal');
+                },
               ),
             ),
           ),

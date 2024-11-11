@@ -2,5 +2,6 @@
   "withdrawal": "退会",
   "notifications": "お知らせ",
   "logout": "ログアウト",
-  "privacy_policy": "プライバシーポリシー"
+  "privacy_policy": "プライバシーポリシー",
+  "are_you_sure_to_withdrawal": "退会手続きをしますか？"
 }
