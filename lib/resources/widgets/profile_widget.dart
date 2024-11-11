@@ -71,7 +71,7 @@ class _ProfileState extends NyState<Profile> {
               child: ListTile(
                 leading: Icon(Icons.notifications_outlined),
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: Text("Notifications"),
+                title: Text(trans("notifications")),
                 onTap: () {
                   routeTo('/announcements');
                 },
@@ -88,10 +88,24 @@ class _ProfileState extends NyState<Profile> {
               child: ListTile(
                   leading: Icon(Icons.info_outline),
                   trailing: Icon(Icons.arrow_forward_ios),
-                  title: Text("Privaciy Policy"),
+                  title: Text(trans("privacy_policy")),
                   onTap: () async {
                     await _controller.onTapPolicy();
                   }),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Color(0xFFF2F4FA),
+              ),
+              child: ListTile(
+                leading: Icon(Icons.warning_amber_rounded),
+                trailing: Icon(Icons.arrow_forward_ios),
+                title: Text(trans("withdrawal")),
+              ),
             ),
           ),
           // Padding(
@@ -118,7 +132,7 @@ class _ProfileState extends NyState<Profile> {
               child: ListTile(
                   leading: Icon(Icons.logout_outlined),
                   trailing: Icon(Icons.arrow_forward_ios),
-                  title: Text("Logout"),
+                  title: Text(trans("logout")),
                   onTap: () {
                     _controller.onLogout();
                   }),
