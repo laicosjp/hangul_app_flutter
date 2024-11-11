@@ -1,3 +1,4 @@
+import '/app/networking/users_api_service.dart';
 import '/app/models/word_record.dart';
 import '/app/networking/words_api_service.dart';
 import '/app/controllers/quiz_controller.dart';
@@ -75,6 +76,8 @@ final Map<Type, dynamic> apiDecoders = {
   GeneralAnnouncementsApiService: GeneralAnnouncementsApiService(),
 
   WordsApiService: WordsApiService(),
+
+  UsersApiService: UsersApiService(),
 };
 
 
