@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/networking/users_api_service.dart';
 import 'package:flutter_app/resources/widgets/safearea_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:nylo_framework/nylo_framework.dart';
@@ -11,6 +12,8 @@ class WithdrawalPage extends NyStatefulWidget {
 }
 
 class _WithdrawalPageState extends NyState<WithdrawalPage> {
+  final _usersApiService = UsersApiService();
+
   @override
   init() async {}
 
@@ -41,7 +44,15 @@ class _WithdrawalPageState extends NyState<WithdrawalPage> {
                       ),
                       side: BorderSide(color: Theme.of(context).primaryColor),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      await _usersApiService.destroy();
+                      await sleep(1);
+                      showToastInfo(
+                        description: "アカウントの削除処理が完了しました",
+                      );
+                      await sleep(5);
+                      routeTo('/auth');
+                    },
                     child: Text(
                       "はい、退会します。",
                       style: TextStyle(color: Theme.of(context).primaryColor),
